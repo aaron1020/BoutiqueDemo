@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="default_sw360">values-sw360dp</string>
+    <string name="default_sw360_sw600">values-sw360dp</string>
+    <string name="default_sw360_sw600_sw720">values-sw360dp</string>
+    <string name="default_sw360_sw600_sw720_sw768">values-sw360dp</string>
+    <string name="default_sw360_sw600_sw720_sw768_sw1024">values-sw360dp</string>
+
+</resources>

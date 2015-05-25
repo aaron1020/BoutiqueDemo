@@ -1,0 +1,34 @@
+<resources>
+
+    <dimen name="actionbar_height">50dp</dimen>
+    <dimen name="actionbar_divide_line_width">0.5dip</dimen>
+    <dimen name="actionbar_divide_line_margin">12dp</dimen>
+    <dimen name="actionbar_title_margin">8dip</dimen>
+    <dimen name="actionbar_title_text_size">16sp</dimen>
+    <dimen name="view_divide_line_height">0.5dip</dimen>
+    <dimen name="aty_custom_view_group_square">160dip</dimen>
+    <dimen name="cascade_horizontal_spacing">10dp</dimen>
+    <dimen name="cascade_vertical_spacing">10dp</dimen>
+    <dimen name="global_button_height">38dip</dimen>
+    <dimen name="global_button_padding">@dimen/shape_circle_padding</dimen>
+    <dimen name="main_ltem_layout_height">42dip</dimen>
+    <dimen name="main_ltem_layout_padding">10dp</dimen>
+    <dimen name="main_item_view_main_title">14sp</dimen>
+    <dimen name="radius_3dip">3dp</dimen>
+    <dimen name="radius_4dip">4dp</dimen>
+    <dimen name="stroke_width">0.6dip</dimen>
+    <dimen name="transparent_menu_text_padding">4dip</dimen>
+    <dimen name="transparent_menu_text_size">18sp</dimen>
+    <dimen name="tree_listview_margin_top">-5dip</dimen>
+    <dimen name="shape_circle_stroke_width">1dip</dimen>
+    <dimen name="shape_circle_size">46dip</dimen>
+    <dimen name="shape_circle_padding">10dip</dimen>
+    <dimen name="shape_circle_corners">23dip</dimen>
+    <dimen name="home_sharkIcon_size">60dp</dimen>
+    <dimen name="home_punchIcon_margin_left">4dp</dimen>
+    <dimen name="home_punchIcon_width">40dp</dimen>
+    <dimen name="home_punchIcon_height">20dp</dimen>
+    <dimen name="home_punchIcon_margin_top">2dp</dimen>
+    <dimen name="preference_dimen">100dp</dimen>
+
+</resources>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DynamicAddViewActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dip"
+        android:layout_marginTop="@dimen/main_ltem_layout_padding"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/main_ltem_layout_padding"
+        android:paddingRight="@dimen/main_ltem_layout_padding" >
+
+        <TextView
+            android:id="@+id/dynamic_addView_title_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/main_item_view_main_title" />
+
+        <TextView
+            android:id="@+id/dynamic_addView_delete_view"
+            android:layout_width="50dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:paddingRight="4dip"
+            android:text="@string/delete"
+            android:textColor="@color/red"
+            android:textSize="@dimen/main_item_view_main_title" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/radius_bg"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            style="@style/MainItemLayout"
+            android:background="@drawable/radius_top_bg" >
+
+            <TextView
+                style="@style/MainTitle"
+                android:text="@string/type" />
+
+            <TextView
+                android:id="@+id/type_text"
+                style="@style/SubTitle"
+                android:drawablePadding="2dip"
+                android:drawableRight="@drawable/global_right_arrow" />
+        </LinearLayout>
+
+        <include layout="@layout/view_divide_line" />
+
+        <LinearLayout
+            android:id="@+id/begin_time_layout"
+            style="@style/MainItemLayout" >
+
+            <TextView
+                style="@style/MainTitle"
+                android:text="@string/begin_time" />
+
+            <TextView
+                android:id="@+id/begin_time_text"
+                style="@style/SubTitle" />
+        </LinearLayout>
+
+        <include layout="@layout/view_divide_line" />
+
+        <LinearLayout
+            android:id="@+id/end_time_layout"
+            style="@style/MainItemLayout" >
+
+            <TextView
+                style="@style/MainTitle"
+                android:text="@string/end_time" />
+
+            <TextView
+                android:id="@+id/end_time_text"
+                style="@style/SubTitle" />
+        </LinearLayout>
+
+        <include layout="@layout/view_divide_line" />
+
+        <RadioGroup
+            android:id="@+id/type_group"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_ltem_layout_height"
+            android:background="@drawable/radius_no_bg"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/type_btn_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/type_one"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/type_btn_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dip"
+                android:text="@string/type_two"
+                android:textSize="14sp" />
+        </RadioGroup>
+
+        <include layout="@layout/view_divide_line" />
+
+        <LinearLayout
+            style="@style/MainItemLayout"
+            android:background="@drawable/radius_bottom_bg"
+            android:clickable="false" >
+
+            <TextView
+                style="@style/MainTitle"
+                android:text="@string/total_calcuate" />
+
+            <TextView
+                android:id="@+id/time_len__text_value"
+                style="@style/SubTitle"
+                android:hint="@string/out_time_length" />
+
+            <LinearLayout
+                android:id="@+id/time_len_cacl_wait"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:gravity="right|center_vertical"
+                android:visibility="gone" >
+
+                <ProgressBar style="@style/ProgressBarStyle" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

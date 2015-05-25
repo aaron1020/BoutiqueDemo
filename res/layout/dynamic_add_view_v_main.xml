@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".DynamicAddViewActivity" >
+
+    <LinearLayout
+        android:id="@+id/dynamic_addView_layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/dynamic_addView_btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_ltem_layout_height"
+        android:layout_marginBottom="@dimen/main_ltem_layout_padding"
+        android:layout_marginTop="@dimen/main_ltem_layout_padding"
+        android:background="@drawable/radius_bg_clickable"
+        android:clickable="true" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:drawablePadding="2dip"
+            android:drawableRight="@drawable/global_add_pic"
+            android:gravity="center"
+            android:text="@string/add"
+            android:textColor="#11C1FB"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</LinearLayout>

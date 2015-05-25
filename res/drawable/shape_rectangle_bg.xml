@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 矩形：默认是圆形形状， 如果内容超出size，才会是四周带有圆角的矩形形状-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <solid android:color="@color/completely_transparent" />
+
+    <stroke
+        android:width="@dimen/shape_circle_stroke_width"
+        android:color="@color/shape_rectangle_line" />
+
+    <size
+        android:height="@dimen/shape_circle_size"
+        android:width="@dimen/shape_circle_size" />
+
+    <padding
+        android:left="@dimen/shape_circle_padding"
+        android:right="@dimen/shape_circle_padding" />
+
+    <corners android:radius="@dimen/shape_circle_corners" />
+
+</shape>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- android:background="@android:color/holo_green_dark" 
+
+    <com.huawei.hrandroidbase.widgets.time.DigitalClock
+        android:id="@+id/digitalTime"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_current_time_height"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/home_current_time_margin_top"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/home_current_time" />
+
+    <com.huawei.hrandroidbase.widgets.time.TextClock
+        android:id="@+id/textClock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/home_current_date"
+        textClock:format24Hour="yyyy-MM-dd E" />
+    -->
+
+</LinearLayout>

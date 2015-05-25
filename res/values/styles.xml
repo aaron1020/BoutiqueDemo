@@ -1,0 +1,128 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppBaseTheme" parent="android:Theme.Light"></style>
+
+    <!-- 全局主题样式 -->
+    <style name="AppTheme" parent="AppBaseTheme">
+
+        <!-- 设置ActionBar样式 -->
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <!-- 设置activity背景 -->
+        <item name="android:windowBackground">@color/activity_bg</item>
+        <!-- 设置RadioButton按钮样式：方法1 -->
+        <item name="android:listChoiceIndicatorSingle">@drawable/radio_btn_selector</item>
+        <!--
+        设置RadioButton按钮样式：方法2 
+        <item name="android:radioButtonStyle">@style/RadioBtnStyle</item>        -->
+    </style>
+
+    <style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
+
+        <!-- 设置ActionBar的背景，可以去掉ActionBar最右边的留空颜色 -->
+        <item name="android:background">@color/actionbar_bg</item>
+    </style>
+
+    <!--
+    <style name="RadioBtnStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/radio_btn_selector</item>
+    </style>    -->
+
+    <style name="GlobalButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/global_button_height</item>
+        <item name="android:background">@drawable/radius_bg_clickable</item>
+        <item name="android:paddingLeft">@dimen/global_button_padding</item>
+        <item name="android:paddingRight">@dimen/global_button_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:onClick">setOnClick</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="MainItemLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/main_ltem_layout_height</item>
+        <item name="android:background">@drawable/radius_no_bg</item>
+        <item name="android:clickable">true</item>
+        <item name="android:paddingLeft">@dimen/main_ltem_layout_padding</item>
+        <item name="android:paddingRight">@dimen/main_ltem_layout_padding</item>
+        <item name="android:weightSum">1</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="MainTitle">
+        <item name="android:textSize">@dimen/main_item_view_main_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:layout_weight">0.3</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="SubTitle" parent="@style/MainTitle">
+        <item name="android:textColor">@color/darker_gray</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColorHint">@color/darker_gray</item>
+        <item name="android:layout_weight">0.7</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:hint">@string/please_select</item>
+    </style>
+
+    <style name="TransparentMenuTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">@dimen/transparent_menu_text_padding</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/transparent_menu_text_size</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:visibility">invisible</item>
+        <item name="android:clickable">true</item>
+        <item name="android:onClick">setOnClick</item>
+    </style>
+
+    <style name="ProgressBarStyle">
+
+
+　　                         <item name="android:indeterminateDrawable">@drawable/progressbar_rotate_anim</item>
+        <item name="android:indeterminateDuration">1000</item>
+        <item name="android:layout_width">20dip</item>
+        <item name="android:layout_height">20dip</item>
+    </style>
+
+    <!-- loading_dialog样式Start -->
+    <style name="LoadingDialogStyle">
+        <item name="android:windowBackground">@color/completely_transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@+android:style/Animation.Dialog</item>
+    </style>
+    <!-- android:windowAnimationStyle为true会有dialog平滑的填满整个屏幕的感觉，而不是瞬间充满屏幕 -->
+    <!-- loading_dialog样式End -->
+
+    <style name="TransparentStyleBottom">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="PunchWaitProgress">
+
+
+	　　                <item name="android:indeterminateDrawable">@drawable/punch_wait_progress</item>
+
+
+	　　                <item name="android:minWidth">76dip</item>
+
+
+	　　                <item name="android:maxWidth">76dip</item>
+
+
+	　　                <item name="android:minHeight">76dip</item>
+
+
+	　　                <item name="android:maxHeight">76dip</item>
+    </style>
+
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="default_">values-default</string>
+    <string name="default_sw360">values-default</string>
+    <string name="default_sw360_sw600">values-default</string>
+    <string name="default_sw360_sw600_sw720">values-default</string>
+    <string name="default_sw360_sw600_sw720_sw768">values-default</string>
+    <string name="default_sw360_sw600_sw720_sw768_sw1024">values-default</string>
+    <string name="should_build_values_file">values-sw%sdp</string>
+    <string name="app_name">精品应用</string>
+    <string name="action_settings">Settings</string>
+    <string name="commit">提交</string>
+    <string name="delete">删除</string>
+    <string name="type">类型</string>
+    <string name="add">添加</string>
+    <string name="hours">小时</string>
+
+    <!-- ActionBar -->
+    <string name="actionbar_back">ActionBar返回键</string>
+    <string name="actionbar_divide_line">ActionBar分割线</string>
+
+    <!-- LoadingDialog -->
+    <string name="note_loading">正在加载</string>
+
+    <!-- 精品应用 -->
+    <string name="aty_boutique">精品应用</string>
+    <string name="cascade_layout">CascadeLayout</string>
+
+    <!-- 动态添加或删除View -->
+    <string name="aty_add_view">动态添加或删除View</string>
+    <string name="please_select">请选择</string>
+    <string name="begin_time">开始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="type_one">转调休</string>
+    <string name="type_two">转加班费</string>
+    <string name="total_calcuate">共计</string>
+    <string name="out_time_length">计算时长(小时)</string>
+    <string name="table_item_index">表单信息(%s)</string>
+    <string name="dynamic_add_view_error_time">开始时间要小于结束时间</string>
+    <string name="submit_infos_success">提交成功</string>
+    <string name="please_fillin_infos">请正确填写必要的信息</string>
+    <string name="submit_infos_note">正在提交信息，请稍候</string>
+
+    <!-- 菜单 -->
+    <string name="l_menu_leave">请假休息</string>
+    <string name="l_menu_overtime">加班奋斗</string>
+    <string name="l_menu_btrip">外出公干</string>
+    <string name="l_menu_nopunch">忘刷卡</string>
+    <string name="l_menu_buslate">中国地图</string>
+    <!-- 树形ListView -->
+    <string name="tree_listview_aty">树形ListView</string>
+    <string name="shape_one_text">人</string>
+    <string name="shape_three_text">人人人</string>
+    <string name="switcher_previous">Pervious</string>
+    <string name="switcher_next">Next</string>
+    <string name="punshCarding">正在打卡</string>
+    <string name="punshCardSuccess">打卡成功</string>
+    <string name="punshCardFail">打卡失败</string>
+    <!-- 中国地图 -->
+    <string name="refresh_map_view">刷新地图</string>
+   
+
+</resources>

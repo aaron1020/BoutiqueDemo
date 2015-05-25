@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="34dip"
+        android:layout_marginTop="@dimen/tree_listview_margin_top"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:id="@+id/tree_centre_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/tree_listview_centre_pic" />
+
+        <TextView
+            android:id="@+id/tree_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tree_centre_pic"
+            android:paddingRight="4dp"
+            android:singleLine="true"
+            android:textColor="@color/eg"
+            android:textSize="@dimen/main_item_view_main_title" />
+
+        <TextView
+            android:id="@+id/tree_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tree_centre_pic"
+            android:paddingLeft="4dp"
+            android:singleLine="true"
+            android:textColor="@color/eg"
+            android:textSize="@dimen/main_item_view_main_title" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/tree_centre_vertical_line"
+        android:layout_width="1dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/tree_listview_margin_top"
+        android:background="@color/eg"
+        android:contentDescription="@string/tree_listview_aty" />
+
+</LinearLayout>

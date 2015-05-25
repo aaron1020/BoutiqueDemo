@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="default_sw360_sw600_sw720_sw768_sw1024">values-sw1024dp</string>
+
+</resources>

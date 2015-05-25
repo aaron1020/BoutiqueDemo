@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imgSharkIcon"
+        android:layout_width="@dimen/home_sharkIcon_size"
+        android:layout_height="@dimen/home_sharkIcon_size"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/home_punchIcon_margin_left"
+        android:contentDescription="@string/punshCarding"
+        android:src="@drawable/icon_shark_image" />
+    
+     <ImageView
+        android:layout_width="@dimen/home_punchIcon_width"
+        android:layout_height="@dimen/home_punchIcon_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/home_punchIcon_margin_top"
+        android:gravity="center"
+        android:contentDescription="@string/punshCarding"
+        android:src="@drawable/icon_shark_text" />
+
+</LinearLayout>

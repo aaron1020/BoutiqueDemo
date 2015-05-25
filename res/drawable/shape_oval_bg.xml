@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 椭圆：默认是圆形形状， 如果内容超出size，才会是椭圆形状-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval" >
+
+    <solid android:color="@color/completely_transparent" />
+
+    <stroke
+        android:width="@dimen/shape_circle_stroke_width"
+        android:color="@color/shape_oval_line" />
+
+    <size
+        android:height="@dimen/shape_circle_size"
+        android:width="@dimen/shape_circle_size" />
+
+    <padding
+        android:left="@dimen/shape_circle_padding"
+        android:right="@dimen/shape_circle_padding" />
+
+</shape>

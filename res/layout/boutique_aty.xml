@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BoutiqueActivity" >
+
+    <LinearLayout
+        android:id="@+id/text_switcher_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="4dip"
+        android:background="@drawable/radius_bg"
+        android:baselineAligned="false"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextSwitcher
+                android:id="@+id/text_switcher_oval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dip"
+                android:background="@drawable/shape_oval_bg" >
+            </TextSwitcher>
+
+            <TextSwitcher
+                android:id="@+id/text_switcher_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dip"
+                android:background="@drawable/shape_rectangle_bg" >
+            </TextSwitcher>
+
+            <TextSwitcher
+                android:id="@+id/text_switcher_rectangle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dip"
+                android:background="@drawable/shape_rectangle_bg" >
+            </TextSwitcher>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/textswitcher_text_pervious"
+                style="@style/GlobalButtonStyle"
+                android:layout_margin="4dip"
+                android:text="@string/switcher_previous" />
+
+            <Button
+                android:id="@+id/textswitcher_text_next"
+                style="@style/GlobalButtonStyle"
+                android:layout_margin="4dip"
+                android:text="@string/switcher_next" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cascade_layout"
+        style="@style/GlobalButtonStyle"
+        android:layout_below="@id/text_switcher_layout"
+        android:layout_centerHorizontal="true"
+        android:text="@string/cascade_layout" />
+
+    <jie.example.widget.WaterWaveViewLayout
+        android:id="@+id/punchCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cascade_layout"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/transparent_menu"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/app_name"
+        android:onClick="setOnClick"
+        android:src="@drawable/transparent_menu_pic_open" />
+
+</RelativeLayout>

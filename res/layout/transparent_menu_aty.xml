@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/transparent_menu_item5"
+        style="@style/TransparentMenuTextStyle"
+        android:layout_above="@+id/transparent_menu_item4"
+        android:layout_alignLeft="@+id/transparent_menu_item4"
+        android:layout_marginLeft="-35dp"
+        android:drawableLeft="@drawable/transparent_menu_pic5"
+        android:text="@string/l_menu_buslate" />
+
+    <TextView
+        android:id="@+id/transparent_menu_item4"
+        style="@style/TransparentMenuTextStyle"
+        android:layout_above="@+id/transparent_menu_item3"
+        android:layout_alignLeft="@+id/transparent_menu_item3"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginTop="3dip"
+        android:drawableLeft="@drawable/transparent_menu_pic4"
+        android:text="@string/l_menu_nopunch" />
+
+    <TextView
+        android:id="@+id/transparent_menu_item3"
+        style="@style/TransparentMenuTextStyle"
+        android:layout_above="@+id/transparent_menu_item2"
+        android:layout_alignLeft="@+id/transparent_menu_item2"
+        android:layout_marginLeft="-25dp"
+        android:layout_marginTop="4dip"
+        android:drawableLeft="@drawable/transparent_menu_pic3"
+        android:text="@string/l_menu_btrip" />
+
+    <TextView
+        android:id="@+id/transparent_menu_item2"
+        style="@style/TransparentMenuTextStyle"
+        android:layout_above="@+id/transparent_menu_item1"
+        android:layout_alignLeft="@+id/transparent_menu_item1"
+        android:layout_marginLeft="-20dp"
+        android:layout_marginTop="5dip"
+        android:drawableLeft="@drawable/transparent_menu_pic2"
+        android:text="@string/l_menu_overtime" />
+
+    <TextView
+        android:id="@+id/transparent_menu_item1"
+        style="@style/TransparentMenuTextStyle"
+        android:layout_above="@+id/transparent_menu_bottom"
+        android:layout_alignLeft="@+id/transparent_menu_bottom"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="6dip"
+        android:drawableLeft="@drawable/transparent_menu_pic1"
+        android:text="@string/l_menu_leave" />
+
+    <ImageView
+        android:id="@+id/transparent_menu_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="7dip"
+        android:contentDescription="@string/action_settings"
+        android:onClick="setOnClick"
+        android:src="@drawable/transparent_menu_pic_bottom" />
+
+</RelativeLayout>
