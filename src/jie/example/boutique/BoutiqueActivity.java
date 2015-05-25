@@ -70,17 +70,14 @@ public class BoutiqueActivity extends BasicActivity {
 
 		@Override
 		public void onPunshSuccess() {
-
 		}
 
 		@Override
 		public void onPunshFail() {
-
 		}
 
 		@Override
 		public void onPunshException() {
-
 		}
 
 		@Override
@@ -97,7 +94,6 @@ public class BoutiqueActivity extends BasicActivity {
 			// infos.setCompoundDrawablesWithIntrinsicBounds(null, null, null,
 			// null);
 			// pbLocationGeting.setVisibility(View.VISIBLE);
-			// InitLocation();
 		}
 
 		@Override
