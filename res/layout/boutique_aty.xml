@@ -54,13 +54,13 @@
 
             <Button
                 android:id="@+id/textswitcher_text_pervious"
-                style="@style/GlobalButtonStyle"
+                style="@style/WrapContentButtonStyle"
                 android:layout_margin="4dip"
                 android:text="@string/switcher_previous" />
 
             <Button
                 android:id="@+id/textswitcher_text_next"
-                style="@style/GlobalButtonStyle"
+                style="@style/WrapContentButtonStyle"
                 android:layout_margin="4dip"
                 android:text="@string/switcher_next" />
         </LinearLayout>
@@ -68,7 +68,7 @@
 
     <Button
         android:id="@+id/cascade_layout"
-        style="@style/GlobalButtonStyle"
+        style="@style/WrapContentButtonStyle"
         android:layout_below="@id/text_switcher_layout"
         android:layout_centerHorizontal="true"
         android:text="@string/cascade_layout" />

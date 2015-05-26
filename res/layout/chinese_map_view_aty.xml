@@ -15,7 +15,7 @@
     </RelativeLayout>
 
     <Button
-        style="@style/GlobalButtonStyle"
+        style="@style/WrapContentButtonStyle"
         android:layout_below="@id/chinese_map_view_container"
         android:layout_centerHorizontal="true"
         android:text="@string/refresh_map_view" />

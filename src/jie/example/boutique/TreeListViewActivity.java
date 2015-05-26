@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jie.example.adapter.TreeListViewAdapter;
+import jie.example.entity.ActivityCollector;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 /**
- * 精品首页
+ * 树形ListView
  */
 public class TreeListViewActivity extends BasicActivity {
 
@@ -47,6 +49,10 @@ public class TreeListViewActivity extends BasicActivity {
 		mStringList.add("10000000000000");
 		mStringList.add("11000000000000");
 		mTreeAdapter.notifyDataSetChanged();
+	}
+
+	public void setOnClick(View view) {
+		ActivityCollector.finishAllActivity();
 	}
 
 }

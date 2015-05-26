@@ -27,15 +27,20 @@
         <item name="android:button">@drawable/radio_btn_selector</item>
     </style>    -->
 
-    <style name="GlobalButtonStyle">
+    <style name="WrapContentButtonStyle">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/global_button_height</item>
+        <item name="android:layout_height">@dimen/wrap_content_button_height</item>
         <item name="android:background">@drawable/radius_bg_clickable</item>
         <item name="android:paddingLeft">@dimen/global_button_padding</item>
         <item name="android:paddingRight">@dimen/global_button_padding</item>
         <item name="android:gravity">center</item>
         <item name="android:onClick">setOnClick</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+    
+    <style name="MatchParentButtonStyle" parent="WrapContentButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/match_parent_button_height</item>
     </style>
 
     <style name="MainItemLayout">
@@ -83,9 +88,7 @@
     </style>
 
     <style name="ProgressBarStyle">
-
-
-　　                         <item name="android:indeterminateDrawable">@drawable/progressbar_rotate_anim</item>
+　　         <item name="android:indeterminateDrawable">@drawable/progressbar_rotate_anim</item>
         <item name="android:indeterminateDuration">1000</item>
         <item name="android:layout_width">20dip</item>
         <item name="android:layout_height">20dip</item>
@@ -108,21 +111,11 @@
     </style>
 
     <style name="PunchWaitProgress">
-
-
-	　　                <item name="android:indeterminateDrawable">@drawable/punch_wait_progress</item>
-
-
-	　　                <item name="android:minWidth">76dip</item>
-
-
-	　　                <item name="android:maxWidth">76dip</item>
-
-
-	　　                <item name="android:minHeight">76dip</item>
-
-
-	　　                <item name="android:maxHeight">76dip</item>
+　　          <item name="android:indeterminateDrawable">@drawable/punch_wait_progress</item>
+　　          <item name="android:minWidth">76dip</item>
+　　          <item name="android:maxWidth">76dip</item>
+　　          <item name="android:minHeight">76dip</item>
+　　          <item name="android:maxHeight">76dip</item>
     </style>
 
 </resources>

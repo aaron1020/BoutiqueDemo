@@ -1,5 +1,6 @@
 package jie.example.boutique;
 
+import jie.example.entity.ActivityCollector;
 import jie.example.utils.LogUtil;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,8 @@ public abstract class BasicActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		LogUtil.globalInfoLog("BasicActivity onCreate");
+		LogUtil.globalInfoLog("onCreate Activity-->" + this);
+		ActivityCollector.addActivity(this);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 全局竖屏显示
 		initActionBar();
 	}
@@ -82,6 +85,13 @@ public abstract class BasicActivity extends Activity {
 	 */
 	protected void setActionBarTitle(int resId) {
 		setActionBarTitle(getString(resId));
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.globalInfoLog("onDestroy Activity-->" + this);
+		ActivityCollector.removeActivity(this);
 	}
 
 	/**

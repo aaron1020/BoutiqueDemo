@@ -15,5 +15,38 @@
         android:padding="4dip"
         android:scrollbars="none"
         android:scrollingCache="false" />
-   
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tree_listview"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dip"
+        android:background="@drawable/radius_bg_clickable"
+        android:drawableLeft="@drawable/global_add_pic"
+        android:drawablePadding="4dip"
+        android:hint="dfadfa"
+        android:paddingLeft="@dimen/global_button_padding"
+        android:paddingRight="@dimen/global_button_padding" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText1"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dip"
+        android:background="@drawable/radius_bg_clickable"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:hint="dfadfa" />
+
+    <Button
+        style="@style/WrapContentButtonStyle"
+        android:layout_below="@id/editText2"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dip"
+        android:text="@string/exit_app" >
+    </Button>
+
 </RelativeLayout>
