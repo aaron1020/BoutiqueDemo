@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="chinese_province_list">
+
+    <string-array name="chinese_province_list">
         <item>北京</item>
         <item>上海</item>
         <item>天津</item>
@@ -34,5 +35,18 @@
         <item>新疆</item>
         <item>台湾</item>
     </string-array>
-
-</resources>
+    <string-array name="ranges">
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="rangeColors">
+        <item>#F20231</item>
+        <item>#FD7400</item>
+        <item>#F5CE3E</item>
+        <item>#55ABFE</item>
+        <item>#49BA2B</item>
+    </string-array>
+</resources>
