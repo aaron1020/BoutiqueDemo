@@ -75,6 +75,9 @@ public class TransparentMenuActivity extends BasicActivity {
 				if (msg.arg1 == R.id.transparent_menu_item5) {
 					startActivity(new Intent(mActivity,
 							ChineseMapViewActivity.class));
+				} else if (msg.arg1 == R.id.transparent_menu_item4) {
+					startActivity(new Intent(mActivity,
+							StatscsViewActivity.class));
 				} else {
 					Intent intent = new Intent(mActivity,
 							DynamicAddViewActivity.class);
@@ -161,6 +164,8 @@ public class TransparentMenuActivity extends BasicActivity {
 			msg.what = Constant.HANDLER_MENU_START_ACTIVITY;
 			if (view.getId() == R.id.transparent_menu_item5) {
 				msg.arg1 = R.id.transparent_menu_item5;
+			} else if (view.getId() == R.id.transparent_menu_item4) {
+				msg.arg1 = R.id.transparent_menu_item4;
 			}
 			mHandler.sendMessageDelayed(msg, MENU_ANIM_DURATION);
 			break;

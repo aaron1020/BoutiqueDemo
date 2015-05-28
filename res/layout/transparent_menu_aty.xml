@@ -20,7 +20,7 @@
         android:layout_marginLeft="-30dp"
         android:layout_marginTop="3dip"
         android:drawableLeft="@drawable/transparent_menu_pic4"
-        android:text="@string/l_menu_nopunch" />
+        android:text="@string/statscs_view_aty" />
 
     <TextView
         android:id="@+id/transparent_menu_item3"

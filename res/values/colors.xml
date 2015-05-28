@@ -16,4 +16,7 @@
     <color name="shape_oval_line">#E64949</color>
     <color name="shape_rectangle_line">#E5953F</color>
     <color name="eg">#08c08e</color>
-</resources>
+    <color name="none">#DFDFDF</color>
+    <color name="business">#508CA4</color>
+
+</resources>
