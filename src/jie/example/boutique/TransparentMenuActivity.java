@@ -77,7 +77,7 @@ public class TransparentMenuActivity extends BasicActivity {
 							ChineseMapViewActivity.class));
 				} else if (msg.arg1 == R.id.transparent_menu_item4) {
 					startActivity(new Intent(mActivity,
-							StatscsViewActivity.class));
+							HistogramViewActivity.class));
 				} else {
 					Intent intent = new Intent(mActivity,
 							DynamicAddViewActivity.class);

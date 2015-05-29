@@ -32,7 +32,7 @@
             android:theme="@style/TransparentStyleBottom" />
         <activity android:name=".TreeListViewActivity" />
         <activity android:name=".ChineseMapViewActivity" />
-        <activity android:name=".StatscsViewActivity" />
+        <activity android:name=".HistogramViewActivity" />
     </application>
 
 </manifest>
