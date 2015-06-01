@@ -1,49 +1,55 @@
 package jie.example.widget;
 
-import java.io.Serializable;
+import jie.example.boutique.R;
 
 /**
  * 柱状图实体类
  */
-public class HistogramEntity implements Serializable {
+public class HistogramEntity implements Comparable<HistogramEntity> {
 
-	private static final long serialVersionUID = 1L;
+	private String histogramName;// 柱体名称，即X轴上显示的内容
+	private float histogramValue;// 柱体值，即柱体的高度
+	private int histogramColor = R.color.red;// 柱体颜色，默认值为红色。
 
-	private String name;
-	private String color;
-	private float y;
-
-	public HistogramEntity() {
+	public HistogramEntity(String histogramName, float histogramValue) {
+		this.histogramName = histogramName;
+		this.histogramValue = histogramValue;
 	}
 
-	public String getColor() {
-		return color;
+	public int getHistogramColor() {
+		return histogramColor;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setHistogramColor(int histogramColor) {
+		this.histogramColor = histogramColor;
 	}
 
-	public String getName() {
-		return name;
+	public String getHistogramName() {
+		return histogramName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setHistogramName(String histogramName) {
+		this.histogramName = histogramName;
 	}
 
-	public float getY() {
-		return y;
+	public float getHistogramValue() {
+		return histogramValue;
 	}
 
-	public void setY(float y) {
-		this.y = y;
+	public void setHistogramValue(float histogramValue) {
+		this.histogramValue = histogramValue;
 	}
 
+	// 定义对象的比较规则：按histogramValue值降序排列
 	@Override
-	public String toString() {
-		return "ImageData [name=" + name + ", y=" + y + ", color=" + color
-				+ "]";
+	public int compareTo(HistogramEntity another) {
+		if (this.histogramValue < another.histogramValue) {
+			return 1;// 小于返回1，在这里可以把1看成true
+		} else if (this.histogramValue > another.histogramValue) {
+			return -1;
+		} else {// 相等：可以在这里根据另一个值进行二次比较。
+			return 0;
+		}
 	}
 
 }

@@ -52,7 +52,7 @@ public class ChineseMapView {
 		mMapViewContainer = mapViewContainer;
 		mProvinceInfoList = provinceInfoList;
 		mProvinceArray = context.getResources().getStringArray(
-				R.array.chinese_province_list);
+				R.array.provinces_list);
 		if (screenWidth > 1000 || mScaleShow == 0.0f) {
 			mScaleShow = 1.0f;
 		} else {

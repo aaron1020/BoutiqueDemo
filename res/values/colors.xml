@@ -15,7 +15,11 @@
     <color name="loading_dialog_bg">#88000000</color>
     <color name="shape_oval_line">#E64949</color>
     <color name="shape_rectangle_line">#E5953F</color>
-    <color name="eg">#08c08e</color>
+    <color name="histogram_view_sub_title">#F20231</color>
+    <color name="eagle_one">#08c08e</color>
+    <color name="eagle_two">#5FA245</color>
+    <color name="eagle_three">#42F976</color>
+    <color name="eagle_four">#08e08c</color>
     <color name="none">#DFDFDF</color>
     <color name="business">#508CA4</color>
 

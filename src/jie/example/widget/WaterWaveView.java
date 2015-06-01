@@ -109,7 +109,7 @@ public class WaterWaveView extends View {
 	}
 
 	private void initPaint() {
-		int circleColorId = getResources().getColor(R.color.eg);
+		int circleColorId = getResources().getColor(R.color.eagle_one);
 		mPaint = new Paint();
 		mPaint.setColor(Color.BLUE);
 		mPaint.setAntiAlias(true);// 抗锯齿

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="chinese_province_list">
+    <string-array name="provinces_list">
         <item>北京</item>
         <item>上海</item>
         <item>天津</item>

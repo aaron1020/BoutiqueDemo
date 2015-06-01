@@ -27,7 +27,7 @@
             android:layout_toLeftOf="@id/tree_centre_pic"
             android:paddingRight="4dp"
             android:singleLine="true"
-            android:textColor="@color/eg"
+            android:textColor="@color/eagle_one"
             android:textSize="@dimen/main_item_view_main_title" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_toRightOf="@id/tree_centre_pic"
             android:paddingLeft="4dp"
             android:singleLine="true"
-            android:textColor="@color/eg"
+            android:textColor="@color/eagle_one"
             android:textSize="@dimen/main_item_view_main_title" />
     </RelativeLayout>
 
@@ -48,7 +48,7 @@
         android:layout_height="35dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/tree_listview_margin_top"
-        android:background="@color/eg"
+        android:background="@color/eagle_one"
         android:contentDescription="@string/tree_listview_aty" />
 
 </LinearLayout>

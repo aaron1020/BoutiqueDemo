@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BoutiqueActivity" >
+    tools:context=".HistogramViewActivity" >
 
     <RelativeLayout
-        android:id="@+id/statscs_view_container"
+        android:id="@+id/histogram_view_container"
         android:layout_width="match_parent"
         android:layout_height="496dip"
         android:layout_alignParentTop="true"

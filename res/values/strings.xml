@@ -61,20 +61,9 @@
     <!-- 中国地图 -->
     <string name="refresh_map_view">刷新地图</string>
    
-    
+    <!-- 柱状图表 -->
     <string name="histogram_view_aty">柱状图表</string>
-    <string name="boss_menu_t1_3">全网NGCRM系统性能情况</string>
-    <string name="boss_menu_t8_2">业务结果</string>
-    <string name="boss_menu_t8">联调测试展示</string>
-    <string name="boss_menu_t1">BOSS系统建设质量</string>
-    <string name="boss_menu_t1_2">NGBOSS3.0*3.5规范符合度测试</string>
-    <string name="boss_menu_t1_2_2">集成商维度</string>
-    <string name="boss_menu_t2">BASS系统建设质量</string>
-    <string name="boss_menu_t2_1">NGBASS1.0*2.0规范符合度测试</string>
-    <string name="boss_menu_t2_1_1">省公司维度</string>
-    <string name="boss_menu_t2_2">NGBASS3.0*3.5规范符合度测试(初始数据)</string>
-    <string name="boss_menu_t2_2_1">省公司维度</string>
-    <string name="boss_menu_t7">代码检测质量</string>
-    <string name="boss_menu_t7_1">集成商维度</string>
+    <string name="hv_top_main_title">全网监控系统</string>
+    <string name="hv_left_title">全网百分比</string>
 
 </resources>
