@@ -62,7 +62,7 @@
     <string name="refresh_map_view">刷新地图</string>
    
     
-    <string name="statscs_view_aty">柱状图表</string>
+    <string name="histogram_view_aty">柱状图表</string>
     <string name="boss_menu_t1_3">全网NGCRM系统性能情况</string>
     <string name="boss_menu_t8_2">业务结果</string>
     <string name="boss_menu_t8">联调测试展示</string>

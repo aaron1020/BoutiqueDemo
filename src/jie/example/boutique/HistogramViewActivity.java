@@ -17,8 +17,8 @@ public class HistogramViewActivity extends BasicActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		super.setActionBarTitle(R.string.statscs_view_aty);
-		setContentView(R.layout.statscs_view_aty);
+		super.setActionBarTitle(R.string.histogram_view_aty);
+		setContentView(R.layout.histogram_view_aty);
 		initData();
 		loadingData();
 	}
