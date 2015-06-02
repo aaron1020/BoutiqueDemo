@@ -52,4 +52,11 @@ public class HistogramEntity implements Comparable<HistogramEntity> {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "HistogramEntity [histogramName=" + histogramName
+				+ ", histogramValue=" + histogramValue + ", histogramColor="
+				+ histogramColor + "]";
+	}
+
 }

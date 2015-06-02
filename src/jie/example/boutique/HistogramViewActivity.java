@@ -67,9 +67,12 @@ public class HistogramViewActivity extends BasicActivity {
 
 		HistogramView histogramView = new HistogramView(this,
 				getString(R.string.hv_top_main_title), histogramEntityList,
-				true, true);
+				true, true, true);
+		histogramView.setTopSubTitleValue(getString(R.string.hv_top_sub_title));
 		histogramView.setLeftTitleValue(getString(R.string.hv_left_title));
 		histogramView.setAverageValue(digitSum / tempCount);
+
 		mHistogramViewContainer.addView(histogramView);
 	}
+
 }

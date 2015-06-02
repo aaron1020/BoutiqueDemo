@@ -60,10 +60,12 @@
     <string name="punshCardFail">打卡失败</string>
     <!-- 中国地图 -->
     <string name="refresh_map_view">刷新地图</string>
-   
+
     <!-- 柱状图表 -->
     <string name="histogram_view_aty">柱状图表</string>
     <string name="hv_top_main_title">全网监控系统</string>
+    <string name="hv_top_sub_title">[一级指标]</string>
     <string name="hv_left_title">全网百分比</string>
+    <string name="hv_average_value">AVG:</string>
 
 </resources>

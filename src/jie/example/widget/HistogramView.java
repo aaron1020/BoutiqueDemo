@@ -3,9 +3,11 @@ package jie.example.widget;
 import java.util.ArrayList;
 
 import jie.example.boutique.R;
+import jie.example.utils.StringUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -30,13 +32,25 @@ import android.widget.ImageView.ScaleType;
  */
 public class HistogramView extends LinearLayout {
 	/**
+	 * y轴的最大刻度
+	 */
+	private static final int Y_PIVOT_MAX_SCALE = 100;
+	/**
+	 * y轴的刻度数量
+	 */
+	private static final int Y_PIVOT_SCALE_NUM = 5;
+	/**
 	 * 顶部标题
 	 */
 	private String mTopMainTitle;
 	/**
-	 * 顶部副标题(红色部分)
+	 * 顶部副标题
 	 */
-	private String mTopSubTitle = "[一级指标]";
+	private String mTopSubTitle;
+	/**
+	 * 是否显示顶部副标题
+	 */
+	private boolean isShowTopSubTitle;
 	/**
 	 * 是否显示左边标题
 	 */
@@ -56,7 +70,7 @@ public class HistogramView extends LinearLayout {
 	/**
 	 * 平均值大小
 	 */
-	private float mAverageValue = 0;
+	private float mAverageValue = 0.0f;
 
 	private int yrightnumber = 6, yMinR = 120;
 	/**
@@ -72,6 +86,7 @@ public class HistogramView extends LinearLayout {
 	 */
 	private boolean zoomimg = true;
 	private ArrayList<HistogramEntity> mHistogramEntityList;
+	private Resources mResources;
 	/**
 	 * 中间控件layout
 	 */
@@ -92,14 +107,13 @@ public class HistogramView extends LinearLayout {
 	 * 中间控件竖向线
 	 */
 	private ImageView countvertical = null;
-	private Paint paint = null;
 	/**
 	 * 右边显示的图片
 	 */
 	private ImageView yright = null;
 	private Bitmap xbit, counthorizntalbitmap, countTopbitmap, yrightbitmap,
 			yleftbitmap;
-	private Canvas mTopCanvas, ycanvasleft, xcountcanvasright;
+	private Canvas mTopCanvas, mYPivotCancas, xcountcanvasright;
 	/**
 	 * 滑动控件
 	 */
@@ -112,10 +126,6 @@ public class HistogramView extends LinearLayout {
 	 * 字体大小
 	 */
 	private int mHistogramNameSize = 22;
-	/**
-	 * X轴最大显示刻度,默认120
-	 */
-	private int YMin = 100;
 	/**
 	 * 图片到边缘间隙，左边默认100
 	 */
@@ -137,9 +147,9 @@ public class HistogramView extends LinearLayout {
 	 */
 	private ImageView yleftimg;
 	/**
-	 * 左边显示刻度数量
+	 * 柱体大小
 	 */
-	private int yleftnumber = 5;
+	private int mHistogramSize = 50;
 	/**
 	 * Y轴坐标刻度大小
 	 */
@@ -153,10 +163,6 @@ public class HistogramView extends LinearLayout {
 	 * 右边刻度
 	 */
 	private int YscaleSizeRight;
-	/**
-	 * 圆柱大小
-	 */
-	private int size = 50;
 	public Bitmap bmp = Bitmap.createBitmap(1, 1, Config.RGB_565);
 
 	private int addy = 0;
@@ -168,26 +174,31 @@ public class HistogramView extends LinearLayout {
 	 *            柱状图顶部标题值
 	 * @param histogramEntityList
 	 *            柱体属性实体的集合
+	 * @param isShowTopSubTitle
+	 *            是否显示柱状图顶部副标题：如果需要显示，则需另外setTopSubTitleValue(String)方法设置副标题的值。
 	 * @param isShowLeftTitle
-	 *            是否显示柱状图左边标题：如果需要显示，则需另外设置标题的值。
+	 *            是否显示柱状图左边标题：如果需要显示，则需另外setLeftTitleValue(String)方法设置标题的值。
 	 * @param isShowAverageLine
-	 *            是否显示柱状图平均线：如果需要显示，则需另外设置平均值的大小。
+	 *            是否显示柱状图平均线：如果需要显示，则需另外setAverageValue(float)方法设置平均值的大小。
 	 */
 	public HistogramView(Context context, String topMainTitle,
 			ArrayList<HistogramEntity> histogramEntityList,
-			boolean isShowLeftTitle, boolean isShowAverageLine) {
+			boolean isShowTopSubTitle, boolean isShowLeftTitle,
+			boolean isShowAverageLine) {
 		super(context);
+		mResources = context.getResources();
 		mTopMainTitle = topMainTitle;
 		mHistogramEntityList = histogramEntityList;
+		this.isShowTopSubTitle = isShowTopSubTitle;
 		this.isShowLeftTitle = isShowLeftTitle;
 		this.isShowAverageLine = isShowAverageLine;
 
 		if (3 < histogramEntityList.size() && histogramEntityList.size() < 10) {
 			this.xKedu = 200;
-			this.size = 100;
+			this.mHistogramSize = 100;
 		} else if (histogramEntityList.size() < 4) {
 			this.xKedu = 350;
-			this.size = 120;
+			this.mHistogramSize = 120;
 		}
 
 		initView(context);
@@ -251,12 +262,12 @@ public class HistogramView extends LinearLayout {
 
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
+		super.dispatchDraw(canvas);
 		if (widthimg == 0) {
 			widthimg = this.getWidth();
 			heightimg = this.getHeight();
 			InitCoordinate();
 		}
-		super.dispatchDraw(canvas);
 	}
 
 	private void InitCoordinate() {
@@ -276,8 +287,8 @@ public class HistogramView extends LinearLayout {
 						- LBMarginleft - LBMarginright, heightimg - LBMarginTop
 						- LBMarginButton + addy, Bitmap.Config.ARGB_8888);
 
-				ycanvasleft = new Canvas();
-				ycanvasleft.setBitmap(yleftbitmap);
+				mYPivotCancas = new Canvas();
+				mYPivotCancas.setBitmap(yleftbitmap);
 				yleftimg.setImageBitmap(yleftbitmap);
 
 				mTopCanvas = new Canvas();
@@ -288,8 +299,6 @@ public class HistogramView extends LinearLayout {
 				xcountcanvasright.setBitmap(yrightbitmap);
 				yright.setImageBitmap(yrightbitmap);
 
-				Canvas xcountcanvashorizntal = new Canvas();
-				xcountcanvashorizntal.setBitmap(counthorizntalbitmap);
 				counthorizntalimg.setImageBitmap(counthorizntalbitmap);
 
 				if (loadright) {
@@ -309,77 +318,103 @@ public class HistogramView extends LinearLayout {
 					}
 				}
 
-				int k = YMin / yleftnumber;
-				YscaleSize = (heightimg - LBMarginTop - LBMarginButton) / YMin;
-				for (int i = 0; i <= YMin; i += k) {
-					int y = (int) (heightimg - LBMarginButton - (YscaleSize * i))
-							+ addy;
-					ycanvasleft.drawLine(LBMarginleft - scaleLeng, y,
-							LBMarginleft, y,
-							getPaint(R.color.black, mHistogramNameSize));
-
-					ycanvasleft
-							.drawText(String.valueOf(i), LBMarginleft - 55,
-									y + 10,
-									getPaint(R.color.black, mHistogramNameSize));
-
-					xcountcanvashorizntal
-							.drawLine(0, y - LBMarginButton, widthimg
-									- LBMarginleft - LBMarginright, y
-									- LBMarginButton, getBackGroundPaint(paint));
+				// 设置头部标题
+				if (StringUtil.isNotEmpty(mTopMainTitle)) {
+					Paint topMainTitlePaint;
+					if (isShowTopSubTitle
+							&& StringUtil.isNotEmpty(mTopSubTitle)) {
+						topMainTitlePaint = getPaint(R.color.black, 26);
+					} else {
+						topMainTitlePaint = getPaint(R.color.black, 36);
+					}
+					float topMainTitleSize = topMainTitlePaint
+							.measureText(mTopMainTitle) / 2;
+					int num = (int) ((widthimg - LBMarginleft - LBMarginright) / 2 - topMainTitleSize);
+					mTopCanvas.drawText(mTopMainTitle, num, LBMarginTop / 2,
+							topMainTitlePaint);
 				}
 
-				// 设置头部标题
-				Paint topMainTitlePaint = getPaint(R.color.black, 26);
-				float topMainTitleSize = topMainTitlePaint
-						.measureText(mTopMainTitle) / 2;
-				int num = (int) ((widthimg - LBMarginleft - LBMarginright) / 2 - topMainTitleSize);
-				mTopCanvas.drawText(mTopMainTitle, num, LBMarginTop / 2,
-						topMainTitlePaint);
-
 				// 设置头部副标题
-				Paint topSubTitlePaint = getPaint(
-						R.color.histogram_view_sub_title, 24);
-				float topSubTitleSize = topSubTitlePaint
-						.measureText(mTopSubTitle) / 2;
-				int num2 = (int) ((widthimg - LBMarginleft - LBMarginright) / 2 - topSubTitleSize);
-				mTopCanvas.drawText(mTopSubTitle, num2, LBMarginTop / 2 + 25,
-						topSubTitlePaint);
-
-				ycanvasleft.drawLine(LBMarginleft, LBMarginButton,
-						LBMarginleft, heightimg - LBMarginTop + addy,
-						getPaint(R.color.black, mHistogramNameSize));
-
-				xcountcanvashorizntal.drawLine(0, 0, widthimg - LBMarginleft
-						- LBMarginright, 0, getBackGroundPaint(paint));
+				if (isShowTopSubTitle) {
+					if (StringUtil.isNotEmpty(mTopSubTitle)) {
+						Paint topSubTitlePaint = getPaint(
+								R.color.histogram_view_sub_title, 24);
+						float topSubTitleSize = topSubTitlePaint
+								.measureText(mTopSubTitle) / 2;
+						int num2 = (int) ((widthimg - LBMarginleft - LBMarginright) / 2 - topSubTitleSize);
+						mTopCanvas.drawText(mTopSubTitle, num2,
+								LBMarginTop / 2 + 25, topSubTitlePaint);
+					}
+				}
 
 				// 绘制左边标题
 				if (isShowLeftTitle) {
-					Paint leftTitlePaint = getPaint(R.color.black, 22);
-					float leftTitleSize = leftTitlePaint
-							.measureText(mLeftTitleValue);
-					Rect vt_TextRect = new Rect(0, LBMarginleft, scaleLeng,
-							LBMarginleft);
-					leftTitlePaint.getTextBounds(mLeftTitleValue, 0,
-							mLeftTitleValue.length(), vt_TextRect);
-					Path vt_TextPath = new Path();
-					int offsetHorizontal = vt_TextRect.height();
-					int offsetVertical = vt_TextRect.width();
-					offsetHorizontal = Math.max(offsetHorizontal, 20);
-					offsetVertical = Math.max(offsetVertical, 20);
-					int vt_ViewWidth = offsetHorizontal + vt_TextRect.height();
-					int startX = vt_ViewWidth / 2 - 10;
-					vt_TextPath.moveTo(startX, heightimg / 2 + leftTitleSize
-							/ 2);
-					vt_TextPath.cubicTo(startX, heightimg / 2 + leftTitleSize
-							/ 2, startX, heightimg / 2 + leftTitleSize / 2,
-							startX, 0);
-					ycanvasleft.drawTextOnPath(mLeftTitleValue, vt_TextPath, 0,
-							vt_TextRect.height(), leftTitlePaint);
+					if (StringUtil.isNotEmpty(mLeftTitleValue)) {
+						Paint leftTitlePaint = getPaint(R.color.black, 22);
+						float leftTitleSize = leftTitlePaint
+								.measureText(mLeftTitleValue);
+						Rect vt_TextRect = new Rect(0, LBMarginleft, scaleLeng,
+								LBMarginleft);
+						leftTitlePaint.getTextBounds(mLeftTitleValue, 0,
+								mLeftTitleValue.length(), vt_TextRect);
+						Path vt_TextPath = new Path();
+						int offsetHorizontal = vt_TextRect.height();
+						int offsetVertical = vt_TextRect.width();
+						offsetHorizontal = Math.max(offsetHorizontal, 20);
+						offsetVertical = Math.max(offsetVertical, 20);
+						int vt_ViewWidth = offsetHorizontal
+								+ vt_TextRect.height();
+						int startX = vt_ViewWidth / 2 - 10;
+						vt_TextPath.moveTo(startX, heightimg / 2
+								+ leftTitleSize / 2);
+						vt_TextPath.cubicTo(startX, heightimg / 2
+								+ leftTitleSize / 2, startX, heightimg / 2
+								+ leftTitleSize / 2, startX, 0);
+						mYPivotCancas.drawTextOnPath(mLeftTitleValue,
+								vt_TextPath, 0, vt_TextRect.height(),
+								leftTitlePaint);
+					}
 				}
+
+				// 绘制Y轴坐标
+				Canvas horizontalGridLineCanvas = new Canvas();
+				horizontalGridLineCanvas.setBitmap(counthorizntalbitmap);
+				int yScaleValue = Y_PIVOT_MAX_SCALE / Y_PIVOT_SCALE_NUM;// 算出刻度值
+				YscaleSize = (heightimg - LBMarginTop - LBMarginButton)
+						/ Y_PIVOT_MAX_SCALE;
+				for (int scale = 0; scale <= Y_PIVOT_MAX_SCALE; scale += yScaleValue) {
+					int valueY = (int) (heightimg - LBMarginButton - (YscaleSize * scale))
+							+ addy;
+
+					// 绘制Y轴刻度分隔线，即分隔每一个刻度值的红色短线
+					mYPivotCancas.drawLine(LBMarginleft - scaleLeng, valueY,
+							LBMarginleft, valueY,
+							getPaint(R.color.red, mHistogramNameSize));
+
+					// 绘制Y轴刻度值
+					mYPivotCancas.drawText(String.valueOf(scale),
+							LBMarginleft - 55, valueY + 10,
+							getPaint(R.color.eagle_two, mHistogramNameSize));
+
+					// 绘制中间的横向网格线
+					horizontalGridLineCanvas.drawLine(0, valueY
+							- LBMarginButton, widthimg - LBMarginleft
+							- LBMarginright, valueY - LBMarginButton,
+							getGridPaint());
+				}
+				// 绘制最上面一根的横向网格线
+				horizontalGridLineCanvas.drawLine(0, 0, widthimg - LBMarginleft
+						- LBMarginright, 0, getGridPaint());
+
+				// 绘制Y轴刻度线
+				mYPivotCancas.drawLine(LBMarginleft, LBMarginButton,
+						LBMarginleft, heightimg - LBMarginTop + addy,
+						getPaint(R.color.black, mHistogramNameSize));
+
 				if (widthimg != 0 && mHandler != null) {
 					drawimg();
 				}
+
 			} catch (OutOfMemoryError e) {
 				closeBitmap();
 				e.printStackTrace();
@@ -434,43 +469,39 @@ public class HistogramView extends LinearLayout {
 		paint.setStyle(Style.FILL);// 设置非填充
 		paint.setAntiAlias(true);// 锯齿不显示
 		paint.setDither(true);
-		// paint.setStrokeWidth(6);// 笔宽像素
-		paint.setColor(getContext().getResources().getColor(paintColor));
+		paint.setColor(mResources.getColor(paintColor));
 		paint.setTextSize(textSize);
 		return paint;
 	}
 
 	/**
-	 * x轴背景画线
+	 * 绘制柱体的画笔
+	 * 
+	 * @return Paint
 	 */
-	private Paint getBackGroundPaint(Paint paint) {
-		paint = new Paint();// 创建一个画笔
-		paint.setStyle(Style.FILL_AND_STROKE);// 设置非填充
-		paint.setColor(Color.argb(74, 74, 74, 74));
+	private Paint getPaint(int paintColor, int textSize, int strokeWidth) {
+		Paint paint = getPaint(paintColor, textSize);
+		paint.setStrokeWidth(strokeWidth);// 笔宽像素
 		return paint;
 	}
 
 	/**
-	 * 圆柱
+	 * 绘制柱状图网格的画笔
 	 */
-	private Paint getDrawPaint(Paint paint, int size, int color) {
-		paint = new Paint(Paint.DITHER_FLAG);// 创建一个画笔
-		paint.setStyle(Style.FILL);// 设置非填充
-		paint.setStrokeWidth(size);// 笔宽像素
-		paint.setAntiAlias(true);// 锯齿不显示
-		paint.setDither(true);
-		paint.setTextSize(20);
-		paint.setColor(getContext().getResources().getColor(color));
+	private Paint getGridPaint() {
+		Paint paint = new Paint();
+		paint.setStyle(Style.FILL_AND_STROKE);
+		paint.setColor(mResources.getColor(R.color.histogram_view_grid_line));
 		return paint;
 	}
 
 	/*
 	 * 透明背景
 	 */
-	private Paint getrectPaint(Paint paint) {
-		paint = new Paint();// 创建一个画笔
+	private Paint getrectPaint() {
+		Paint paint = new Paint();// 创建一个画笔
 		paint.setStyle(Style.FILL_AND_STROKE);// 设置非填充
-		paint.setColor(Color.argb(0, 0, 0, 0));
+		paint.setColor(mResources.getColor(R.color.completely_transparent));
 		return paint;
 	}
 
@@ -559,11 +590,6 @@ public class HistogramView extends LinearLayout {
 			xbit = null;
 		}
 
-		if (paint != null) {
-			paint.reset();
-			paint = null;
-		}
-
 		System.gc();
 	}
 
@@ -598,10 +624,10 @@ public class HistogramView extends LinearLayout {
 							Bitmap.Config.ARGB_8888);
 					Canvas xcanvas = new Canvas();
 					xcanvas.drawRect(0, 0, allxwhidth, ch + LBMarginButton,
-							getrectPaint(paint));
+							getrectPaint());
 					xcanvas.setBitmap(xbit);
 					for (int i = 0; i < mHistogramEntityList.size(); i++) {
-						int himg = (int) ((ch) - ((ch) / YMin)
+						int himg = (int) ((ch) - ((ch) / Y_PIVOT_MAX_SCALE)
 								* mHistogramEntityList.get(i)
 										.getHistogramValue());
 						xcanvas.drawLine(
@@ -609,11 +635,14 @@ public class HistogramView extends LinearLayout {
 								h - LBMarginButton - LBMarginButton + addy,
 								i * xkedu + xkedu / 2,
 								himg,
-								getDrawPaint(paint, size, mHistogramEntityList
-										.get(i).getHistogramColor()));
+								getPaint(mHistogramEntityList.get(i)
+										.getHistogramColor(), 20,
+										mHistogramSize));
+
+						// 绘制纵向网格线，不包括最左边的Y轴刻度线
 						xcanvas.drawLine(i * xkedu + xkedu, h - LBMarginButton
 								- LBMarginButton + addy, i * xkedu + xkedu, 0,
-								getBackGroundPaint(paint));
+								getGridPaint());
 						String yt = String.valueOf(mHistogramEntityList.get(i)
 								.getHistogramValue());
 						yt = yt.length() > 5 ? yt.substring(0, 5) : yt;
@@ -665,22 +694,31 @@ public class HistogramView extends LinearLayout {
 
 					}
 
-					// 绘制平均线
 					if (isShowAverageLine) {
+						/*
+						 * 绘制平均值。"AVG:" + mAverageValue：需要绘制的文字；allxwhidth -
+						 * xkedu - X：x轴上的偏移量，即向左或向右偏移；ch - ch /
+						 * Y_PIVOT_MAX_SCALE * mAverageValue -
+						 * X：y轴上的偏移量，即向上或向下偏移。
+						 */
 						xcanvas.drawText(
-								"AVG:" + mAverageValue,
-								allxwhidth - xkedu,
-								(int) ((ch) - ((ch) / YMin) * mAverageValue) - 5,
+								mResources.getString(R.string.hv_average_value)
+										+ mAverageValue,
+								allxwhidth - xkedu - 42,
+								ch - ch / Y_PIVOT_MAX_SCALE * mAverageValue - 5,
 								getPaint(R.color.eagle_four, mHistogramNameSize));
-						xcanvas.drawLine(0, (int) ((ch) - ((ch) / YMin)
-								* mAverageValue), allxwhidth + xkedu,
-								(int) ((ch) - ((ch) / YMin) * mAverageValue),
+						// 绘制平均线
+						xcanvas.drawLine(0,
+								(int) ((ch) - ((ch) / Y_PIVOT_MAX_SCALE)
+										* mAverageValue), allxwhidth + xkedu,
+								(int) ((ch) - ((ch) / Y_PIVOT_MAX_SCALE)
+										* mAverageValue),
 								getPaint(R.color.eagle_four, 20));
 					}
 
 					// 绘制平均线上的点
 					if (isShowAverageLine) {
-						int avgcir = (int) ((ch) - ((ch) / YMin)
+						int avgcir = (int) ((ch) - ((ch) / Y_PIVOT_MAX_SCALE)
 								* mAverageValue);
 
 						for (int j = 0; j < mHistogramEntityList.size(); j++) {
@@ -703,6 +741,13 @@ public class HistogramView extends LinearLayout {
 	 */
 	public void setAverageValue(float averageValue) {
 		this.mAverageValue = averageValue;
+	}
+
+	/**
+	 * 设置柱状图顶部副标题的内容
+	 */
+	public void setTopSubTitleValue(String topSubTitleValue) {
+		this.mTopSubTitle = topSubTitleValue;
 	}
 
 	/**
