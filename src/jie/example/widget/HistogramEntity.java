@@ -43,13 +43,13 @@ public class HistogramEntity implements Comparable<HistogramEntity> {
 	// 定义对象的比较规则：按histogramValue值降序排列
 	@Override
 	public int compareTo(HistogramEntity another) {
-		if (this.histogramValue < another.histogramValue) {
-			return 1;// 小于返回1，在这里可以把1看成true
-		} else if (this.histogramValue > another.histogramValue) {
-			return -1;
-		} else {// 相等：可以在这里根据另一个值进行二次比较。
-			return 0;
-		}
+		// if (this.histogramValue < another.histogramValue) {
+		// return 1;// 小于返回1，在这里可以把1看成true
+		// } else if (this.histogramValue > another.histogramValue) {
+		// return -1;
+		// } else {// 相等：可以在这里根据另一个值进行二次比较。
+		return 0;
+		// }
 	}
 
 	@Override

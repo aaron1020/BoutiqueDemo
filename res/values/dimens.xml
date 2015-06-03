@@ -31,5 +31,6 @@
     <dimen name="home_punchIcon_height">20dp</dimen>
     <dimen name="home_punchIcon_margin_top">2dp</dimen>
     <dimen name="preference_dimen">100dp</dimen>
+    <dimen name="hv_container_height">290dp</dimen>
 
 </resources>
