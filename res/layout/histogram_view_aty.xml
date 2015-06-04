@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HistogramViewActivity" >
 
     <RelativeLayout
-        android:id="@+id/histogram_view_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/hv_container_height"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:baselineAligned="false"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        tools:context=".HistogramViewActivity" >
+
+        <RelativeLayout
+            android:id="@+id/histogram_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hv_container_height"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" >
+        </RelativeLayout>
+
+        <!--
+        <jie.example.widget.HistogramView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hv_container_height"
+            android:layout_below="@id/histogram_view_container"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dip" >
+        </jie.example.widget.HistogramView>
+          -->
     </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>
