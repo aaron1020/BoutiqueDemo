@@ -551,7 +551,10 @@ public class HistogramView extends LinearLayout {
 				@Override
 				public void run() {
 					mIVShowGridPoti.setImageBitmap(mBitmapHistogram);
-					mIVShowGridPoti.setOnTouchListener(mTouchListener);
+					if (mClickListener != null) {
+						mIVShowGridPoti.setOnTouchListener(mTouchListener);
+						mClickListener.setOnClickListener(mClickedHistogramId);
+					}
 				}
 			});
 
@@ -630,13 +633,13 @@ public class HistogramView extends LinearLayout {
 			Log.i(TAG,
 					"event.getX() = " + downX + " ,event.getY() = "
 							+ event.getY());
-			int clickId = 0;
+			int mClickedHistogramId = 0;
 			for (int i = 0; i < mPointList.size(); i++) {
 				Point point = mPointList.get(i);
 				if (downX > point.startX && downX < point.stopX
 						&& downY < point.startY && downY > point.stopY) {
-					clickId = i;
-					Log.i(TAG, "clickId = " + clickId);
+					mClickedHistogramId = i;
+					Log.i(TAG, "clickId = " + mClickedHistogramId);
 					break;
 				}
 			}
@@ -644,6 +647,7 @@ public class HistogramView extends LinearLayout {
 		}
 	};
 
+	private int mClickedHistogramId = -1;
 	private List<Point> mPointList = new ArrayList<Point>();
 
 	class Point {
@@ -660,6 +664,16 @@ public class HistogramView extends LinearLayout {
 			this.stopY = stopY;
 		}
 
+	}
+
+	private OnClickListener mClickListener;
+
+	public void setOnClickListener(OnClickListener onClickListener) {
+		this.mClickListener = onClickListener;
+	}
+
+	public interface OnClickListener {
+		public void setOnClickListener(int position);
 	}
 
 }

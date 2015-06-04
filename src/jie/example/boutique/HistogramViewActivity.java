@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import jie.example.utils.ToastUtil;
 import jie.example.widget.HistogramView;
 import jie.example.widget.HistogramEntity;
 import android.annotation.SuppressLint;
@@ -72,6 +73,13 @@ public class HistogramViewActivity extends BasicActivity {
 		histogramView.setLeftTitleValue(getString(R.string.hv_left_title));
 		String averageValue = String.format("%.2f", digitSum / tempCount);// 四舍五入，保留两位小数
 		histogramView.setAverageValue(averageValue);
+		histogramView.setOnClickListener(new HistogramView.OnClickListener() {
+
+			@Override
+			public void setOnClickListener(int position) {
+				ToastUtil.showToast(position + "");
+			}
+		});
 		mHistogramViewContainer.addView(histogramView);
 	}
 
