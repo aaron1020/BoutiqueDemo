@@ -7,8 +7,10 @@ import java.util.Random;
 import jie.example.utils.ToastUtil;
 import jie.example.widget.HistogramView;
 import jie.example.widget.HistogramEntity;
+import jie.example.widget.HistogramView.HistogramViewClick;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 /**
@@ -17,6 +19,12 @@ import android.widget.RelativeLayout;
 public class HistogramViewActivity extends BasicActivity {
 
 	private RelativeLayout mHistogramViewContainer;
+	//private HistogramView mHistogramView;
+	private HistogramView mHistogramViewChild;
+	private ArrayList<HistogramEntity> mHistogramEntityList;
+	private String[] mProvinceArray;
+	private int mTempCount = 0;
+	private float mDigitSum = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +38,65 @@ public class HistogramViewActivity extends BasicActivity {
 	@Override
 	public void initData() {
 		mHistogramViewContainer = (RelativeLayout) findViewById(R.id.histogram_view_container);
+		//mHistogramView = (HistogramView) findViewById(R.id.histogram_view);
+		mProvinceArray = getResources().getStringArray(R.array.provinces_list);
+		mHistogramEntityList = new ArrayList<HistogramEntity>();
 	}
 
 	@SuppressLint("ResourceAsColor")
 	@Override
 	public void loadingData() {
+
+		makeData();
 		mHistogramViewContainer.removeAllViews();
 
-		String[] provinceArray = getResources().getStringArray(
-				R.array.provinces_list);
-		ArrayList<HistogramEntity> histogramEntityList = new ArrayList<HistogramEntity>();
+		mHistogramViewChild = new HistogramView(this,
+				getString(R.string.hv_top_main_title), mHistogramEntityList,
+				true, true, true, false);
+		mHistogramViewChild
+				.setTopSubTitleValue(getString(R.string.hv_top_sub_title));
+		mHistogramViewChild
+				.setLeftTitleValue(getString(R.string.hv_left_title));
+		String averageValue = String.format("%.2f", mDigitSum / mTempCount);// 四舍五入，保留两位小数
+		mHistogramViewChild.setAverageValue(averageValue);
+		mHistogramViewChild.setHistogramViewClick(new HistogramViewClick() {
 
-		int tempCount = 0;
-		float digitSum = 0;
+			@Override
+			public void setHistogramViewListener(int histogramId,
+					HistogramEntity histogramEntity) {
+				ToastUtil.showToast(histogramEntity.getHistogramName());
+			}
+		});
+		mHistogramViewContainer.addView(mHistogramViewChild);
+
+		//mHistogramView.setHistogramEntityList(mHistogramEntityList);
+		//mHistogramView.setAverageValue(String.format("%.2f", mDigitSum
+		//		/ mTempCount));
+		//mHistogramView.refreshHistogramView();
+	}
+
+	@SuppressLint("ResourceAsColor")
+	public void setOnClick(View view) {
+		makeData();
+		mHistogramViewChild.setAverageValue(String.format("%.2f", mDigitSum
+				/ mTempCount));
+
+		mHistogramViewChild.refreshHistogramView();
+	}
+
+	@SuppressLint("ResourceAsColor")
+	private void makeData() {
+
+		mDigitSum = 0;
+		mTempCount = 0;
+		mHistogramEntityList.clear();
+
 		Random ran = new Random();
-		while (tempCount < provinceArray.length) {
+		while (mTempCount < mProvinceArray.length) {
 			float digit = ran.nextFloat() * 101;
 			if (digit <= 100 && digit >= 50.0f) {
 				HistogramEntity histogramEntity = new HistogramEntity(
-						provinceArray[tempCount], digit);
+						mProvinceArray[mTempCount], digit);
 				if (digit <= 100 && digit >= 90) {
 					histogramEntity.setHistogramColor(R.color.eagle_one);
 				} else if (digit < 90 && digit >= 80) {
@@ -58,29 +106,12 @@ public class HistogramViewActivity extends BasicActivity {
 				} else if (digit < 70 && digit >= 60) {
 					histogramEntity.setHistogramColor(R.color.view_divide_line);
 				}
-				histogramEntityList.add(histogramEntity);
-				digitSum += digit;
-				tempCount++;
+				mHistogramEntityList.add(histogramEntity);
+				mDigitSum += digit;
+				mTempCount++;
 			}
 		}
-
-		Collections.sort(histogramEntityList);// 对对象进行排序操作
-
-		HistogramView histogramView = new HistogramView(this,
-				getString(R.string.hv_top_main_title), histogramEntityList,
-				true, true, true, false);
-		histogramView.setTopSubTitleValue(getString(R.string.hv_top_sub_title));
-		histogramView.setLeftTitleValue(getString(R.string.hv_left_title));
-		String averageValue = String.format("%.2f", digitSum / tempCount);// 四舍五入，保留两位小数
-		histogramView.setAverageValue(averageValue);
-		histogramView.setOnClickListener(new HistogramView.OnClickListener() {
-
-			@Override
-			public void setOnClickListener(int position) {
-				ToastUtil.showToast(position + "");
-			}
-		});
-		mHistogramViewContainer.addView(histogramView);
+		Collections.sort(mHistogramEntityList);// 对对象进行排序操作
 	}
 
 }

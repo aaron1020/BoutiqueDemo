@@ -128,15 +128,25 @@ public class HistogramView extends LinearLayout {
 	 */
 	private int mRightSacleMargin;
 	/**
-	 * x轴每一格的宽度，也就是网格的宽度
+	 * x轴每一格的宽度，也就是网格的宽度，默认是100
 	 */
 	private int mGridWidth = 100;
+
+	/**
+	 * 保存点击选中的柱子的Id
+	 */
+	private int mClickedHistogramId = -1;
+	private float mDownX = 0.0f, mDownY = 0.0f;
 	private Resources mResources;
 	private LinearLayout mLayoutParent;
 	private RelativeLayout mLayoutChild;
 	private HorizontalScrollView mHoriScroll;
 	private Canvas mTopCanvas, mYPivotCancas, mRightScaleCanvas;
 	private ArrayList<HistogramEntity> mHistogramEntityList;
+	/**
+	 * 保存柱子的坐标范围
+	 */
+	private List<Point> mPointList = new ArrayList<Point>();
 	/**
 	 * 占位：负责显示标题
 	 */
@@ -159,6 +169,8 @@ public class HistogramView extends LinearLayout {
 	private ImageView mIVShowRightPart;
 	private Bitmap mBitmapTopTitle, mBitmapLeftPart, mBitmapGridHori,
 			mBitmapRightPart, mBitmapHistogram;
+	private HistogramViewClick mHistogramViewClick;
+
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler() {
 
@@ -443,124 +455,115 @@ public class HistogramView extends LinearLayout {
 					HV_MARGIN_LEFT, mHistogramViewHeight - HV_MARGIN_TOP,
 					getPaint(R.color.black, GLOBAL_TEXT_SIZE));
 
-			if (mHistogramEntityList != null && mHistogramEntityList.size() > 0) {
-				int allxwhidth = mHistogramEntityList.size() * mGridWidth > mHistogramViewWidth ? mHistogramEntityList
-						.size() * mGridWidth + mGridWidth
-						: mHistogramViewWidth;
-				int ch = mHistogramViewHeight - HV_MARGIN_BOTTOM
-						- HV_MARGIN_TOP;
-
-				mBitmapHistogram = Bitmap.createBitmap(allxwhidth, ch
-						+ HV_MARGIN_BOTTOM, Bitmap.Config.ARGB_8888);
-				Canvas histogramCanvas = new Canvas();
-				histogramCanvas.setBitmap(mBitmapHistogram);
-
-				for (int i = 0; i < mHistogramEntityList.size(); i++) {
-					int stopX = (int) (ch - ch / Y_PIVOT_MAX_SCALE
-							* mHistogramEntityList.get(i).getHistogramValue());
-
-					// 绘制柱体
-					float startX = i * mGridWidth + mGridWidth / 2;
-					float startY = mHistogramViewHeight - HV_MARGIN_BOTTOM
-							- HV_MARGIN_BOTTOM;
-					float stopXValue = startX + mHistogramWidth;
-					float stopY = stopX;
-
-					mPointList
-							.add(new Point(startX, stopXValue, startY, stopY));
-
-					if (i < 3) {
-						Log.i(TAG, "startX = " + startX + ", startY = "
-								+ startY + ", stopXValue = " + stopXValue
-								+ ", stopY = " + stopY);
-					}
-
-					histogramCanvas.drawLine(
-							i * mGridWidth + mGridWidth / 2,
-							mHistogramViewHeight - HV_MARGIN_BOTTOM
-									- HV_MARGIN_BOTTOM,
-							i * mGridWidth + mGridWidth / 2,
-							stopX,
-							getPaint(mHistogramEntityList.get(i)
-									.getHistogramColor(), 20, mHistogramWidth));
-
-					// 绘制纵向网格线，不包括最左边的Y轴刻度线
-					histogramCanvas.drawLine(i * mGridWidth + mGridWidth,
-							mHistogramViewHeight - HV_MARGIN_BOTTOM
-									- HV_MARGIN_BOTTOM, i * mGridWidth
-									+ mGridWidth, 0, getGridPaint());
-
-					// 绘制柱体上的数值文字
-					String histogramValue = String.format("%.2f",
-							mHistogramEntityList.get(i).getHistogramValue());// 四舍五入，保留两位小数
-					histogramCanvas.drawText(histogramValue, i * mGridWidth
-							+ mGridWidth / 2 - 27, stopX - 2,
-							getPaint(R.color.black, 22));
-
-					// 绘制柱体名称
-					String histogramName = mHistogramEntityList.get(i)
-							.getHistogramName();
-					if (StringUtil.isNotEmpty(histogramName)) {
-						Paint paint = getPaint(R.color.black, GLOBAL_TEXT_SIZE);
-						float textWidth = paint.measureText(histogramName);
-						histogramCanvas.drawText(histogramName,
-								(mGridWidth * i) + mGridWidth / 2 - textWidth
-										/ 2, ch + 20, paint);
-					}
-				}
-
-				if (isShowAverageLine) {
-					/*
-					 * 绘制平均值。"AVG:" + mAverageValue：需要绘制的文字；allxwhidth - xkedu -
-					 * X：x轴上的偏移量，即向左或向右偏移；ch - ch / Y_PIVOT_MAX_SCALE *
-					 * mAverageValue - X：y轴上的偏移量，即向上或向下偏移。
-					 */
-					histogramCanvas.drawText(
-							mResources.getString(R.string.hv_average_value)
-									+ mAverageValue,
-							allxwhidth - mGridWidth - 10,
-							ch - ch / Y_PIVOT_MAX_SCALE
-									* Float.parseFloat(mAverageValue) - 5,
-							getPaint(R.color.eagle_four, GLOBAL_TEXT_SIZE));
-					// 绘制平均线
-					histogramCanvas.drawLine(
-							0,
-							ch - ch / Y_PIVOT_MAX_SCALE
-									* Float.parseFloat(mAverageValue),
-							allxwhidth + mGridWidth,
-							ch - ch / Y_PIVOT_MAX_SCALE
-									* Float.parseFloat(mAverageValue),
-							getPaint(R.color.eagle_four, 20));
-				}
-
-				// 绘制平均线上的点
-				if (isShowAverageLine) {
-					int avgcir = (int) ((ch) - ((ch) / Y_PIVOT_MAX_SCALE)
-							* Float.parseFloat(mAverageValue));
-
-					for (int j = 0; j < mHistogramEntityList.size(); j++) {
-						histogramCanvas.drawCircle(mGridWidth * j + mGridWidth
-								/ 2, avgcir, mAverageLineHeight + 3,
-								getPaint(R.color.eagle_four, 20));
-					}
-				}
-			}
-
-			// 在Handler中刷新界面
-			mHandler.post(new Runnable() {
-				@Override
-				public void run() {
-					mIVShowGridPoti.setImageBitmap(mBitmapHistogram);
-					if (mClickListener != null) {
-						mIVShowGridPoti.setOnTouchListener(mTouchListener);
-						mClickListener.setOnClickListener(mClickedHistogramId);
-					}
-				}
-			});
+			drawHistogram();
 
 		} catch (Exception e) {
 			LogUtil.e(TAG, "Draw Histogram View Exception-->" + e.toString());
 		}
+	}
+
+	/**
+	 * 绘制各个柱子
+	 */
+	private void drawHistogram() {
+		if (mHistogramEntityList != null && mHistogramEntityList.size() > 0) {
+			int allxwhidth = mHistogramEntityList.size() * mGridWidth > mHistogramViewWidth ? mHistogramEntityList
+					.size() * mGridWidth + mGridWidth
+					: mHistogramViewWidth;
+			int ch = mHistogramViewHeight - HV_MARGIN_BOTTOM - HV_MARGIN_TOP;
+
+			mBitmapHistogram = Bitmap.createBitmap(allxwhidth, ch
+					+ HV_MARGIN_BOTTOM, Bitmap.Config.ARGB_8888);
+			Canvas histogramCanvas = new Canvas();
+			histogramCanvas.setBitmap(mBitmapHistogram);
+			mPointList.clear();
+
+			for (int i = 0; i < mHistogramEntityList.size(); i++) {
+				// 绘制柱体
+				float startY = mHistogramViewHeight - HV_MARGIN_BOTTOM
+						- HV_MARGIN_BOTTOM;
+				int stopY = (int) (ch - ch / Y_PIVOT_MAX_SCALE
+						* mHistogramEntityList.get(i).getHistogramValue());
+				histogramCanvas.drawLine(
+						i * mGridWidth + mGridWidth / 2,
+						startY,
+						i * mGridWidth + mGridWidth / 2,
+						stopY,
+						getPaint(mHistogramEntityList.get(i)
+								.getHistogramColor(), 20, mHistogramWidth));
+
+				// 保存柱体所在的坐标范围，为了方便点击，我们扩大了柱体所在的X坐标范围至网格所在的X坐标范围。
+				float startX = i * mGridWidth;
+				float stopX = startX + mGridWidth;
+				mPointList.add(new Point(startX, stopX, startY, stopY));
+
+				// 绘制纵向网格线，不包括最左边的Y轴刻度线
+				histogramCanvas.drawLine(i * mGridWidth + mGridWidth, startY, i
+						* mGridWidth + mGridWidth, 0, getGridPaint());
+
+				// 绘制柱体上的数值文字
+				String histogramValue = String.format("%.2f",
+						mHistogramEntityList.get(i).getHistogramValue());// 四舍五入，保留两位小数
+				histogramCanvas.drawText(histogramValue, i * mGridWidth
+						+ mGridWidth / 2 - 27, stopY - 2,
+						getPaint(R.color.black, 22));
+
+				// 绘制柱体名称
+				String histogramName = mHistogramEntityList.get(i)
+						.getHistogramName();
+				if (StringUtil.isNotEmpty(histogramName)) {
+					Paint paint = getPaint(R.color.black, GLOBAL_TEXT_SIZE);
+					float textWidth = paint.measureText(histogramName);
+					histogramCanvas.drawText(histogramName, (mGridWidth * i)
+							+ mGridWidth / 2 - textWidth / 2, ch + 20, paint);
+				}
+			}
+
+			if (isShowAverageLine) {
+				/*
+				 * 绘制平均值。"AVG:" + mAverageValue：需要绘制的文字；allxwhidth - xkedu -
+				 * X：x轴上的偏移量，即向左或向右偏移；ch - ch / Y_PIVOT_MAX_SCALE *
+				 * mAverageValue - X：y轴上的偏移量，即向上或向下偏移。
+				 */
+				histogramCanvas.drawText(
+						mResources.getString(R.string.hv_average_value)
+								+ mAverageValue,
+						allxwhidth - mGridWidth - 10,
+						ch - ch / Y_PIVOT_MAX_SCALE
+								* Float.parseFloat(mAverageValue) - 5,
+						getPaint(R.color.eagle_four, GLOBAL_TEXT_SIZE));
+				// 绘制平均线
+				histogramCanvas.drawLine(
+						0,
+						ch - ch / Y_PIVOT_MAX_SCALE
+								* Float.parseFloat(mAverageValue), allxwhidth
+								+ mGridWidth, ch - ch / Y_PIVOT_MAX_SCALE
+								* Float.parseFloat(mAverageValue),
+						getPaint(R.color.eagle_four, 20));
+			}
+
+			// 绘制平均线上的点
+			if (isShowAverageLine) {
+				int avgcir = (int) ((ch) - ((ch) / Y_PIVOT_MAX_SCALE)
+						* Float.parseFloat(mAverageValue));
+
+				for (int j = 0; j < mHistogramEntityList.size(); j++) {
+					histogramCanvas.drawCircle(mGridWidth * j + mGridWidth / 2,
+							avgcir, mAverageLineHeight + 3,
+							getPaint(R.color.eagle_four, 20));
+				}
+			}
+		}
+
+		// 在Handler中刷新界面
+		mHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				mIVShowGridPoti.setImageBitmap(mBitmapHistogram);
+				mIVShowGridPoti.setOnTouchListener(mTouchListener);
+			}
+		});
+
 	}
 
 	/**
@@ -624,33 +627,61 @@ public class HistogramView extends LinearLayout {
 		this.mLeftTitleValue = leftTitleValue;
 	}
 
+	public void setHistogramViewClick(HistogramViewClick histogramViewClick) {
+		mHistogramViewClick = histogramViewClick;
+	}
+
+	public void setHistogramEntityList(
+			ArrayList<HistogramEntity> histogramEntityList) {
+		this.mHistogramEntityList = histogramEntityList;
+	}
+
+	/**
+	 * 当数据改变时，调用此方法刷新柱状图
+	 */
+	public void refreshHistogramView() {
+		drawHistogram();
+	}
+
 	private OnTouchListener mTouchListener = new OnTouchListener() {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			float downX = event.getX();
-			float downY = event.getY();
-			Log.i(TAG,
-					"event.getX() = " + downX + " ,event.getY() = "
-							+ event.getY());
-			int mClickedHistogramId = 0;
-			for (int i = 0; i < mPointList.size(); i++) {
-				Point point = mPointList.get(i);
-				if (downX > point.startX && downX < point.stopX
-						&& downY < point.startY && downY > point.stopY) {
-					mClickedHistogramId = i;
-					Log.i(TAG, "clickId = " + mClickedHistogramId);
-					break;
+
+			if (event.getAction() == MotionEvent.ACTION_DOWN) {
+				mDownX = event.getX();
+				mDownY = event.getY();
+			} else if (event.getAction() == MotionEvent.ACTION_UP) {
+				// 手指按下和松开是同一个地方，即是点击事件
+				if ((mDownX == event.getX()) && (mDownY == event.getY())) {
+
+					// 判断坐标的范围落下哪个柱子上
+					for (int i = 0; i < mPointList.size(); i++) {
+						Point point = mPointList.get(i);
+						if (mDownX > point.startX && mDownX < point.stopX
+								&& mDownY < point.startY
+								&& mDownY > point.stopY) {
+							mClickedHistogramId = i;
+							Log.i(TAG, "clickId = " + mClickedHistogramId);
+							if (mHistogramViewClick != null) {
+								mHistogramViewClick.setHistogramViewListener(
+										mClickedHistogramId,
+										mHistogramEntityList
+												.get(mClickedHistogramId));
+							}
+						}
+					}
+
 				}
 			}
-			return false;
+			return true;// 若不返回true，只会响应第一个动作(MotionEvent.ACTION_DOWN)事件
 		}
 	};
 
-	private int mClickedHistogramId = -1;
-	private List<Point> mPointList = new ArrayList<Point>();
-
-	class Point {
+	/**
+	 * 坐标内部类，用于保存柱体所在的坐标范围
+	 */
+	private final class Point {
 
 		float startX;
 		float stopX;
@@ -663,17 +694,17 @@ public class HistogramView extends LinearLayout {
 			this.startY = startY;
 			this.stopY = stopY;
 		}
-
 	}
 
-	private OnClickListener mClickListener;
-
-	public void setOnClickListener(OnClickListener onClickListener) {
-		this.mClickListener = onClickListener;
-	}
-
-	public interface OnClickListener {
-		public void setOnClickListener(int position);
+	public interface HistogramViewClick {
+		/**
+		 * @param histogramId
+		 *            柱子的id
+		 * @param histogramEntity
+		 *            柱子的信息
+		 */
+		void setHistogramViewListener(int histogramId,
+				HistogramEntity histogramEntity);
 	}
 
 }

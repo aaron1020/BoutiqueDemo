@@ -18,15 +18,21 @@
             android:layout_centerHorizontal="true" >
         </RelativeLayout>
 
-        <!--
-        <jie.example.widget.HistogramView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/hv_container_height"
+        <Button
+            android:id="@+id/btn_refresh_histogram_view"
+            style="@style/WrapContentButtonStyle"
             android:layout_below="@id/histogram_view_container"
             android:layout_centerHorizontal="true"
-            android:layout_margin="2dip" >
+            android:layout_margin="4dip"
+            android:text="@string/histogram_view_refrech" />
+
+        <jie.example.widget.HistogramView
+            android:id="@+id/histogram_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hv_container_height"
+            android:layout_below="@id/btn_refresh_histogram_view"
+            android:layout_centerHorizontal="true">
         </jie.example.widget.HistogramView>
-          -->
     </RelativeLayout>
 
 </ScrollView>
