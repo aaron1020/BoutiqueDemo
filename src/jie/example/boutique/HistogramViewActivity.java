@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 public class HistogramViewActivity extends BasicActivity {
 
 	private RelativeLayout mHistogramViewContainer;
-	//private HistogramView mHistogramView;
+	// private HistogramView mHistogramView;
 	private HistogramView mHistogramViewChild;
 	private ArrayList<HistogramEntity> mHistogramEntityList;
 	private String[] mProvinceArray;
@@ -38,7 +38,7 @@ public class HistogramViewActivity extends BasicActivity {
 	@Override
 	public void initData() {
 		mHistogramViewContainer = (RelativeLayout) findViewById(R.id.histogram_view_container);
-		//mHistogramView = (HistogramView) findViewById(R.id.histogram_view);
+		// mHistogramView = (HistogramView) findViewById(R.id.histogram_view);
 		mProvinceArray = getResources().getStringArray(R.array.provinces_list);
 		mHistogramEntityList = new ArrayList<HistogramEntity>();
 	}
@@ -46,7 +46,6 @@ public class HistogramViewActivity extends BasicActivity {
 	@SuppressLint("ResourceAsColor")
 	@Override
 	public void loadingData() {
-
 		makeData();
 		mHistogramViewContainer.removeAllViews();
 
@@ -69,10 +68,6 @@ public class HistogramViewActivity extends BasicActivity {
 		});
 		mHistogramViewContainer.addView(mHistogramViewChild);
 
-		//mHistogramView.setHistogramEntityList(mHistogramEntityList);
-		//mHistogramView.setAverageValue(String.format("%.2f", mDigitSum
-		//		/ mTempCount));
-		//mHistogramView.refreshHistogramView();
 	}
 
 	@SuppressLint("ResourceAsColor")

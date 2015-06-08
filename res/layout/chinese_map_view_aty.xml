@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChineseMapViewActivity" >
 
     <RelativeLayout
-        android:id="@+id/chinese_map_view_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="6dip" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <jie.example.widget.ChineseMapView
+            android:id="@+id/chinese_map_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="6dip" >
+        </jie.example.widget.ChineseMapView>
+
+        <Button
+            android:id="@+id/btn_refresh_chinese_map_view"
+            style="@style/WrapContentButtonStyle"
+            android:layout_below="@id/chinese_map_view"
+            android:layout_centerHorizontal="true"
+            android:text="@string/refresh_map_view" />
+
+        <jie.example.widget.GaugeView
+            android:id="@+id/gauge_view"
+            android:layout_width="260dip"
+            android:layout_height="260dip"
+            android:layout_below="@id/btn_refresh_chinese_map_view"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="6dip" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_refresh_chinese_map_view"
-        style="@style/WrapContentButtonStyle"
-        android:layout_below="@id/chinese_map_view_container"
-        android:layout_centerHorizontal="true"
-        android:text="@string/refresh_map_view" />
-
-    <jie.example.widget.GaugeView
-        android:id="@+id/gauge_view"
-        android:layout_width="260dip"
-        android:layout_height="260dip"
-        android:layout_below="@id/btn_refresh_chinese_map_view"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="6dip" />
-
-</RelativeLayout>
+</ScrollView>

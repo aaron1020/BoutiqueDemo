@@ -20,7 +20,6 @@ import android.graphics.Paint.Style;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -229,6 +228,7 @@ public class HistogramView extends LinearLayout {
 
 		setBackgroundColor(mResources.getColor(R.color.hv_container_bg));
 		setOrientation(HORIZONTAL);
+		
 		if (isShowRightSacle) {
 			mHvMarginRight = 70;
 		}
@@ -662,7 +662,7 @@ public class HistogramView extends LinearLayout {
 								&& mDownY < point.startY
 								&& mDownY > point.stopY) {
 							mClickedHistogramId = i;
-							Log.i(TAG, "clickId = " + mClickedHistogramId);
+							LogUtil.i(TAG, "clickId = " + mClickedHistogramId);
 							if (mHistogramViewClick != null) {
 								mHistogramViewClick.setHistogramViewListener(
 										mClickedHistogramId,
