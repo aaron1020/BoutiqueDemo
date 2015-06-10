@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context=".TransparentMenuActivity" >
 
     <TextView
         android:id="@+id/transparent_menu_item5"
@@ -10,7 +12,7 @@
         android:layout_alignLeft="@+id/transparent_menu_item4"
         android:layout_marginLeft="-35dp"
         android:drawableLeft="@drawable/transparent_menu_pic5"
-        android:text="@string/l_menu_buslate" />
+        android:text="@string/menu_chinese_map" />
 
     <TextView
         android:id="@+id/transparent_menu_item4"
@@ -30,7 +32,7 @@
         android:layout_marginLeft="-25dp"
         android:layout_marginTop="4dip"
         android:drawableLeft="@drawable/transparent_menu_pic3"
-        android:text="@string/l_menu_btrip" />
+        android:text="@string/menu_paint_demo" />
 
     <TextView
         android:id="@+id/transparent_menu_item2"

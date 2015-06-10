@@ -78,6 +78,8 @@ public class TransparentMenuActivity extends BasicActivity {
 				} else if (msg.arg1 == R.id.transparent_menu_item4) {
 					startActivity(new Intent(mActivity,
 							HistogramViewActivity.class));
+				} else if (msg.arg1 == R.id.transparent_menu_item3) {
+					startActivity(new Intent(mActivity, PaintDemoActivity.class));
 				} else {
 					Intent intent = new Intent(mActivity,
 							DynamicAddViewActivity.class);
@@ -166,6 +168,8 @@ public class TransparentMenuActivity extends BasicActivity {
 				msg.arg1 = R.id.transparent_menu_item5;
 			} else if (view.getId() == R.id.transparent_menu_item4) {
 				msg.arg1 = R.id.transparent_menu_item4;
+			} else if (view.getId() == R.id.transparent_menu_item3) {
+				msg.arg1 = R.id.transparent_menu_item3;
 			}
 			mHandler.sendMessageDelayed(msg, MENU_ANIM_DURATION);
 			break;

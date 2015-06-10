@@ -88,7 +88,7 @@ public class ChineseMapView extends RelativeLayout {
 		if (mProvinceInfoList != null && mProvinceInfoList.size() > 0) {
 			for (int i = 0; i < mProvinceArray.length; i++) {
 				final ImageView provinceImageView = new ImageView(mContext);
-
+				
 				// 设置图片的布局属性
 				RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 						(int) (mPictruesWidth[i] / mScaleShow),
@@ -97,9 +97,8 @@ public class ChineseMapView extends RelativeLayout {
 				layoutParams.topMargin = (int) (mPictruesTopMargin[i] / mScaleShow);
 				provinceImageView.setLayoutParams(layoutParams);
 
-				// 设置显示的省份图片
+				// 设置要显示的省份图片
 				int provincePicStartId = 0;
-
 				switch (mProvinceInfoList.get(i).getId() % 7) {
 				case 0:
 					provincePicStartId = R.drawable.province_blue_01;

@@ -18,13 +18,12 @@ import android.widget.RelativeLayout;
  */
 public class HistogramViewActivity extends BasicActivity {
 
-	private RelativeLayout mHistogramViewContainer;
-	// private HistogramView mHistogramView;
-	private HistogramView mHistogramViewChild;
-	private ArrayList<HistogramEntity> mHistogramEntityList;
-	private String[] mProvinceArray;
 	private int mTempCount = 0;
 	private float mDigitSum = 0;
+	private String[] mProvinceArray;
+	private RelativeLayout mHistogramViewContainer;
+	private HistogramView mHistogramViewChild;
+	private ArrayList<HistogramEntity> mHistogramEntityList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class HistogramViewActivity extends BasicActivity {
 	@Override
 	public void initData() {
 		mHistogramViewContainer = (RelativeLayout) findViewById(R.id.histogram_view_container);
-		// mHistogramView = (HistogramView) findViewById(R.id.histogram_view);
 		mProvinceArray = getResources().getStringArray(R.array.provinces_list);
 		mHistogramEntityList = new ArrayList<HistogramEntity>();
 	}

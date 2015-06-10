@@ -26,6 +26,7 @@
         <activity android:name=".BasicActivity" />
         <activity android:name=".DynamicAddViewActivity" />
         <activity android:name=".CascadeLayoutActivity" />
+        <activity android:name=".PaintDemoActivity" />
         <activity
             android:name=".TransparentMenuActivity"
             android:launchMode="singleTask"

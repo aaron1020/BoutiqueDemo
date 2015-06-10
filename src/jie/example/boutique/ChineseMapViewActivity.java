@@ -19,7 +19,7 @@ public class ChineseMapViewActivity extends BasicActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		super.setActionBarTitle(R.string.l_menu_buslate);
+		super.setActionBarTitle(R.string.menu_chinese_map);
 		setContentView(R.layout.chinese_map_view_aty);
 		initData();
 		loadingData();
@@ -64,4 +64,5 @@ public class ChineseMapViewActivity extends BasicActivity {
 		mChineseMapView.setProvinceInfoList(mProvinceInfoList);
 		mChineseMapView.refreshChineseMapView();
 	}
+
 }

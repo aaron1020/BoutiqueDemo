@@ -68,7 +68,7 @@ public class HistogramView extends LinearLayout {
 	/**
 	 * 字体大小
 	 */
-	private static final int GLOBAL_TEXT_SIZE = 22;
+	private static final int GLOBAL_PAINT_SIZE = 22;
 	/**
 	 * mHistogramViewWidth：HistogramView所在布局的宽度；mHistogramViewHeight：
 	 * HistogramView所在布局的高度
@@ -228,7 +228,7 @@ public class HistogramView extends LinearLayout {
 
 		setBackgroundColor(mResources.getColor(R.color.hv_container_bg));
 		setOrientation(HORIZONTAL);
-		
+
 		if (isShowRightSacle) {
 			mHvMarginRight = 70;
 		}
@@ -356,7 +356,7 @@ public class HistogramView extends LinearLayout {
 					topMainTitlePaint = getPaint(R.color.black, 36);
 				}
 				float topMainTitleSize = topMainTitlePaint
-						.measureText(mTopMainTitle) / 2;
+						.measureText(mTopMainTitle) / 2;// 测量出标题的宽度
 				float x = (mHistogramViewWidth - HV_MARGIN_LEFT - mHvMarginRight)
 						/ 2 - topMainTitleSize;
 				mTopCanvas.drawText(mTopMainTitle, x, HV_MARGIN_TOP / 2,
@@ -414,11 +414,11 @@ public class HistogramView extends LinearLayout {
 							- (int) (mRightSacleMargin * j);
 
 					mRightScaleCanvas.drawLine(0, y, SCALE_DIVIDE_LINE_LENGTH,
-							y, getPaint(R.color.black, GLOBAL_TEXT_SIZE));
+							y, getPaint(R.color.black, GLOBAL_PAINT_SIZE));
 
 					mRightScaleCanvas.drawText(String.valueOf(j) + "%",
 							SCALE_DIVIDE_LINE_LENGTH, y + 8,
-							getPaint(R.color.black, GLOBAL_TEXT_SIZE));
+							getPaint(R.color.black, GLOBAL_PAINT_SIZE));
 				}
 			}
 
@@ -434,12 +434,12 @@ public class HistogramView extends LinearLayout {
 				// 绘制Y轴刻度分隔线，即分隔每一个刻度值的红色短线
 				mYPivotCancas.drawLine(HV_MARGIN_LEFT
 						- SCALE_DIVIDE_LINE_LENGTH, valueY, HV_MARGIN_LEFT,
-						valueY, getPaint(R.color.red, GLOBAL_TEXT_SIZE));
+						valueY, getPaint(R.color.red, GLOBAL_PAINT_SIZE));
 
 				// 绘制Y轴刻度值
 				mYPivotCancas.drawText(String.valueOf(scale),
 						HV_MARGIN_LEFT - 55, valueY + 10,
-						getPaint(R.color.eagle_two, GLOBAL_TEXT_SIZE));
+						getPaint(R.color.eagle_two, GLOBAL_PAINT_SIZE));
 
 				// 绘制中间的横向网格线
 				horizontalGridLineCanvas.drawLine(0, valueY - HV_MARGIN_BOTTOM,
@@ -453,7 +453,7 @@ public class HistogramView extends LinearLayout {
 			// 绘制Y轴刻度线
 			mYPivotCancas.drawLine(HV_MARGIN_LEFT, HV_MARGIN_BOTTOM,
 					HV_MARGIN_LEFT, mHistogramViewHeight - HV_MARGIN_TOP,
-					getPaint(R.color.black, GLOBAL_TEXT_SIZE));
+					getPaint(R.color.black, GLOBAL_PAINT_SIZE));
 
 			drawHistogram();
 
@@ -512,7 +512,7 @@ public class HistogramView extends LinearLayout {
 				String histogramName = mHistogramEntityList.get(i)
 						.getHistogramName();
 				if (StringUtil.isNotEmpty(histogramName)) {
-					Paint paint = getPaint(R.color.black, GLOBAL_TEXT_SIZE);
+					Paint paint = getPaint(R.color.black, GLOBAL_PAINT_SIZE);
 					float textWidth = paint.measureText(histogramName);
 					histogramCanvas.drawText(histogramName, (mGridWidth * i)
 							+ mGridWidth / 2 - textWidth / 2, ch + 20, paint);
@@ -531,7 +531,7 @@ public class HistogramView extends LinearLayout {
 						allxwhidth - mGridWidth - 10,
 						ch - ch / Y_PIVOT_MAX_SCALE
 								* Float.parseFloat(mAverageValue) - 5,
-						getPaint(R.color.eagle_four, GLOBAL_TEXT_SIZE));
+						getPaint(R.color.eagle_four, GLOBAL_PAINT_SIZE));
 				// 绘制平均线
 				histogramCanvas.drawLine(
 						0,
