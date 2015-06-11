@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import jie.example.entity.HistogramEntity;
 import jie.example.utils.ToastUtil;
 import jie.example.widget.HistogramView;
-import jie.example.widget.HistogramEntity;
 import jie.example.widget.HistogramView.HistogramViewClick;
 import android.annotation.SuppressLint;
 import android.os.Bundle;

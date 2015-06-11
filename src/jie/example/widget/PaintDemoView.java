@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -42,16 +43,22 @@ public class PaintDemoView extends View {
 				Y_BASIC_COORDINATE, paint);
 
 		paint = getPaint();
+		paint.setStyle(Paint.Style.STROKE);// 空心，默认是实心。
+
 		// 画圆-->float cx:圆心的X轴坐标；float cy:圆心的Y轴坐标；float radius:半径
 		canvas.drawCircle(Constant.screenWidth / 2, Y_BASIC_COORDINATE * 2, 36,
 				paint);
 
-		// 横线
+		/*
+		 * 画线-->float startX:线条起点的X轴坐标；float startY:线条起点的Y轴坐标；float
+		 * stopX:线条终点的X轴坐标；float stopY::线条终点的Y轴坐标
+		 */
+		// 横线-->Y轴坐标不变
 		float startY = Y_BASIC_COORDINATE * 1.0f * 3;
 		float stopY = startY;
 		canvas.drawLine(Constant.screenWidth / 4, startY,
 				Constant.screenWidth / 4 * 3, stopY, paint);
-		// 竖线
+		// 竖线-->X轴坐标不变
 		float startX = Constant.screenWidth / 2;
 		float stopX = startX;
 		canvas.drawLine(startX, startY, stopX, Y_BASIC_COORDINATE * 10, paint);
@@ -61,18 +68,82 @@ public class PaintDemoView extends View {
 		// 右斜线
 		canvas.drawLine(startX, startY, stopX + 200, Y_BASIC_COORDINATE * 10,
 				paint);
+		// 粗线条
+		canvas.drawLine(startX + 250, startY, startX + 250,
+				Y_BASIC_COORDINATE * 10, getStoreWidthPaint(40));
+
+		// 画弧-->start
+		/*
+		 * float left:矩形左边所在的X坐标；float top:矩形顶边所在的Y坐标；float
+		 * right:矩形右边所在的X坐标float bottom:矩形底边所在的Y坐标。
+		 */
+		RectF ovalFalse = new RectF(100, 20, 300, 220);
+		/*
+		 * RectF oval:定义弧形的形状和位置，如果上面的(right -
+		 * left)=(bottom-top)，那么是圆形形状的弧形，如果不等，则是椭圆形状的弧形；float
+		 * startAngle:弧形开始的角度；float sweepAngle:弧形扫过多少度；boolean
+		 * useCenter:注意这个取值的不同而导致弧形形状的不同
+		 */
+		canvas.drawArc(ovalFalse, 0, 270, false, getPaint());// 绘画弧形规则：从三点钟方向开始顺时针方向绘制
+		RectF ovalTrue = new RectF(100, 230, 300, 430);
+		canvas.drawArc(ovalTrue, 0, 270, true, getPaint());
+		// 画多个具有相同的圆心但颜色不同的弧形
+		ovalTrue.set(310, 230, 510, 430);
+		canvas.drawArc(ovalTrue, 0, 45, true, getPaint());
+		canvas.drawArc(ovalTrue, 45, 45, true, getPaint(R.color.eagle_four));
+		// 画弧-->end
+
+		// 画矩形
+		/*
+		 * 若(right-left)=(bottom-top)，则是正方形，若不等是矩形
+		 */
+		canvas.drawRect(100, 440, 250, 540, paint);// 空心矩形
+		canvas.drawRect(260, 440, 410, 540, getPaint());// 实心矩形
+		canvas.drawRect(420, 440, 520, 540, getPaint());// 正方形
 	}
 
+	/**
+	 * 获取默认颜色的画笔
+	 */
 	private Paint getPaint() {
 		Paint paint = new Paint();
-		paint.setAntiAlias(true);// 抗(不显示)锯齿，请绘出来的物体更清晰
+		paint.setAntiAlias(true);// 抗(不显示)锯齿，让绘出来的物体更清晰
 		paint.setColor(mResources.getColor(R.color.red));// 设置画笔的颜色
 		return paint;
 	}
 
-	private Paint getPaint(float textSixe) {
+	/**
+	 * 获取特定颜色的画笔
+	 */
+	private Paint getPaint(int colorRes) {
 		Paint paint = getPaint();
-		paint.setTextSize(textSixe);// 设置文字的大小
+		paint.setColor(mResources.getColor(colorRes));// 设置画笔的颜色
+		return paint;
+	}
+
+	/**
+	 * 用于绘制文字的画笔
+	 * 
+	 * @param textSixe
+	 *            文字的大小
+	 */
+	private Paint getPaint(float textSize) {
+		Paint paint = getPaint();
+		if (textSize > 0) {
+			paint.setTextSize(textSize);// 设置文字的大小
+		}
+		return paint;
+	}
+
+	/**
+	 * 获取具有一定宽度的画笔
+	 * 
+	 * @param width
+	 *            画笔的宽度
+	 */
+	private Paint getStoreWidthPaint(int width) {
+		Paint paint = getPaint();
+		paint.setStrokeWidth(width);// 设置画笔的宽度
 		return paint;
 	}
 

@@ -1,4 +1,4 @@
-package jie.example.widget;
+package jie.example.entity;
 
 import jie.example.boutique.R;
 

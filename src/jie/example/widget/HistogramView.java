@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jie.example.boutique.R;
+import jie.example.entity.HistogramEntity;
 import jie.example.utils.LogUtil;
 import jie.example.utils.StringUtil;
 
