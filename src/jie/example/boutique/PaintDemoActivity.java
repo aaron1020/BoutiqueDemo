@@ -22,11 +22,7 @@ public class PaintDemoActivity extends BasicActivity {
 	@Override
 	public void initData() {
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.paint_view_container);
-		final PaintDemoView paintView = new PaintDemoView(this);
-		paintView.setMinimumHeight(700);
-		paintView.setMinimumWidth(800);
-		paintView.invalidate();
-		layout.addView(paintView);
+		layout.addView(new PaintDemoView(this));
 	}
 
 	@Override

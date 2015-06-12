@@ -5,9 +5,15 @@ import jie.example.constant.Constant;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -23,10 +29,13 @@ public class PaintDemoView extends View {
 
 	public PaintDemoView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		initView(context);
 	}
 
 	private void initView(Context context) {
 		mResources = context.getResources();
+		setMinimumHeight(Constant.screenHeight);
+		setMinimumWidth(Constant.screenWidth);
 	}
 
 	@SuppressLint("DrawAllocation")
@@ -93,13 +102,74 @@ public class PaintDemoView extends View {
 		canvas.drawArc(ovalTrue, 45, 45, true, getPaint(R.color.eagle_four));
 		// 画弧-->end
 
-		// 画矩形
-		/*
-		 * 若(right-left)=(bottom-top)，则是正方形，若不等是矩形
-		 */
+		// 画矩形-->若(right-left)=(bottom-top)，则是正方形，若不等是矩形
 		canvas.drawRect(100, 440, 250, 540, paint);// 空心矩形
 		canvas.drawRect(260, 440, 410, 540, getPaint());// 实心矩形
 		canvas.drawRect(420, 440, 520, 540, getPaint());// 正方形
+
+		// 定义一个颜色渐变的着色器
+		Shader shader = new LinearGradient(0, 0, 100, 100,
+				new int[] { Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW,
+						Color.LTGRAY }, null, Shader.TileMode.REPEAT);
+		paint.setShader(shader);
+		paint.setStrokeWidth(2.0f);
+
+		/*
+		 * 画椭圆-->若(right-left)=(bottom-top)，则是圆形，若不等才是椭圆
+		 */
+		ovalTrue.set(100, 550, 250, 660);
+		canvas.drawOval(ovalTrue, paint);
+		ovalTrue.set(260, 550, 410, 700);
+		canvas.drawOval(ovalTrue, paint);
+
+		// 画任意多边形
+		Path path = new Path();
+		// 等边三角形
+		path.moveTo(300, 300);// 第一点的坐标
+		path.lineTo(500, 646.41f);// 第二点的坐标
+		path.lineTo(700, 300);// 第三点的坐标
+		path.close();// 设置图形封闭
+		canvas.drawPath(path, paint);
+		// 等边三角形
+		path = new Path();
+		path.moveTo(500, 710);
+		path.lineTo(600, 536.8f);
+		path.lineTo(700, 710);
+		// 未设置封闭//path.close();
+		canvas.drawPath(path, paint);
+		// 折线图
+		float[] y = { 660, 730, 680, 550, 660 };
+		path = new Path();
+		path.moveTo(710, 710);
+		for (int i = 0; i < 5; i++) {
+			path.lineTo(740 + 30 * i, y[i]);
+		}
+		canvas.drawPath(path, paint);
+
+		// 画圆角矩形
+		ovalTrue.set(100, 720, 200, 880);
+		canvas.drawRoundRect(ovalTrue, 20, 20, paint);// 第二个参数是x半径，第三个参数是y半径
+
+		// 画点
+		canvas.drawPoint(220, 800, getStoreWidthPaint(10));// 画一个点
+		paint.setStyle(Paint.Style.FILL);
+		paint.setStrokeWidth(10);
+		canvas.drawPoint(240, 800, paint);// 画一个点
+		canvas.drawPoints(new float[] { 260, 800, 280, 800, 300, 800 }, paint);// 画多个点
+
+		// 画图片(贴图)
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+				R.drawable.province_blue_25);
+		canvas.drawBitmap(bitmap, 330, 720, getPaint());
+
+		// 画贝塞尔曲线
+		paint.setStyle(Paint.Style.STROKE);
+		path = new Path();
+		path.moveTo(500, 850);// 设置Path的起点
+		path.quadTo(500, 600, 880, 800); // 设置贝塞尔曲线的控制点坐标和终点坐标
+		canvas.drawPath(path, paint);
+
+		invalidate();
 	}
 
 	/**

@@ -79,7 +79,7 @@ public class HistogramView extends LinearLayout {
 	 * 柱状图的右边距
 	 */
 	private int mHvMarginRight = 30;
-	/**
+	/** 
 	 * 柱体的宽度，默认是50
 	 */
 	private int mHistogramWidth = 50;
