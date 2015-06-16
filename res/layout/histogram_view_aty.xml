@@ -33,7 +33,6 @@
             android:layout_below="@id/btn_refresh_histogram_view"
             android:layout_centerHorizontal="true"
             android:background="@color/hv_container_bg"
-            android:orientation="horizontal"
             histogram:leftTitle="@string/hv_left_title"
             histogram:showLeftTitle="true"
             histogram:showTopSubTitle="true"
