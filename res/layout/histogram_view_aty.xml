@@ -28,13 +28,19 @@
             android:text="@string/histogram_view_refrech" />
 
         <jie.example.widget.HistogramView2
+            android:id="@+id/histogram_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/hv_container_height"
             android:layout_below="@id/btn_refresh_histogram_view"
             android:layout_centerHorizontal="true"
             android:background="@color/hv_container_bg"
+            android:orientation="vertical"
             histogram:leftTitle="@string/hv_left_title"
+            histogram:rightScaleLineValue="120"
+            histogram:rightScaleNum="6"
+            histogram:showAverageLine="true"
             histogram:showLeftTitle="true"
+            histogram:showRightScale="true"
             histogram:showTopSubTitle="true"
             histogram:topMainTitle="@string/hv_top_main_title"
             histogram:topSubTitle="@string/hv_top_sub_title"

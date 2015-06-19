@@ -8,6 +8,7 @@ import jie.example.entity.HistogramEntity;
 import jie.example.utils.ToastUtil;
 import jie.example.widget.HistogramView;
 import jie.example.widget.HistogramView.HistogramViewClick;
+import jie.example.widget.HistogramView2;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ public class HistogramViewActivity extends BasicActivity {
 	private String[] mProvinceArray;
 	private RelativeLayout mHistogramViewContainer;
 	private HistogramView mHistogramViewChild;
+	private HistogramView2 mHistogramView;
 	private ArrayList<HistogramEntity> mHistogramEntityList;
 
 	@Override
@@ -36,6 +38,7 @@ public class HistogramViewActivity extends BasicActivity {
 
 	@Override
 	public void initData() {
+		mHistogramView = (HistogramView2) findViewById(R.id.histogram_view);
 		mHistogramViewContainer = (RelativeLayout) findViewById(R.id.histogram_view_container);
 		mProvinceArray = getResources().getStringArray(R.array.provinces_list);
 		mHistogramEntityList = new ArrayList<HistogramEntity>();
@@ -66,6 +69,19 @@ public class HistogramViewActivity extends BasicActivity {
 		});
 		mHistogramViewContainer.addView(mHistogramViewChild);
 
+		mHistogramView.setHistogramEntityList(mHistogramEntityList);
+		mHistogramView.setAverageValue(String.format("%.2f", mDigitSum
+				/ mTempCount));
+		mHistogramView
+				.setHistogramViewClick(new HistogramView2.HistogramViewClick() {
+
+					@Override
+					public void setHistogramViewListener(int histogramId,
+							HistogramEntity histogramEntity) {
+						ToastUtil.showToast(histogramEntity.getHistogramName());
+					}
+				});
+		// mHistogramView.refreshHistogramView();
 	}
 
 	@SuppressLint("ResourceAsColor")

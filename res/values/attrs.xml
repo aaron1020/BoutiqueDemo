@@ -19,7 +19,7 @@
         <attr name="showLeftTitle" format="boolean" />
         <attr name="rightScaleLineValue" format="integer" />
         <attr name="rightScaleNum" format="integer" />
-        <attr name="showRightScaleLine" format="boolean" />
+        <attr name="showRightScale" format="boolean" />
         <attr name="showAverageLine" format="boolean" />
     </declare-styleable>
     <declare-styleable name="GaugeView">
