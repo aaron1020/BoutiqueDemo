@@ -78,7 +78,7 @@ public class ChineseMapView extends RelativeLayout {
 	private void initView(Context context) {
 		mContext = context;
 		mProvinceArray = context.getResources().getStringArray(
-				R.array.provinces_list);
+				R.array.provinces);
 		if (Constant.screenWidth > 1000 || mScaleShow == 0.0f) {
 			mScaleShow = 1.0f;
 		}

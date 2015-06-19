@@ -140,9 +140,12 @@ public class PaintDemoView extends View {
 		// 折线图
 		float[] y = { 660, 730, 680, 550, 660 };
 		path = new Path();
-		path.moveTo(710, 710);
-		for (int i = 0; i < 5; i++) {
-			path.lineTo(740 + 30 * i, y[i]);
+		for (int i = 0; i < 6; i++) {
+			if (i == 0) {
+				path.moveTo(710, 710);
+			} else {
+				path.lineTo(740 + 30 * (i - 1), y[i - 1]);
+			}
 		}
 		canvas.drawPath(path, paint);
 

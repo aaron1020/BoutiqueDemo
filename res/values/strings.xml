@@ -69,5 +69,8 @@
     <string name="hv_left_title">全网百分比</string>
     <string name="hv_average_value">AVG:</string>
     <string name="histogram_view_refrech">刷新图表</string>
+    <string name="hv_top_main_title_month">月份营业额</string>
+    <string name="hv_top_sub_title_month">[主要指标]</string>
+    <string name="hv_left_title_month">单位:亿元</string>
 
 </resources>

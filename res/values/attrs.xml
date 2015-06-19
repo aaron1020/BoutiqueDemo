@@ -8,8 +8,8 @@
     <declare-styleable name="CascadeLayout_LayoutParams">
         <attr name="layout_vertical_spacing" format="dimension" />
     </declare-styleable>
-    <!-- HistogramView2：类名 -->
-    <declare-styleable name="HistogramView2">
+    <!-- HistogramView：类名 -->
+    <declare-styleable name="HistogramView">
         <attr name="yPivotMaxScale" format="integer" />
         <attr name="yPivotScaleNum" format="integer" />
         <attr name="topMainTitle" format="string" />
@@ -17,7 +17,7 @@
         <attr name="showTopSubTitle" format="boolean" />
         <attr name="leftTitle" format="string" />
         <attr name="showLeftTitle" format="boolean" />
-        <attr name="rightScaleLineValue" format="integer" />
+        <attr name="rightMaxScale" format="integer" />
         <attr name="rightScaleNum" format="integer" />
         <attr name="showRightScale" format="boolean" />
         <attr name="showAverageLine" format="boolean" />
