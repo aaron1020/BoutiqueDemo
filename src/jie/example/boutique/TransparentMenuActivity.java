@@ -80,6 +80,8 @@ public class TransparentMenuActivity extends BasicActivity {
 							HistogramViewActivity.class));
 				} else if (msg.arg1 == R.id.transparent_menu_item3) {
 					startActivity(new Intent(mActivity, PaintDemoActivity.class));
+				} else if (msg.arg1 == R.id.transparent_menu_item2) {
+					startActivity(new Intent(mActivity, CaptureActivity.class));
 				} else {
 					Intent intent = new Intent(mActivity,
 							DynamicAddViewActivity.class);
@@ -164,13 +166,7 @@ public class TransparentMenuActivity extends BasicActivity {
 			closeMenuActivity();
 			Message msg = mHandler.obtainMessage();
 			msg.what = Constant.HANDLER_MENU_START_ACTIVITY;
-			if (view.getId() == R.id.transparent_menu_item5) {
-				msg.arg1 = R.id.transparent_menu_item5;
-			} else if (view.getId() == R.id.transparent_menu_item4) {
-				msg.arg1 = R.id.transparent_menu_item4;
-			} else if (view.getId() == R.id.transparent_menu_item3) {
-				msg.arg1 = R.id.transparent_menu_item3;
-			}
+			msg.arg1 = view.getId();
 			mHandler.sendMessageDelayed(msg, MENU_ANIM_DURATION);
 			break;
 		}

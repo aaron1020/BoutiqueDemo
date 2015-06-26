@@ -45,7 +45,7 @@
 
     <!-- 菜单 -->
     <string name="l_menu_leave">请假休息</string>
-    <string name="l_menu_overtime">加班奋斗</string>
+    <string name="l_menu_zxing">二维码</string>
     <string name="menu_paint_demo">Paint画图</string>
     <string name="menu_chinese_map">中国地图</string>
     <!-- 树形ListView -->
@@ -72,5 +72,23 @@
     <string name="hv_top_main_title_month">月份营业额</string>
     <string name="hv_top_sub_title_month">[主要指标]</string>
     <string name="hv_left_title_month">单位:亿元</string>
+
+    <!-- 二维码 -->
+    <string name="scan_type_qrcode">将二维码放入框内，即可自动扫描</string>
+    <string name="scan_type_barcode">将条形码放入框内，即可自动扫描</string>
+    <string name="scan_qrcode">二维码</string>
+    <string name="scan_barcode">条形码</string>
+    <string name="scan_help">帮助</string>
+    <string name="scan_scan">扫一扫</string>
+    <string name="scan_result">扫描结果</string>
+    <string name="scan_content">扫描内容</string>
+    <string name="scan_back">返回</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_ok">确定</string>
+    <string name="msg_camera_framework_bug">抱歉，Android相机可能被占用，您可能需要重启设备。</string>
+    <string name="msg_default_format">格式</string>
+    <string name="msg_default_meta">元数据</string>
+    <string name="msg_default_time">时间</string>
+    <string name="msg_default_type">类型</string>
 
 </resources>

@@ -163,8 +163,6 @@ public class HistogramView extends LinearLayout {
 	 * 占位：负责显示柱状图网格纵向线和柱体
 	 */
 	private ImageView mIVShowGridPoti;
-
-	// private ImageView mIVShowGridLine;
 	/**
 	 * 占位：负责显示右边刻度
 	 */
@@ -343,18 +341,11 @@ public class HistogramView extends LinearLayout {
 			mIVShowGridPoti.setLayoutParams(params);
 			mIVShowGridPoti.setScaleType(ScaleType.MATRIX);
 
-			// mIVShowGridLine = new ImageView(context);
-			// mIVShowGridLine.setLayoutParams(new LayoutParams(
-			// LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-			// mIVShowGridLine.setScaleType(ScaleType.MATRIX);
-
 			// 定义一个水平滚动控件用于包裹各个柱子
 			mHoriScroll = new HorizontalScrollView(context);
 			mHoriScroll.setHorizontalScrollBarEnabled(true);
 			mHoriScroll.setLayoutParams(params);
 			mHoriScroll.addView(mIVShowGridPoti);// 把mIVShowGridPoti加入水平滚动控件中
-
-			// mHoriScroll.addView(mIVShowGridLine);// 把mIVShowGridLine加入水平滚动控件中
 
 			histogramScrollContainer.addView(mHoriScroll);// 把水平滚动控件加入histogramScrollContainer中
 			mHorizontalLayout.addView(histogramScrollContainer);
@@ -563,15 +554,8 @@ public class HistogramView extends LinearLayout {
 				histogramCanvas.setBitmap(mBitmapHistogram);
 				mPointList.clear();
 
-				// Path path = new Path();
-				// Canvas canvas = new Canvas();
-				// final Bitmap bitmap = Bitmap.createBitmap(xPivotLen, 1,
-				// Bitmap.Config.ARGB_8888);
-				// canvas.setBitmap(bitmap);
-				// Paint linePaint = getPaint(R.color.red, 26);
 				for (int i = 0; i < listSize; i++) {
-					// 绘制柱体
-					// (mYPivotHeight / mYPivotMaxScale)为单位刻度值占有多少的高度
+					// 绘制柱体;(mYPivotHeight / mYPivotMaxScale)为单位刻度值占有多少的高度
 					float stopY = (mYPivotHeight - mYPivotHeight
 							/ mYPivotMaxScale
 							* mHistogramEntityList.get(i).getHistogramValue()) - 1;// 减1是因为(①Ⅰ)处减了1
@@ -610,13 +594,6 @@ public class HistogramView extends LinearLayout {
 								mYPivotHeight + 20, paint);
 					}
 
-					// if (i == 0) {
-					// path.moveTo(xValue, stopY);
-					// } else {
-					// path.lineTo(xValue, stopY);
-					// }
-					// histogramCanvas.drawPath(path, linePaint);
-
 					// 绘制平均线上的点
 					if (isShowAverageLine) {
 						float cy = mYPivotHeight - mYPivotHeight
@@ -649,7 +626,6 @@ public class HistogramView extends LinearLayout {
 				mHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						// mIVShowGridLine.setImageBitmap(bitmap);
 						mIVShowGridPoti.setImageBitmap(mBitmapHistogram);
 						mIVShowGridPoti.setOnTouchListener(mTouchListener);
 					}

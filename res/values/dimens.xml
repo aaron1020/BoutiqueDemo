@@ -32,5 +32,6 @@
     <dimen name="home_punchIcon_margin_top">2dp</dimen>
     <dimen name="preference_dimen">100dp</dimen>
     <dimen name="hv_container_height">290dp</dimen>
-
+    <dimen name="standard_padding">8dip</dimen>
+    <dimen name="half_padding">4dip</dimen>
 </resources>

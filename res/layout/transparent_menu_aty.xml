@@ -42,7 +42,7 @@
         android:layout_marginLeft="-20dp"
         android:layout_marginTop="5dip"
         android:drawableLeft="@drawable/transparent_menu_pic2"
-        android:text="@string/l_menu_overtime" />
+        android:text="@string/l_menu_zxing" />
 
     <TextView
         android:id="@+id/transparent_menu_item1"

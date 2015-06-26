@@ -8,6 +8,12 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="jie.example.constant.BoutiqueApp"
         android:allowBackup="true"
@@ -27,6 +33,14 @@
         <activity android:name=".DynamicAddViewActivity" />
         <activity android:name=".CascadeLayoutActivity" />
         <activity android:name=".PaintDemoActivity" />
+        <activity
+            android:name=".CaptureActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name=".ResultActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TransparentMenuActivity"
             android:launchMode="singleTask"
