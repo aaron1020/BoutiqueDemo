@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name="jie.example.constant.BoutiqueApp"
@@ -34,20 +35,19 @@
         <activity android:name=".CascadeLayoutActivity" />
         <activity android:name=".PaintDemoActivity" />
         <activity
-            android:name=".CaptureActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
-            android:name=".ResultActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".TransparentMenuActivity"
             android:launchMode="singleTask"
             android:theme="@style/TransparentStyleBottom" />
         <activity android:name=".TreeListViewActivity" />
         <activity android:name=".ChineseMapViewActivity" />
         <activity android:name=".HistogramViewActivity" />
+        <activity
+            android:name=".CaptureActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ResultActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

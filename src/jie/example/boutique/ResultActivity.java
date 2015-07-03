@@ -1,20 +1,14 @@
 package jie.example.boutique;
 
-import jie.example.boutique.R;
-import android.app.Activity;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ResultActivity extends Activity {
-
-	private TextView mActivityTitle;
+public class ResultActivity extends BasicActivity {
 
 	private ImageView barcodeImageView;
 	private TextView formatTextView;
@@ -27,20 +21,16 @@ public class ResultActivity extends Activity {
 	private CharSequence metadataText;
 	private String resultString;
 	private Bundle bundle;
+	private WebView mWebView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Window window = getWindow();
-		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 保持屏幕处于点亮状态
-		requestWindowFeature(Window.FEATURE_NO_TITLE); // 隐藏标题栏
-		setContentView(R.layout.activity_result);
-		initView();
-		mGetIntentData();
+		super.setActionBarTitle(R.string.scan_result);
+		setContentView(R.layout.scan_result_aty);
+		initData();
 		setView();
-
-		mActivityTitle = (TextView) findViewById(R.id.actionbar_title);
-		mActivityTitle.setText(R.string.scan_result);
+		loadingData();
 	}
 
 	private void setView() {
@@ -51,11 +41,15 @@ public class ResultActivity extends Activity {
 		resultTextView.setText(resultString);
 	}
 
-	public void setLeftBtnClick(View view) {
-		finish();
-	}
+	@Override
+	public void initData() {
+		barcodeImageView = (ImageView) findViewById(R.id.barcode_image_view);
+		formatTextView = (TextView) findViewById(R.id.format_text_view);
+		timeTextView = (TextView) findViewById(R.id.time_text_view);
+		metaTextView = (TextView) findViewById(R.id.meta_text_view);
+		resultTextView = (TextView) findViewById(R.id.contents_text_view);
+		mWebView = (WebView) findViewById(R.id.web_view);
 
-	private void mGetIntentData() {
 		bundle = new Bundle();
 		bundle = this.getIntent().getExtras();
 		barcodeBitmap = bundle.getParcelable("bitmap");
@@ -65,29 +59,10 @@ public class ResultActivity extends Activity {
 		resultString = bundle.getString("resultString");
 	}
 
-	private void initView() {
-		barcodeImageView = (ImageView) findViewById(R.id.barcode_image_view);
-		formatTextView = (TextView) findViewById(R.id.format_text_view);
-		timeTextView = (TextView) findViewById(R.id.time_text_view);
-		metaTextView = (TextView) findViewById(R.id.meta_text_view);
-		resultTextView = (TextView) findViewById(R.id.contents_text_view);
-
-	}
-
-	public void backCapture(View view) {
-		runBack();
-	}
-
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			runBack();
-		}
-		return false;
-	}
-
-	public void runBack() {
-		Intent intent = new Intent(ResultActivity.this, CaptureActivity.class);
-		startActivity(intent);
-		ResultActivity.this.finish();
+	@SuppressLint("SetJavaScriptEnabled")
+	@Override
+	public void loadingData() {
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.loadUrl(resultString);
 	}
 }

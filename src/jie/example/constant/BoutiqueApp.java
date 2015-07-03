@@ -20,7 +20,7 @@ public class BoutiqueApp extends Application {
 
 	private void getDevicePerferences() {
 
-		// 实例化DisplayMetrics方法1；注：getWindowManager()为Activity中的方法
+		// 实例化DisplayMetrics方法1；注：getWindowManager()为Activity中的方法，该方法在Activity中才能使用
 		// DisplayMetrics displayMetrics = new DisplayMetrics();
 		// getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 

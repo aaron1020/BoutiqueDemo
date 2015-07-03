@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jie.example.camera;
+package jie.example.zxing.decode;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,7 +31,9 @@ import android.util.Log;
  * power. <br/>
  * <br/>
  * 
- * 该活动监控器全程监控扫描活跃状态，与CaptureActivity生命周期相同
+ * 该活动监控器全程监控扫描活跃状态，与CaptureActivity生命周期相同。活动监控器，用于省电，如果手机没有连接电源线，
+ * 那么当相机开启后如果一直处于不被使用状态则该服务会将当前activity关闭
+ * 。活动监控器全程监控扫描活跃状态，与CaptureActivity生命周期相同.每一次扫描过后都会重置该监控，即重新倒计时。
  */
 public final class InactivityTimer {
 
@@ -138,7 +140,6 @@ public final class InactivityTimer {
 				Log.i(TAG, "Finishing activity due to inactivity");
 				activity.finish();
 			} catch (InterruptedException e) {
-				// continue without killing
 			}
 			return null;
 		}

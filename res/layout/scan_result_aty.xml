@@ -5,9 +5,6 @@
     android:background="@android:color/background_light"
     android:orientation="vertical" >
 
-    <!-- 顶部条栏 -->
-    <include layout="@layout/actionbar_view" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +24,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/half_padding"
                 android:adjustViewBounds="true"
-                android:contentDescription="@string/scan_scan"
+                android:contentDescription="@string/scan_result"
                 android:gravity="right"
                 android:maxHeight="160dip"
                 android:maxWidth="160dip"
@@ -141,6 +138,7 @@
         android:layout_height="3dp" />
 
     <ScrollView
+        android:id="@+id/contents_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -158,5 +156,10 @@
                 android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jie.example.camera;
+package jie.example.zxing.decode;
 
 import android.app.Activity;
 import android.content.DialogInterface;

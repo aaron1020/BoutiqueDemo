@@ -74,12 +74,10 @@
     <string name="hv_left_title_month">单位:亿元</string>
 
     <!-- 二维码 -->
-    <string name="scan_type_qrcode">将二维码放入框内，即可自动扫描</string>
-    <string name="scan_type_barcode">将条形码放入框内，即可自动扫描</string>
+    <string name="scan_type">将%s放入框内，即可自动扫描</string>
     <string name="scan_qrcode">二维码</string>
     <string name="scan_barcode">条形码</string>
     <string name="scan_help">帮助</string>
-    <string name="scan_scan">扫一扫</string>
     <string name="scan_result">扫描结果</string>
     <string name="scan_content">扫描内容</string>
     <string name="scan_back">返回</string>

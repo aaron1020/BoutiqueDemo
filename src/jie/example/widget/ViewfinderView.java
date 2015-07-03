@@ -1,4 +1,20 @@
-package jie.example.camera;
+/*
+ * Copyright (C) 2008 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package jie.example.widget;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,6 +22,7 @@ import java.util.List;
 
 import jie.example.boutique.CaptureActivity;
 import jie.example.boutique.R;
+import jie.example.zxing.camera.CameraManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -192,17 +209,16 @@ public final class ViewfinderView extends View {
 			if ((CaptureActivity.currentState != null)
 					&& (CaptureActivity.currentState.equals("onecode"))) {
 				canvas.drawText(
-						getResources().getString(R.string.scan_type_barcode),
-						frame.left - 150, frame.bottom + 40 * density - 40,
-						paint);
+						getResources().getString(R.string.scan_barcode),
+						frame.left + 8, (float) (frame.bottom + (float) 40
+								* density), paint);
 
 			}
 			if ((CaptureActivity.currentState != null)
 					&& (CaptureActivity.currentState.equals("qrcode"))) {
-				canvas.drawText(
-						getResources().getString(R.string.scan_type_qrcode),
-						frame.left - 150, frame.bottom + 40 * density - 40,
-						paint);
+				canvas.drawText(getResources().getString(R.string.scan_qrcode),
+						frame.left - 20, (float) (frame.bottom + (float) 40
+								* density), paint);
 			}
 
 			List<ResultPoint> currentPossible = possibleResultPoints;

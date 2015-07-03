@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jie.example.camera;
+package jie.example.zxing.camera;
 
 
 import android.graphics.Point;

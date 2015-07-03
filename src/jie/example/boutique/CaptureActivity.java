@@ -8,14 +8,15 @@ import java.util.Map;
 import java.util.Vector;
 
 import jie.example.boutique.R;
-import jie.example.camera.BeepManager;
-import jie.example.camera.CameraManager;
-import jie.example.camera.CaptureActivityHandler;
-import jie.example.camera.DecodeThread;
-import jie.example.camera.FinishListener;
-import jie.example.camera.InactivityTimer;
-import jie.example.camera.ViewfinderView;
 import jie.example.utils.LogUtil;
+import jie.example.utils.ToastUtil;
+import jie.example.widget.ViewfinderView;
+import jie.example.zxing.camera.BeepManager;
+import jie.example.zxing.camera.CameraManager;
+import jie.example.zxing.decode.CaptureActivityHandler;
+import jie.example.zxing.decode.DecodeThread;
+import jie.example.zxing.decode.FinishListener;
+import jie.example.zxing.decode.InactivityTimer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,6 +30,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -48,24 +50,17 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 					ResultMetadataType.ERROR_CORRECTION_LEVEL,
 					ResultMetadataType.POSSIBLE_COUNTRY);
 	private boolean hasSurface;
-	private BeepManager beepManager;// 声音震动管理器。如果扫描成功后可以播放一段音频，也可以震动提醒，可以通过配置来决定扫描成功后的行为。
+	private BeepManager mBeepManager;// 声音震动管理器。如果扫描成功后可以播放一段音频，也可以震动提醒，可以通过配置来决定扫描成功后的行为。
 	public static String currentState = "qrcode";// 条形码二维码选择状态
-	private String characterSet;
 
 	private SurfaceView mSurfaceView;
 	private SurfaceHolder mSurfaceHolder;
-	private ViewfinderView viewfinderView;
+	private ViewfinderView mViewfinderView;
 	private TextView mActivityTitle;
-	private TextView mTextQrcode;
-	private TextView mTextBarcode;
-
-	/**
-	 * 活动监控器，用于省电，如果手机没有连接电源线，那么当相机开启后如果一直处于不被使用状态则该服务会将当前activity关闭。
-	 * 活动监控器全程监控扫描活跃状态，与CaptureActivity生命周期相同.每一次扫描过后都会重置该监控，即重新倒计时。
-	 */
-	private InactivityTimer inactivityTimer;
-	private CameraManager cameraManager;
-	private Vector<BarcodeFormat> decodeFormats;// 编码格式
+	private TextView mTextQrcode, mTextBarcode, mTextHelp;
+	private InactivityTimer mInactivityTimer;
+	private CameraManager mCameraManager;
+	private Vector<BarcodeFormat> mDecodeFormats;// 编码格式
 	private CaptureActivityHandler mHandler;// 解码线程
 
 	private OnClickListener mClickListener = new OnClickListener() {
@@ -74,21 +69,26 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 			switch (v.getId()) {
 			case R.id.item_qrcode:
 				currentState = "qrcode";
-				mTextQrcode.setSelected(true);// 设置选中项的图片：方法1(前提：需要在图片选择器中的XML文件中添加state_selected状态为true)
-				mTextBarcode.setSelected(false);
+				mTextQrcode.setSelected(true);// 设置选中项的选中图片：方法1(前提：需要在图片选择器中的XML文件中添加state_selected状态为true)
 				// 设置选中项的图片：方法2
 				// Drawable drawable = getResources().getDrawable(
 				// R.drawable.scan_qrcode_click);
 				// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
 				// drawable.getMinimumHeight());
 				// mQrcode.setCompoundDrawables(null, drawable, null, null);
+				mTextBarcode.setSelected(false);
+				mActivityTitle.setText(mTextQrcode.getText().toString());
 				qrcodeSetting();
 				break;
 			case R.id.item_onecode:
 				currentState = "onecode";
 				mTextQrcode.setSelected(false);
 				mTextBarcode.setSelected(true);
+				mActivityTitle.setText(mTextBarcode.getText().toString());
 				onecodeSetting();
+				break;
+			case R.id.item_help:
+				ToastUtil.showToast(mTextHelp.getText().toString());
 				break;
 			default:
 				break;
@@ -104,58 +104,40 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 		 * 若不设置FEATURE_NO_TITLE或沒有在功能清单文件中设置Activity的主题样式为Theme.NoTitleBar，
 		 * 则扫描效果会大打折扣，甚至会扫描不出。
 		 */
-		// requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.capture_aty);
-		initComponent();
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.scan_code_aty);
 		initView();
-
+		loadingData();
 	}
 
-	/**
-	 * 初始化功能组件
-	 */
-	private void initComponent() {
-		hasSurface = false;
-		inactivityTimer = new InactivityTimer(this);
-		beepManager = new BeepManager(this);
-		cameraManager = new CameraManager(getApplication());
-	}
-
-	/**
-	 * 初始化视图
-	 */
 	private void initView() {
 		mActivityTitle = (TextView) findViewById(R.id.actionbar_title);
 		mSurfaceView = (SurfaceView) findViewById(R.id.capture_surface_view);
+		mViewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		mTextBarcode = (TextView) findViewById(R.id.item_onecode);
 		mTextQrcode = (TextView) findViewById(R.id.item_qrcode);
-
-		mActivityTitle.setText(R.string.scan_scan);
-		mTextBarcode.setOnClickListener(mClickListener);
-		mTextQrcode.setOnClickListener(mClickListener);
-		mTextQrcode.setSelected(true);
-		
-		/**
-		 * 主要对相机进行初始化工作
-		 */
-		inactivityTimer.onActivity();
-		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-		viewfinderView.setCameraManager(cameraManager);
+		mTextHelp = (TextView) findViewById(R.id.item_help);
+		mInactivityTimer = new InactivityTimer(this);
+		mBeepManager = new BeepManager(this);
+		mCameraManager = new CameraManager(this);
 		mSurfaceHolder = mSurfaceView.getHolder();
-		qrcodeSetting();
-		if (hasSurface) {
-			initCamera(mSurfaceHolder);
-		} else {
-			// 如果SurfaceView已经渲染完毕，会回调surfaceCreated，在surfaceCreated中调用initCamera()
-			mSurfaceHolder.addCallback(this);
-		}
-		// 加载声音配置，其实在BeemManager的构造器中也会调用该方法，即在onCreate的时候会调用一次
-		beepManager.updatePrefs();
-		// 恢复活动监控器
-		inactivityTimer.onResume();
 	}
 
-	
+	private void loadingData() {
+		mTextQrcode.setOnClickListener(mClickListener);
+		mTextBarcode.setOnClickListener(mClickListener);
+		mTextHelp.setOnClickListener(mClickListener);
+		mActivityTitle.setText(R.string.scan_qrcode);
+		mTextQrcode.setSelected(true);
+
+		mInactivityTimer.onActivity();
+		mViewfinderView.setCameraManager(mCameraManager);
+		mSurfaceHolder.addCallback(this);
+		// 恢复活动监控器
+		mInactivityTimer.onResume();
+
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -163,35 +145,28 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	}
 
 	public void drawViewfinder() {
-		viewfinderView.drawViewfinder();
+		mViewfinderView.drawViewfinder();
 	}
 
 	/**
 	 * 初始化摄像头。打开摄像头，检查摄像头是否被开启及是否被占用
-	 * 
-	 * @param surfaceHolder
 	 */
 	private void initCamera(SurfaceHolder surfaceHolder) {
-		if (surfaceHolder == null) {
-			throw new IllegalStateException("No SurfaceHolder provided");
-		}
-		if (cameraManager.isOpen()) {
-			LogUtil.w(TAG,
-					"initCamera() while already open -- late SurfaceView callback?");
+		if (mCameraManager.isOpen()) {
+			LogUtil.i(TAG, "back's camera() is already open");
 			return;
 		}
 		try {
-			cameraManager.openDriver(surfaceHolder);
-			// Creating the mHandler starts the preview, which can also throw a
-			// RuntimeException.
+			mCameraManager.openDriver(surfaceHolder);
+			// Creating the mHandler starts the preview
 			if (mHandler == null) {
-				mHandler = new CaptureActivityHandler(this, decodeFormats,
-						characterSet, cameraManager);
+				mHandler = new CaptureActivityHandler(this, mDecodeFormats,
+						null, mCameraManager);
 			}
 		} catch (Exception e) {
 			// Barcode Scanner has seen crashes in the wild of this variety:
 			// java.?lang.?RuntimeException: Fail to connect to camera service
-			LogUtil.w(TAG,
+			LogUtil.e(TAG,
 					"Unexpected error initializing camera" + e.toString());
 			displayFrameworkBugMessageAndExit();
 		}
@@ -221,13 +196,11 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 			mHandler = null;
 		}
 		// 暂停活动监控器
-		inactivityTimer.onPause();
+		mInactivityTimer.onPause();
 		// 关闭摄像头
-		cameraManager.closeDriver();
+		mCameraManager.closeDriver();
 		if (!hasSurface) {
-			SurfaceView surfaceView = (SurfaceView) findViewById(R.id.capture_surface_view);
-			SurfaceHolder surfaceHolder = surfaceView.getHolder();
-			surfaceHolder.removeCallback(this);
+			mSurfaceHolder.removeCallback(this);
 		}
 	}
 
@@ -238,7 +211,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	protected void onDestroy() {
 		// 停止活动监控器
 		super.onDestroy();
-		inactivityTimer.shutdown();
+		mInactivityTimer.shutdown();
 	}
 
 	public void setLeftBtnClick(View view) {
@@ -253,14 +226,14 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	 * @param scaleFactor
 	 */
 	public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
-		inactivityTimer.onActivity();
+		mInactivityTimer.onActivity();
 
 		boolean fromLiveScan = barcode != null;
 		if (fromLiveScan) {
 
 			// Then not from history, so beep/vibrate and we have an image to
 			// draw on
-			beepManager.playBeepSoundAndVibrate();
+			mBeepManager.playBeepSoundAndVibrate();
 			drawResultPoints(barcode, scaleFactor, rawResult);
 		}
 		DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT,
@@ -345,31 +318,31 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	}
 
 	private void onecodeSetting() {
-		decodeFormats = new Vector<BarcodeFormat>(7);
-		decodeFormats.clear();
-		decodeFormats.addAll(DecodeThread.ONE_D_FORMATS);
+		mDecodeFormats = new Vector<BarcodeFormat>(7);
+		mDecodeFormats.clear();
+		mDecodeFormats.addAll(DecodeThread.ONE_D_FORMATS);
 		if (null != mHandler) {
-			mHandler.setDecodeFormats(decodeFormats);
+			mHandler.setDecodeFormats(mDecodeFormats);
 		}
 
-		viewfinderView.refreshDrawableState();
-		cameraManager.setManualFramingRect(360, 222);
-		viewfinderView.refreshDrawableState();
+		mViewfinderView.refreshDrawableState();
+		mCameraManager.setManualFramingRect(360, 222);
+		mViewfinderView.refreshDrawableState();
 
 	}
 
 	private void qrcodeSetting() {
-		decodeFormats = new Vector<BarcodeFormat>(2);
-		decodeFormats.clear();
-		decodeFormats.add(BarcodeFormat.QR_CODE);
-		decodeFormats.add(BarcodeFormat.DATA_MATRIX);
+		mDecodeFormats = new Vector<BarcodeFormat>(2);
+		mDecodeFormats.clear();
+		mDecodeFormats.add(BarcodeFormat.QR_CODE);
+		mDecodeFormats.add(BarcodeFormat.DATA_MATRIX);
 		if (null != mHandler) {
-			mHandler.setDecodeFormats(decodeFormats);
+			mHandler.setDecodeFormats(mDecodeFormats);
 		}
 
-		viewfinderView.refreshDrawableState();
-		cameraManager.setManualFramingRect(300, 300);
-		viewfinderView.refreshDrawableState();
+		mViewfinderView.refreshDrawableState();
+		mCameraManager.setManualFramingRect(560, 560);
+		mViewfinderView.refreshDrawableState();
 	}
 
 	@Override
@@ -397,7 +370,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	 * 闪光灯调节器。自动检测环境光线强弱并决定是否开启闪光灯
 	 */
 	public ViewfinderView getViewfinderView() {
-		return viewfinderView;
+		return mViewfinderView;
 	}
 
 	public Handler getHandler() {
@@ -405,7 +378,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	}
 
 	public CameraManager getCameraManager() {
-		return cameraManager;
+		return mCameraManager;
 	}
 
 	/**

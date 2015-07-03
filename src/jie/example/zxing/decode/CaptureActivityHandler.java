@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package jie.example.camera;
+package jie.example.zxing.decode;
 
 import java.util.Collection;
 import java.util.Vector;
 
 import jie.example.boutique.CaptureActivity;
 import jie.example.boutique.R;
+import jie.example.zxing.camera.CameraManager;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;

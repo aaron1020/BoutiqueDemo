@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package jie.example.camera;
+package jie.example.zxing.decode;
+
+import jie.example.widget.ViewfinderView;
 
 import com.google.zxing.ResultPoint;
 import com.google.zxing.ResultPointCallback;

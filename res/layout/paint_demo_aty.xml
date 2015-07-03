@@ -16,11 +16,20 @@
         </RelativeLayout>
 
         <jie.example.widget.PaintDemoView
+            android:id="@+id/paint_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/paint_view_container"
             android:layout_margin="4dip" >
         </jie.example.widget.PaintDemoView>
+
+        <RelativeLayout
+            android:id="@+id/surface_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/paint_view"
+            android:layout_margin="4dip" >
+        </RelativeLayout>
     </RelativeLayout>
 
 </ScrollView>

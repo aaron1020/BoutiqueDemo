@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jie.example.camera;
+package jie.example.zxing.decode;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Hashtable;
