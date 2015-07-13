@@ -35,6 +35,7 @@
             histogram:rightMaxScale="120"
             histogram:rightScaleNum="6"
             histogram:showAverageLine="true"
+            histogram:showBrokenLine="true"
             histogram:showLeftTitle="true"
             histogram:showRightScale="true"
             histogram:showTopSubTitle="true"

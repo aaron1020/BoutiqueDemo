@@ -57,7 +57,7 @@ public class HistogramViewActivity extends BasicActivity {
 
 		mHistogramViewChild = new HistogramView(this,
 				getString(R.string.hv_top_main_title), mHistogramEntityList,
-				100, 5, true, true, true, false);
+				100, 5, true, true, true, false, false);
 		mHistogramViewChild
 				.setTopSubTitleValue(getString(R.string.hv_top_sub_title));
 		mHistogramViewChild

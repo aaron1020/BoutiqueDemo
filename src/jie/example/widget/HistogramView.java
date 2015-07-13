@@ -35,8 +35,7 @@ import android.widget.ImageView.ScaleType;
  */
 @SuppressLint("HandlerLeak")
 public class HistogramView extends LinearLayout {
-
-	private static final String TAG = "HistogramView";
+	private static final String TAG = HistogramView.class.getSimpleName();
 	/**
 	 * 柱状图(不包括Y轴刻度线和柱体名称)的顶边距
 	 */
@@ -105,6 +104,10 @@ public class HistogramView extends LinearLayout {
 	 * 是否显示平均线
 	 */
 	private boolean isShowAverageLine;
+	/**
+	 * 是否显示折线图
+	 */
+	private boolean isShowBrokenLine;
 	/**
 	 * mHistogramViewWidth：HistogramView的宽度；mHistogramViewHeight：
 	 * HistogramView的高度
@@ -239,12 +242,14 @@ public class HistogramView extends LinearLayout {
 	 * @param isShowRightSacle
 	 *            是否显示右侧刻度：如果需要显示，则需另外setRightScaleMaX(int)和setRightScaleNum(int
 	 *            )方法，分别设置右边刻度的最大值和数量。
+	 * @param isShowBrokenLine
+	 *            是否显示拆线图
 	 */
 	public HistogramView(Context context, String topMainTitle,
 			ArrayList<HistogramEntity> histogramEntityList, int yPivotMaxScale,
 			int yPivotScaleNum, boolean isShowTopSubTitle,
 			boolean isShowLeftTitle, boolean isShowAverageLine,
-			boolean isShowRightSacle) {
+			boolean isShowRightSacle, boolean isShowBrokenLine) {
 		super(context);
 		mTopMainTitle = topMainTitle;
 		mHistogramEntityList = histogramEntityList;
@@ -254,6 +259,7 @@ public class HistogramView extends LinearLayout {
 		this.isShowLeftTitle = isShowLeftTitle;
 		this.isShowAverageLine = isShowAverageLine;
 		this.isShowRightSacle = isShowRightSacle;
+		this.isShowBrokenLine = isShowBrokenLine;
 		initView(context);
 	}
 
@@ -286,6 +292,8 @@ public class HistogramView extends LinearLayout {
 					R.styleable.HistogramView_showAverageLine, false);
 			isShowRightSacle = typedArray.getBoolean(
 					R.styleable.HistogramView_showRightScale, false);
+			isShowBrokenLine = typedArray.getBoolean(
+					R.styleable.HistogramView_showBrokenLine, false);
 			mRightScaleMaX = typedArray.getInteger(
 					R.styleable.HistogramView_rightMaxScale, 0);
 			mRightScaleNum = typedArray.getInteger(
@@ -554,6 +562,9 @@ public class HistogramView extends LinearLayout {
 				histogramCanvas.setBitmap(mBitmapHistogram);
 				mPointList.clear();
 
+				Path path = new Path();
+				boolean moveTo = true;
+
 				for (int i = 0; i < listSize; i++) {
 					// 绘制柱体;(mYPivotHeight / mYPivotMaxScale)为单位刻度值占有多少的高度
 					float stopY = (mYPivotHeight - mYPivotHeight
@@ -571,6 +582,16 @@ public class HistogramView extends LinearLayout {
 					mPointList.add(new Point(startX, stopX, mYPivotHeight,
 							stopY));
 
+					if (isShowBrokenLine) {
+						histogramCanvas.drawCircle(xValue, stopY, 3,
+								getPaint(R.color.point_yellow, 20));
+						if (moveTo) {
+							path.moveTo(xValue, stopY);
+							moveTo = false;
+						} else {
+							path.lineTo(xValue, stopY);
+						}
+					}
 					// 绘制纵向网格线，不包括最左边的Y轴刻度线
 					histogramCanvas.drawLine(stopX, mYPivotHeight, stopX, 0,
 							getGridPaint());
@@ -602,6 +623,14 @@ public class HistogramView extends LinearLayout {
 						histogramCanvas.drawCircle(xValue, cy - 1, 3,
 								getPaint(R.color.eagle_four, 20));// 减1是因为(①Ⅰ)处减了1
 					}
+				}
+
+				if (isShowBrokenLine) {
+					Paint paint = getPaint();
+					paint.setStyle(Paint.Style.STROKE);
+					paint.setColor(mResources.getColor(R.color.point_yellow));
+					paint.setStrokeWidth(2);
+					histogramCanvas.drawPath(path, paint);
 				}
 
 				if (isShowAverageLine) {

@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="CascadeLayout">
-        <attr name="horizontal_spacing" format="dimension" />
-        <attr name="vertical_spacing" format="dimension" />
-    </declare-styleable>
-    <declare-styleable name="CascadeLayout_LayoutParams">
-        <attr name="layout_vertical_spacing" format="dimension" />
-    </declare-styleable>
     <!-- HistogramView：类名 -->
     <declare-styleable name="HistogramView">
         <attr name="yPivotMaxScale" format="integer" />
@@ -21,6 +14,14 @@
         <attr name="rightScaleNum" format="integer" />
         <attr name="showRightScale" format="boolean" />
         <attr name="showAverageLine" format="boolean" />
+        <attr name="showBrokenLine" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CascadeLayout">
+        <attr name="horizontal_spacing" format="dimension" />
+        <attr name="vertical_spacing" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="CascadeLayout_LayoutParams">
+        <attr name="layout_vertical_spacing" format="dimension" />
     </declare-styleable>
     <declare-styleable name="GaugeView">
         <attr name="showOuterShadow" format="boolean" />
