@@ -2,12 +2,14 @@ package jie.example.boutique;
 
 import jie.example.constant.Constant;
 import jie.example.utils.LogUtil;
+import jie.example.utils.ToastUtil;
 import jie.example.widget.WaterWaveViewLayout;
 import jie.example.widget.WaterWaveViewLayout.OnPunshCardListener;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -21,7 +23,8 @@ import android.widget.ViewSwitcher.ViewFactory;
  */
 public class BoutiqueActivity extends BasicActivity {
 
-	private static final String TAG = "BoutiqueActivity";
+	private static final String TAG = BoutiqueActivity.class.getSimpleName();
+	private static final int TEST_REQUEST_CODE = 101;
 	private BoutiqueActivity mActivity;
 	private TextSwitcher mTextSwitcherOval;
 	private TextSwitcher mTextSwitcherCircle;
@@ -30,6 +33,7 @@ public class BoutiqueActivity extends BasicActivity {
 	private String[] mTextLong = { "111111", "222222", "333333", "444444" };
 	private String[] mTextShort = { "1", "2", "3", "4" };
 	private int mTextOvalId = 0;
+	private int mPressNumberCount = 0;
 
 	@SuppressLint("InlinedApi")
 	@Override
@@ -199,7 +203,9 @@ public class BoutiqueActivity extends BasicActivity {
 	public void setOnClick(View view) {
 		switch (view.getId()) {
 		case R.id.cascade_layout:
-			startActivity(new Intent(this, CascadeLayoutActivity.class));
+			Intent intent = new Intent(this, CascadeLayoutActivity.class);
+			intent.putExtra("testKey", "testValue");
+			startActivityForResult(intent, TEST_REQUEST_CODE);
 			break;
 
 		case R.id.transparent_menu:
@@ -234,6 +240,19 @@ public class BoutiqueActivity extends BasicActivity {
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == TEST_REQUEST_CODE) {
+			if (data != null) {
+				LogUtil.i(TAG, data
+						.getStringExtra(CascadeLayoutActivity.TEST_RESULT_KEY));
+			} else {
+				LogUtil.i(TAG, "data is null");
+			}
+		}
+	}
+
+	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		LogUtil.globalInfoLog("(BoutiqueActivity) onSaveInstanceState(Bundle)");
@@ -249,6 +268,18 @@ public class BoutiqueActivity extends BasicActivity {
 				Constant.SAVE_INSTANCE_STATE, "defaultValue");
 		LogUtil.globalInfoLog("(BoutiqueActivity) onRestoreInstanceState(Bundle)-->"
 				+ outStateValue);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mPressNumberCount < 3) {
+				ToastUtil.showToast(mPressNumberCount + "");
+				mPressNumberCount++;
+				return false;// 效果同return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }
