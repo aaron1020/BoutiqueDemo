@@ -564,7 +564,6 @@ public class HistogramView extends LinearLayout {
 
 				Path path = new Path();
 				boolean moveTo = true;
-
 				for (int i = 0; i < listSize; i++) {
 					// 绘制柱体;(mYPivotHeight / mYPivotMaxScale)为单位刻度值占有多少的高度
 					float stopY = (mYPivotHeight - mYPivotHeight
@@ -583,8 +582,10 @@ public class HistogramView extends LinearLayout {
 							stopY));
 
 					if (isShowBrokenLine) {
+						// 绘制折线上的转折点
 						histogramCanvas.drawCircle(xValue, stopY, 3,
-								getPaint(R.color.point_yellow, 20));
+								getPaint(R.color.hv_broken_line, 20));
+						// 设置折线路径走向
 						if (moveTo) {
 							path.moveTo(xValue, stopY);
 							moveTo = false;
@@ -592,6 +593,7 @@ public class HistogramView extends LinearLayout {
 							path.lineTo(xValue, stopY);
 						}
 					}
+
 					// 绘制纵向网格线，不包括最左边的Y轴刻度线
 					histogramCanvas.drawLine(stopX, mYPivotHeight, stopX, 0,
 							getGridPaint());
@@ -626,9 +628,10 @@ public class HistogramView extends LinearLayout {
 				}
 
 				if (isShowBrokenLine) {
+					// 绘制折线图
 					Paint paint = getPaint();
 					paint.setStyle(Paint.Style.STROKE);
-					paint.setColor(mResources.getColor(R.color.point_yellow));
+					paint.setColor(mResources.getColor(R.color.hv_broken_line));
 					paint.setStrokeWidth(2);
 					histogramCanvas.drawPath(path, paint);
 				}

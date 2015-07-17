@@ -79,7 +79,8 @@ public class TransparentMenuActivity extends BasicActivity {
 					startActivity(new Intent(mActivity,
 							HistogramViewActivity.class));
 				} else if (msg.arg1 == R.id.transparent_menu_item3) {
-					startActivity(new Intent(mActivity, PaintDemoActivity.class));
+					startActivity(new Intent(mActivity,
+							PaintDemoActivity.class));
 				} else if (msg.arg1 == R.id.transparent_menu_item2) {
 					startActivity(new Intent(mActivity, CaptureActivity.class));
 				} else {

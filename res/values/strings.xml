@@ -61,6 +61,8 @@
     <string name="refresh_map_view">刷新地图</string>
     <!-- PaintDemoView文字 -->
     <string name="paint_text">画字</string>
+    <string name="paint_text_path">沿着路径画字</string>
+    <string name="paint_text_path_2">TEXTPATH</string>
 
     <!-- 柱状图表 -->
     <string name="histogram_view_aty">柱状图表</string>
@@ -89,4 +91,6 @@
     <string name="msg_default_time">时间</string>
     <string name="msg_default_type">类型</string>
 
-</resources>
+    <!-- 彩色二维码 -->
+    <string name="scanning_view_aty">彩色二维码</string>
+</resources>

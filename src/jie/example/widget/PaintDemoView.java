@@ -2,6 +2,7 @@ package jie.example.widget;
 
 import jie.example.boutique.R;
 import jie.example.constant.Constant;
+import jie.example.utils.LogUtil;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,13 +13,14 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
 public class PaintDemoView extends View {
-
+	private static final String TAG = PaintDemoView.class.getSimpleName();
 	private static final int Y_BASIC_COORDINATE = 50;
 	private Resources mResources;
 
@@ -47,13 +49,13 @@ public class PaintDemoView extends View {
 		Paint paint = getPaint(44.5f);
 		String paintText = mResources.getString(R.string.paint_text);
 		float paintTextWidth = paint.measureText(paintText);// 根据画笔，测出文字的宽度
+		LogUtil.i(TAG, "paintTextWidth = " + paintTextWidth);
 		// (Constant.screenWidth - paintTextWidth) / 2：水平居中
 		canvas.drawText(paintText, (Constant.screenWidth - paintTextWidth) / 2,
 				Y_BASIC_COORDINATE, paint);
 
 		paint = getPaint();
 		paint.setStyle(Paint.Style.STROKE);// 空心，默认是实心。
-
 		// 画圆-->float cx:圆心的X轴坐标；float cy:圆心的Y轴坐标；float radius:半径
 		canvas.drawCircle(Constant.screenWidth / 2, Y_BASIC_COORDINATE * 2, 36,
 				paint);
@@ -172,7 +174,20 @@ public class PaintDemoView extends View {
 		path.quadTo(500, 600, 880, 800); // 设置贝塞尔曲线的控制点坐标和终点坐标
 		canvas.drawPath(path, paint);
 
-		invalidate();
+		// 沿着路径画字
+		path = new Path();
+		paint = getPaint(40.5f);
+		path.moveTo(50, 900);
+		path.lineTo(50, 1150);
+		path.lineTo(50, 900);
+		Rect bounds = new Rect();
+		String paintTextPath = mResources.getString(R.string.paint_text_path);
+		paint.getTextBounds(paintTextPath, 0, paintTextPath.length(), bounds);
+		int textWidth = bounds.width();
+		int textHeiht = bounds.height();
+		LogUtil.i(TAG, "textWidth = " + textWidth);
+		LogUtil.i(TAG, "textHeiht = " + textHeiht);
+		canvas.drawTextOnPath(paintTextPath, path, 0, 0, paint);
 	}
 
 	/**
