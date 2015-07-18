@@ -94,4 +94,5 @@
     <!-- 彩色二维码 -->
     <string name="scanning_view_aty">彩色二维码</string>
     <string name="force_down_line">强制下线 </string>
+    <string name="remain_email_name">credential.helper</string>
 </resources>
