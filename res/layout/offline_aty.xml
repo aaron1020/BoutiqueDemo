@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OfflineActivity" >
+
+    <Button
+        android:id="@+id/login_exit_btn"
+        style="@style/MatchParentButtonStyle"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="12dip"
+        android:text="@string/force_offline" />
+
+</RelativeLayout>

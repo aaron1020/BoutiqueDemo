@@ -1,6 +1,6 @@
 package jie.example.boutique;
 
-import jie.example.entity.ActivityCollector;
+import jie.example.manager.ActivityCollector;
 import jie.example.utils.LogUtil;
 import android.os.Bundle;
 import android.view.View;

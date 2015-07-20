@@ -16,6 +16,7 @@
     <string name="add">添加</string>
     <string name="hours">小时</string>
     <string name="exit_app">退出应用</string>
+    <string name="ok">确定</string>
 
     <!-- ActionBar -->
     <string name="actionbar_back">ActionBar返回键</string>
@@ -93,6 +94,13 @@
 
     <!-- 彩色二维码 -->
     <string name="scanning_view_aty">彩色二维码</string>
-    <string name="force_down_line">强制下线 </string>
-    <string name="remain_email_name">credential.helper</string>
-</resources>
+    <string name="force_offline">强制下线功能</string>
+    <string name="force_offline_warn">警告</string>
+    <string name="force_offline_warn_content">您已被强制下线，请重新登录！</string>
+    <string name="user_login">登录</string>
+    <string name="user_name">用户名</string>
+    <string name="user_password">密%s码</string>
+    <string name="user_name_hint">请输入用户名</string>
+    <string name="user_password_hint">请输入密码</string>
+
+</resources>

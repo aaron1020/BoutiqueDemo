@@ -1,6 +1,6 @@
 package jie.example.utils;
 
-import jie.example.constant.BoutiqueApp;
+import jie.example.manager.BoutiqueApp;
 import android.annotation.SuppressLint;
 import android.view.Gravity;
 import android.widget.Toast;

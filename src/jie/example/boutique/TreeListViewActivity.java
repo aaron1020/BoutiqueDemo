@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jie.example.adapter.TreeListViewAdapter;
-import jie.example.entity.ActivityCollector;
+import jie.example.manager.ActivityCollector;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;

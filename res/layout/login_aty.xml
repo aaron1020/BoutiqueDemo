@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LogingActivity" >
+
+    <LinearLayout
+        android:id="@+id/login_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:background="@drawable/radius_bg"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip" >
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/user_name"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/login_edit_name"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:hint="@string/user_name_hint"
+                android:paddingLeft="6dip"
+                android:paddingRight="6dip"
+                android:singleLine="true"
+                android:textColor="#4F4F4F"
+                android:textColorHint="@color/darker_gray" />
+        </LinearLayout>
+
+        <include layout="@layout/view_divide_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip" >
+
+            <TextView
+                android:id="@+id/login_text_password"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:gravity="right"
+                android:text="@string/user_password"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/login_edit_password"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@color/white"
+                android:hint="@string/user_password_hint"
+                android:inputType="textPassword"
+                android:paddingLeft="6dip"
+                android:paddingRight="6dip"
+                android:singleLine="true"
+                android:textColor="#4F4F4F"
+                android:textColorHint="@color/darker_gray" />
+
+            <ImageButton
+                android:id="@+id/login_iv_password_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="6dip"
+                android:layout_marginRight="6dip"
+                android:background="@null"
+                android:contentDescription="@string/user_password"
+                android:onClick="setOnClick"
+                android:src="@drawable/jui_link_http" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        style="@style/MatchParentButtonStyle"
+        android:layout_below="@id/login_input_layout"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="12dip"
+        android:text="@string/user_login" />
+
+</RelativeLayout>

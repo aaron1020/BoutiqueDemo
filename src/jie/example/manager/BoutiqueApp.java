@@ -1,6 +1,7 @@
-package jie.example.constant;
+package jie.example.manager;
 
 import jie.example.boutique.R;
+import jie.example.constant.Constant;
 import jie.example.utils.LogUtil;
 import android.app.Application;
 import android.content.Context;

@@ -33,7 +33,7 @@ public class BoutiqueActivity extends BasicActivity {
 	private String[] mTextLong = { "111111", "222222", "333333", "444444" };
 	private String[] mTextShort = { "1", "2", "3", "4" };
 	private int mTextOvalId = 0;
-	private int mPressNumberCount = 0;
+	private int mPressNumberCount = 1;
 
 	@SuppressLint("InlinedApi")
 	@Override
