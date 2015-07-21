@@ -90,7 +90,7 @@
                 android:background="@null"
                 android:contentDescription="@string/user_password"
                 android:onClick="setOnClick"
-                android:src="@drawable/jui_link_http" />
+                android:src="@drawable/login_edit_show_password" />
         </RelativeLayout>
     </LinearLayout>
 
