@@ -23,22 +23,6 @@
     <color name="eagle_three">#42F976</color>
     <color name="eagle_four">#08e08c</color>
     <color name="hv_broken_line">#488577</color>
-    <color name="none">#DFDFDF</color>
-    <color name="business">#508CA4</color>
-
-    <!-- 二维码 -->
-    <color name="contents_text">#ff000000</color>
-    <color name="encode_view">#ffffffff</color>
-    <color name="possible_result_points">#c0ffbd21</color>
-    <!-- Android standard ICS color -->
-    <color name="result_minor_text">#ffc0c0c0</color>
-    <color name="result_points">#c099cc00</color>
-    <!-- Android standard ICS color -->
-    <color name="result_text">#ffffffff</color>
-    <color name="result_view">#b0000000</color>
-    <color name="transparent">#00000000</color>
-    <color name="viewfinder_laser">#ffcc0000</color>
-    <!-- Android standard ICS color -->
-    <color name="viewfinder_mask">#60000000</color>
+    <color name="edit_text_color">#4F4F4F</color>
 
 </resources>

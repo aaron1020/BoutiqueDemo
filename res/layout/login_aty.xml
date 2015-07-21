@@ -10,98 +10,97 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="8dip"
-        android:layout_marginRight="8dip"
+        android:layout_marginLeft="@dimen/actionbar_title_margin"
+        android:layout_marginRight="@dimen/actionbar_title_margin"
         android:background="@drawable/radius_bg"
         android:gravity="center"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dip"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="8dip"
-            android:paddingRight="8dip" >
+            android:layout_height="@dimen/actionbar_height"
+            android:paddingLeft="@dimen/actionbar_title_margin"
+            android:paddingRight="@dimen/actionbar_title_margin" >
 
             <TextView
-                android:layout_width="0dip"
+                android:id="@+id/login_text_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:text="@string/user_name"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/exit_left_text_size" />
 
             <EditText
                 android:id="@+id/login_edit_name"
-                android:layout_width="0dip"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/login_text_name"
                 android:background="@color/white"
                 android:hint="@string/user_name_hint"
-                android:paddingLeft="6dip"
-                android:paddingRight="6dip"
+                android:paddingLeft="@dimen/actionbar_title_margin"
                 android:singleLine="true"
-                android:textColor="#4F4F4F"
+                android:textColor="@color/edit_text_color"
                 android:textColorHint="@color/darker_gray" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <include layout="@layout/view_divide_line" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dip"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="8dip"
-            android:paddingRight="8dip" >
+            android:layout_height="@dimen/actionbar_height"
+            android:paddingLeft="@dimen/actionbar_title_margin"
+            android:paddingRight="@dimen/actionbar_title_margin" >
 
             <TextView
                 android:id="@+id/login_text_password"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.9"
-                android:gravity="right"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:text="@string/user_password"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/exit_left_text_size" />
 
             <EditText
                 android:id="@+id/login_edit_password"
-                android:layout_width="0dip"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/login_iv_password_show"
+                android:layout_toRightOf="@id/login_text_password"
                 android:background="@color/white"
                 android:hint="@string/user_password_hint"
                 android:inputType="textPassword"
-                android:paddingLeft="6dip"
-                android:paddingRight="6dip"
+                android:paddingLeft="@dimen/actionbar_title_margin"
+                android:paddingRight="@dimen/actionbar_title_margin"
                 android:singleLine="true"
-                android:textColor="#4F4F4F"
+                android:textColor="@color/edit_text_color"
                 android:textColorHint="@color/darker_gray" />
 
             <ImageButton
                 android:id="@+id/login_iv_password_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginLeft="6dip"
-                android:layout_marginRight="6dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/radius_4dip"
                 android:background="@null"
                 android:contentDescription="@string/user_password"
                 android:onClick="setOnClick"
                 android:src="@drawable/jui_link_http" />
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/login_btn"
         style="@style/MatchParentButtonStyle"
         android:layout_below="@id/login_input_layout"
-        android:layout_marginLeft="8dip"
-        android:layout_marginRight="8dip"
-        android:layout_marginTop="12dip"
+        android:layout_marginLeft="@dimen/actionbar_title_margin"
+        android:layout_marginRight="@dimen/actionbar_title_margin"
+        android:layout_marginTop="@dimen/actionbar_divide_line_margin"
         android:text="@string/user_login" />
 
 </RelativeLayout>

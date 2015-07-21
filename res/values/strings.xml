@@ -76,24 +76,6 @@
     <string name="hv_top_sub_title_month">[主要指标]</string>
     <string name="hv_left_title_month">单位:亿元</string>
 
-    <!-- 二维码 -->
-    <string name="scan_type">将%s放入框内，即可自动扫描</string>
-    <string name="scan_qrcode">二维码</string>
-    <string name="scan_barcode">条形码</string>
-    <string name="scan_help">帮助</string>
-    <string name="scan_result">扫描结果</string>
-    <string name="scan_content">扫描内容</string>
-    <string name="scan_back">返回</string>
-    <string name="button_cancel">取消</string>
-    <string name="button_ok">确定</string>
-    <string name="msg_camera_framework_bug">抱歉，Android相机可能被占用，您可能需要重启设备。</string>
-    <string name="msg_default_format">格式</string>
-    <string name="msg_default_meta">元数据</string>
-    <string name="msg_default_time">时间</string>
-    <string name="msg_default_type">类型</string>
-
-    <!-- 彩色二维码 -->
-    <string name="scanning_view_aty">彩色二维码</string>
     <string name="force_offline">强制下线功能</string>
     <string name="force_offline_warn">警告</string>
     <string name="force_offline_warn_content">您已被强制下线，请重新登录！</string>
