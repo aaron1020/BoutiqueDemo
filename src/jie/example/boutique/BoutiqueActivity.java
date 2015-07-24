@@ -205,6 +205,10 @@ public class BoutiqueActivity extends BasicActivity {
 		case R.id.cascade_layout:
 			Intent intent = new Intent(this, CascadeLayoutActivity.class);
 			intent.putExtra("testKey", "testValue");
+			/*
+			 * startActivityForResult启动另一个Activity时，这个Activity的启动方式不能"singleTask"
+			 * ，不然会马上直接调用onActivityResult方法，返回的数据为空。
+			 */
 			startActivityForResult(intent, TEST_REQUEST_CODE);
 			break;
 
@@ -243,6 +247,7 @@ public class BoutiqueActivity extends BasicActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == TEST_REQUEST_CODE) {
+			LogUtil.i(TAG, "TEST_REQUEST_CODE");
 			if (data != null) {
 				LogUtil.i(TAG, data
 						.getStringExtra(CascadeLayoutActivity.TEST_RESULT_KEY));

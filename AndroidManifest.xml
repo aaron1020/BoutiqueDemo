@@ -30,11 +30,12 @@
         </activity>
         <activity android:name=".BasicActivity" />
         <activity android:name=".DynamicAddViewActivity" />
-        <activity android:name=".CascadeLayoutActivity" />
+        <activity
+            android:name=".CascadeLayoutActivity" />
         <activity android:name=".PaintDemoActivity" />
         <activity
             android:name=".TransparentMenuActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:theme="@style/TransparentStyleBottom" />
         <activity android:name=".TreeListViewActivity" />
         <activity android:name=".ChineseMapViewActivity" />
