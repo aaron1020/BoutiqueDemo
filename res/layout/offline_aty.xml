@@ -9,9 +9,7 @@
         android:id="@+id/login_exit_btn"
         style="@style/MatchParentButtonStyle"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="8dip"
-        android:layout_marginRight="8dip"
-        android:layout_marginTop="12dip"
+        android:layout_margin="8dip"
         android:text="@string/force_offline" />
 
 </RelativeLayout>

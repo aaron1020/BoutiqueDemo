@@ -5,7 +5,6 @@ import java.util.List;
 import jie.example.boutique.R;
 import jie.example.boutique.TreeListViewActivity;
 import jie.example.utils.StringUtil;
-
 import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;

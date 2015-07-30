@@ -17,11 +17,29 @@
         android:scrollingCache="false" />
 
     <Button
+        android:id="@+id/tl_btn_exit_app"
         style="@style/WrapContentButtonStyle"
         android:layout_below="@id/tree_listview"
         android:layout_centerHorizontal="true"
         android:layout_margin="4dip"
-        android:text="@string/exit_app" >
-    </Button>
+        android:text="@string/exit_app" />
+
+    <TextView
+        android:id="@+id/tl_text_vs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tl_btn_exit_app"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/transparent_menu_text_size" />
+
+    <!-- 1.ViewStub目前不支持merge标签；2.inflatedId为ViewStub调用inflate()后才返回的id，
+    如果想用通过findViewById找到该id对应的实例，会报空指针异常，但该值可以不用设置。 -->
+    <ViewStub
+        android:id="@+id/tl_vs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tl_text_vs"
+        android:inflatedId="@+id/tl_vs_inflate_id"
+        android:layout="@layout/offline_aty" />
 
 </RelativeLayout>
