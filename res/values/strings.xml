@@ -71,5 +71,6 @@
     <string name="inflate_only_invoke">inflate()只能执行一次</string>
     <string name="press_one_more">再按一次</string>
     <string name="text_show_vs_counter">%s 秒后显示ViewStub</string>
+    <string name="new_computer">新电脑</string>
 
 </resources>
