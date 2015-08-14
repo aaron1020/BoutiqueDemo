@@ -30,8 +30,7 @@
         </activity>
         <activity android:name=".BasicActivity" />
         <activity android:name=".DynamicAddViewActivity" />
-        <activity
-            android:name=".CascadeLayoutActivity" />
+        <activity android:name=".CascadeLayoutActivity" />
         <activity android:name=".PaintDemoActivity" />
         <activity
             android:name=".TransparentMenuActivity"
@@ -42,6 +41,7 @@
         <activity android:name=".HistogramViewActivity" />
         <activity android:name=".LogingActivity" />
         <activity android:name=".OfflineActivity" />
+        <activity android:name=".WriterActivity" />
 
         <receiver
             android:name=".receiver.ForceOfflineReceiver"

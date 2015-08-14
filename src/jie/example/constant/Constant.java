@@ -21,4 +21,5 @@ public class Constant {
 	public static final String SAVE_INSTANCE_STATE = "onSaveInstanceState";
 	public static final String TAG_GLOBAL = "BoutiqueApp";
 	public static final String DATE_FORMAT_SHORT_LINE = "yyyy-MM-dd";
+	public static final String APP_FOLDER = "Boutique";
 }

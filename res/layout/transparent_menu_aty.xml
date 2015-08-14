@@ -32,7 +32,7 @@
         android:layout_marginLeft="-25dp"
         android:layout_marginTop="4dip"
         android:drawableLeft="@drawable/transparent_menu_pic3"
-        android:text="@string/menu_paint_demo" />
+        android:text="@string/writer_aty" />
 
     <TextView
         android:id="@+id/transparent_menu_item2"
