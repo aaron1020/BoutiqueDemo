@@ -33,7 +33,6 @@ public class WriterActivity extends BasicActivity {
 		switch(view.getId()){
 		case R.id.btn_confirm:
 			mWriterView.savePanelText();
-			//mWriterView.changeBitmapBackBg();
 			break;
 		case R.id.btn_clear:
 			mWriterView.clearPanel();

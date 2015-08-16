@@ -13,6 +13,7 @@
     <color name="darker_gray">@android:color/darker_gray</color>
     <color name="stroke_color">#ACACAC</color>
     <color name="loading_dialog_bg">#88000000</color>
+    <color name="writer_panel_bg">#88FFFFFF</color>
     <color name="shape_oval_line">#E64949</color>
     <color name="shape_rectangle_line">#E5953F</color>
     <color name="histogram_view_sub_title">#F20231</color>

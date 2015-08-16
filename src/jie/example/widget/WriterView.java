@@ -3,8 +3,11 @@ package jie.example.widget;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import jie.example.boutique.R;
 import jie.example.utils.LogUtil;
+import jie.example.utils.StringUtil;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -27,12 +30,11 @@ import android.widget.LinearLayout;
 public class WriterView extends LinearLayout {
 	private static final String TAG = WriterView.class.getSimpleName();
 	private int mPanelWidth = 0, mPanelHeight = 0;
-	private Context mContext;
 	private Resources mResources;
 	private ImageView mIVPanel;
 	private Bitmap mBitmapPanel;
 	private Canvas mPaintCanvas;
-	private Path mTextPath = new Path();;
+	private Path mTextPath = new Path();
 	private Paint mTextPaint;
 	private StringBuilder mStrBuilder = new StringBuilder();
 
@@ -45,8 +47,8 @@ public class WriterView extends LinearLayout {
 		initView(context);
 	}
 
+	@SuppressLint("ResourceAsColor")
 	private void initView(Context context) {
-		mContext = context;
 		mResources = context.getResources();
 
 		mIVPanel = new ImageView(context);
@@ -54,7 +56,8 @@ public class WriterView extends LinearLayout {
 				LayoutParams.MATCH_PARENT);
 		params.gravity = Gravity.CENTER;
 		mIVPanel.setLayoutParams(params);
-		mIVPanel.setBackgroundColor(Color.WHITE);// 设置画板颜色为白色
+		mIVPanel.setBackgroundColor(mResources
+				.getColor(R.color.writer_panel_bg));// 设置画板颜色为白色
 
 		addView(mIVPanel);
 	}
@@ -72,14 +75,49 @@ public class WriterView extends LinearLayout {
 	/**
 	 * 保存手指运动轨迹
 	 */
-	private void saveTrack(String track) {
+	private void saveTrack() {
+		String track = mStrBuilder.toString();
+		if (StringUtil.isNotEmpty(track.trim())) {
+			LogUtil.i(TAG, "track = " + track);
+			try {
+				saveToSD("track_" + System.currentTimeMillis() + ".txt", track);
+				mStrBuilder.delete(0, mStrBuilder.length());
+			} catch (Exception e) {
+				LogUtil.e(TAG, TAG + "::saveTrack(String)::" + e.toString());
+			}
+		} else {
+			LogUtil.i(TAG, "track is null");
+		}
+	}
+
+	public void saveToSD(String fileName, String content) throws Exception {
+		if (Environment.MEDIA_MOUNTED.equals(Environment
+				.getExternalStorageState())) {
+			File file = new File(Environment.getExternalStorageDirectory(),
+					fileName);
+			OutputStream out = new FileOutputStream(file);
+			out.write(content.getBytes());
+			out.close();
+		}
 	}
 
 	@Override
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
 		LogUtil.i(TAG, TAG + "::onDetachedFromWindow()");
-		saveTrack(mStrBuilder.toString());
+		saveTrack();
+		releaseResource(mBitmapPanel, mPaintCanvas);
+		mTextPath = null;
+	}
+
+	/**
+	 * 回收Bitmap以及它对应的画布
+	 */
+	private void releaseResource(Bitmap bitmap, Canvas canvas) {
+		if (bitmap != null && !bitmap.isRecycled()) {
+			canvas = null;
+			bitmap.recycle();
+		}
 	}
 
 	private void drawHistogramView() {
@@ -92,16 +130,21 @@ public class WriterView extends LinearLayout {
 
 		mIVPanel.setOnTouchListener(mTouchListener);
 
-		getPaint();
+		getDefaultPaint();
 	}
 
-	private Paint getPaint() {
+	private Paint getDefaultPaint() {
 		mTextPaint = new Paint();
 		mTextPaint.setAntiAlias(true);// 抗(不显示)锯齿，让绘出来的物体更清晰
 		mTextPaint.setStyle(Paint.Style.STROKE);
-		mTextPaint.setStrokeWidth(10.0f);
 		mTextPaint.setColor(mResources.getColor(R.color.red));// 设置画笔的颜色
 		return mTextPaint;
+	}
+
+	private Paint getPaint(Paint paint, float scale) {
+		Paint p = paint;
+		p.setStrokeWidth(1 + 2.0f * scale);
+		return p;
 	}
 
 	/**
@@ -112,6 +155,7 @@ public class WriterView extends LinearLayout {
 			mTextPath.reset();
 			mPaintCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 			invalidate();
+			mStrBuilder.delete(0, mStrBuilder.length());// 把轨迹的坐标信息也给清掉
 		}
 	}
 
@@ -125,15 +169,19 @@ public class WriterView extends LinearLayout {
 		File file = null;
 		try {
 			savePath = Environment.getExternalStorageDirectory()
-					+ File.separator + System.currentTimeMillis() + ".png";
+					+ File.separator + System.currentTimeMillis()
+					+ ".png".trim();
 			file = new File(savePath);
 			fos = new FileOutputStream(file);
 			baos = new ByteArrayOutputStream();
 			mBitmapPanel.compress(Bitmap.CompressFormat.PNG, 100, baos);
-			byte[] b = baos.toByteArray();
-			if (b != null) {
-				fos.write(b);
+			byte[] data = baos.toByteArray();
+			if (data != null) {
+				fos.write(data);
 			}
+
+			saveTrack();
+			clearPanel();
 		} catch (Exception e) {
 			LogUtil.e(TAG, TAG + "::savePanelText()::" + e.toString());
 		} finally {
@@ -154,16 +202,21 @@ public class WriterView extends LinearLayout {
 	private OnTouchListener mTouchListener = new OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
+			LogUtil.i(TAG, "event.getPressure() = " + event.getPressure());
 			float x = event.getX();
 			float y = event.getY();
+
 			if (event.getAction() == MotionEvent.ACTION_DOWN) {
 				mTextPath.moveTo(x, y);
 			} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 				mTextPath.quadTo(x, y, x, y); // 画线
-				mPaintCanvas.drawPath(mTextPath, mTextPaint);
+				Paint paint = getPaint(mTextPaint, event.getPressure());
+				mPaintCanvas.drawPath(mTextPath, paint);
 				invalidate();
 				mStrBuilder.append("x = " + x + ", y = " + y).append('|');
-				LogUtil.i(TAG, mStrBuilder.toString());
+				paint = null;
+			} else if (event.getAction() == MotionEvent.ACTION_UP) {
+				mTextPath.reset();
 			}
 			return true;
 		}

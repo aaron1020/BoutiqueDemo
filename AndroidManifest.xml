@@ -42,6 +42,8 @@
         <activity android:name=".LogingActivity" />
         <activity android:name=".OfflineActivity" />
         <activity android:name=".WriterActivity" />
+        <activity android:name=".PDFActivity"
+            android:screenOrientation="landscape" />
 
         <receiver
             android:name=".receiver.ForceOfflineReceiver"

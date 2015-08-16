@@ -6,11 +6,21 @@
     tools:context=".TransparentMenuActivity" >
 
     <TextView
+        android:id="@+id/transparent_menu_item6"
+        style="@style/TransparentMenuTextStyle"
+        android:layout_above="@+id/transparent_menu_item5"
+        android:layout_alignLeft="@+id/transparent_menu_item5"
+        android:layout_marginLeft="-40dp"
+        android:drawableLeft="@drawable/transparent_menu_pic5"
+        android:text="@string/menu_pdf_browser" />
+
+    <TextView
         android:id="@+id/transparent_menu_item5"
         style="@style/TransparentMenuTextStyle"
         android:layout_above="@+id/transparent_menu_item4"
         android:layout_alignLeft="@+id/transparent_menu_item4"
         android:layout_marginLeft="-35dp"
+        android:layout_marginTop="3dip"
         android:drawableLeft="@drawable/transparent_menu_pic5"
         android:text="@string/menu_chinese_map" />
 

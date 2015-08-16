@@ -41,6 +41,7 @@
     <string name="l_menu_zxing">二维码</string>
     <string name="menu_paint_demo">Paint画图</string>
     <string name="menu_chinese_map">中国地图</string>
+    <string name="menu_pdf_browser">PDF阅读器</string>
     <string name="tree_listview_aty">树形ListView</string>
     <string name="shape_one_text">人</string>
     <string name="shape_three_text">人人人</string>
