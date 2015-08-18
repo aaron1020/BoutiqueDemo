@@ -2,6 +2,7 @@ package jie.example.boutique;
 
 import jie.example.utils.LogUtil;
 import jie.example.widget.PaintDemoView;
+import jie.example.widget.SignNamePanel;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -36,7 +37,7 @@ public class PaintDemoActivity extends BasicActivity {
 
 	@Override
 	public void loadingData() {
-
+		new SignNamePanel(this, 400, 500);
 	}
 
 	public void setOnClick(View view) {

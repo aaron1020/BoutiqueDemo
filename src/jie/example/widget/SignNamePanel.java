@@ -10,21 +10,21 @@ import android.widget.Button;
 /**
  * 签名板
  */
-public class SignNameView extends View implements View.OnClickListener {
+public class SignNamePanel extends View implements View.OnClickListener {
 	private WindowManager mWindiwMananger;
 	private WindowManager.LayoutParams mWindowParams = new WindowManager.LayoutParams();
 	private WriterView mWriterView;
 	private View mWheelView;
-	int x = 400, y = 500;
+	private int x = 400, y = 500;
 
-	public SignNameView(Context context, int x, int y) {
+	public SignNamePanel(Context context, int x, int y) {
 		super(context);
 		this.x = x;
 		this.y = y;
 		initWindow(context);
 	}
 
-	public SignNameView(Context context) {
+	public SignNamePanel(Context context) {
 		super(context);
 		initWindow(context);
 	}
@@ -36,8 +36,8 @@ public class SignNameView extends View implements View.OnClickListener {
 				R.layout.view_sign_name, null);
 		mWindowParams.type = 2002;// type：2002表示系统级窗口
 		mWindowParams.flags = 40;// 设置桌面可控
-		mWindowParams.width = 450;
-		mWindowParams.height = 450;
+		mWindowParams.width = 650;
+		mWindowParams.height = 550;
 		mWindowParams.format = -3; // 透明
 		mWindowParams.x = this.x;
 		mWindowParams.y = this.y;

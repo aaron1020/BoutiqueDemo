@@ -1,6 +1,7 @@
 package jie.example.boutique;
 
 import java.util.List;
+import java.util.Locale;
 
 import jie.example.constant.Constant;
 import jie.example.entity.DynamicAddViewEntity;
@@ -15,6 +16,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.view.View;
 import android.widget.ScrollView;
 
@@ -22,12 +25,11 @@ import android.widget.ScrollView;
  * 动态添加或删除View
  */
 public class DynamicAddViewActivity extends BasicActivity {
-
 	private static final String TAG = "DynamicAddViewActivity";
-	// private DynamicAddViewActivity mActivity;
 	private ScrollView mScrollView;
 	private DynamicAddView mDynamicAddView;
 	private LoadingDialog mLoadingDialog;
+	private TextToSpeech mTextSpeech;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,6 @@ public class DynamicAddViewActivity extends BasicActivity {
 
 	@Override
 	public void initData() {
-		// mActivity = DynamicAddViewActivity.this;
 		mLoadingDialog = new LoadingDialog(this);
 		mScrollView = (ScrollView) findViewById(R.id.dynamic_add_view_scrollView);
 		mDynamicAddView = (DynamicAddView) findViewById(R.id.dynamic_add_view);
@@ -55,6 +56,21 @@ public class DynamicAddViewActivity extends BasicActivity {
 				.getSerializableExtra("PersonSerialize");
 		LogUtil.i(TAG, personSerialize.toString());
 
+		mTextSpeech = new TextToSpeech(this, new OnInitListener() {
+			@Override
+			public void onInit(int status) {
+				if (status == TextToSpeech.SUCCESS) {
+					int result = mTextSpeech.setLanguage(Locale.ENGLISH);
+					if (result == TextToSpeech.LANG_MISSING_DATA
+							|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
+						LogUtil.e(TAG, "tts no working!!");
+					} else {
+						mTextSpeech.speak("UniStrong",
+								TextToSpeech.QUEUE_FLUSH, null);
+					}
+				}
+			}
+		});
 	}
 
 	public void setScrollViewScroll(int offsetYScroll) {
@@ -74,6 +90,7 @@ public class DynamicAddViewActivity extends BasicActivity {
 			switch (msg.what) {
 			case Constant.HANDLER_DYNAMIC_ADD_VIEW:
 				mScrollView.smoothScrollTo(0, msg.arg1);
+				mTextSpeech.speak("提交", TextToSpeech.QUEUE_FLUSH, null);
 				break;
 
 			case Constant.HANDLER_SUBMIT_INFO_SUCCESS:
@@ -81,6 +98,7 @@ public class DynamicAddViewActivity extends BasicActivity {
 					mLoadingDialog.dismiss();
 				}
 				ToastUtil.showToast(R.string.submit_infos_success);
+				mTextSpeech.speak("Nan Tian", TextToSpeech.QUEUE_FLUSH, null);
 				break;
 
 			default:
@@ -114,6 +132,15 @@ public class DynamicAddViewActivity extends BasicActivity {
 			for (DynamicAddViewEntity itemViewInfo : itemViewInfos) {
 				LogUtil.i(TAG, itemViewInfo.toString());
 			}
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mTextSpeech != null) {
+			mTextSpeech.stop();
+			mTextSpeech.shutdown();
 		}
 	}
 
