@@ -17,9 +17,9 @@ public class Constant {
 	public static final int HANDLER_MENU_CLOSE_ACTIVITY = 1029;
 	public static final int HANDLER_MENU_START_ACTIVITY = 1030;
 	public static final int HANDLER_DYNAMIC_DELETE_ITEM_VIEW = 1031;
-
 	public static final String SAVE_INSTANCE_STATE = "onSaveInstanceState";
 	public static final String TAG_GLOBAL = "BoutiqueApp";
 	public static final String DATE_FORMAT_SHORT_LINE = "yyyy-MM-dd";
+	public static final String DATE_FORMAT_FILENAME = "yyyy-MM-dd'T'HH_mm_ss";
 	public static final String APP_FOLDER = "Boutique";
 }

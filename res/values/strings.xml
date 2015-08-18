@@ -75,5 +75,7 @@
     <string name="press_one_more">再按一次</string>
     <string name="text_show_vs_counter">%s 秒后显示ViewStub</string>
     <string name="writer_aty">写字板</string>
+    <string name="writer_sign_panel">签名板</string>
+    <string name="sdcard_error">SD卡不存在或已经卸载</string>
 
 </resources>

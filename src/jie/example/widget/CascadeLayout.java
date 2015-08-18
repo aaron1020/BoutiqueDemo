@@ -179,7 +179,6 @@ public class CascadeLayout extends ViewGroup {
 		public LayoutParams(ViewGroup.LayoutParams layoutParams) {
 			super(layoutParams);
 		}
-
 	}
 
 }

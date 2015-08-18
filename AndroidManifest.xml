@@ -19,6 +19,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <uses-library android:name="android.test.runner" />
+
         <activity
             android:name="jie.example.boutique.BoutiqueActivity"
             android:label="@string/app_name" >
@@ -41,9 +43,6 @@
         <activity android:name=".HistogramViewActivity" />
         <activity android:name=".LogingActivity" />
         <activity android:name=".OfflineActivity" />
-        <activity android:name=".WriterActivity" />
-        <activity android:name=".PDFActivity"
-            android:screenOrientation="landscape" />
 
         <receiver
             android:name=".receiver.ForceOfflineReceiver"
@@ -54,5 +53,10 @@
             </intent-filter>
         </receiver>
     </application>
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:label="Tests for My App"
+        android:targetPackage="jie.example.boutique" />
 
 </manifest>

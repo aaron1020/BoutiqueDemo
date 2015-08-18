@@ -21,7 +21,7 @@ import android.widget.TextView;
  */
 public class TransparentMenuActivity extends BasicActivity {
 
-	private static final int MENU_ITEN_NUM = 6;
+	private static final int MENU_ITEN_NUM = 5;
 	private static final int MENU_ANIM_DURATION = 150;
 	private static final int MENU_ANIM_START_OFFSET = 100;// 显示时间 默认100毫秒
 	private TransparentMenuActivity mActivity;
@@ -72,17 +72,14 @@ public class TransparentMenuActivity extends BasicActivity {
 				break;
 
 			case Constant.HANDLER_MENU_START_ACTIVITY:
-				if (msg.arg1 == R.id.transparent_menu_item6) {
-					startActivity(new Intent(mActivity,
-							PDFActivity.class));
-				}else if (msg.arg1 == R.id.transparent_menu_item5) {
+				if (msg.arg1 == R.id.transparent_menu_item5) {
 					startActivity(new Intent(mActivity,
 							ChineseMapViewActivity.class));
 				} else if (msg.arg1 == R.id.transparent_menu_item4) {
 					startActivity(new Intent(mActivity,
 							HistogramViewActivity.class));
 				} else if (msg.arg1 == R.id.transparent_menu_item3) {
-					startActivity(new Intent(mActivity, WriterActivity.class));
+					startActivity(new Intent(mActivity, PaintDemoActivity.class));
 				} else if (msg.arg1 == R.id.transparent_menu_item2) {
 					startActivity(new Intent(mActivity, LogingActivity.class));
 				} else {

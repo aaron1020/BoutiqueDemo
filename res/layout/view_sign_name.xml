@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/writer_window_bg"
+    android:padding="1dip" >
+
+    <TextView
+        android:id="@+id/sp_text_title"
+        android:layout_width="match_parent"
+        android:layout_height="34dip"
+        android:layout_alignParentTop="true"
+        android:background="@color/hv_broken_line"
+        android:gravity="center"
+        android:text="@string/writer_sign_panel"
+        android:textSize="18sp" />
+
+    <jie.example.widget.WriterView
+        android:id="@+id/sp_wv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sp_layout_bottom"
+        android:layout_below="@id/sp_text_title" />
+
+    <LinearLayout
+        android:id="@+id/sp_layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="36dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/hv_broken_line"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="4dip" >
+
+        <Button
+            android:id="@+id/sp_lb_btn_confirm"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dip"
+            android:background="@drawable/radius_bg_clickable"
+            android:gravity="center"
+            android:paddingLeft="@dimen/global_button_padding"
+            android:paddingRight="@dimen/global_button_padding"
+            android:text="@string/confirm" />
+
+        <Button
+            android:id="@+id/sp_lb_btn_clear"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:background="@drawable/radius_bg_clickable"
+            android:gravity="center"
+            android:paddingLeft="@dimen/global_button_padding"
+            android:paddingRight="@dimen/global_button_padding"
+            android:text="@string/clear" />
+    </LinearLayout>
+
+</RelativeLayout>

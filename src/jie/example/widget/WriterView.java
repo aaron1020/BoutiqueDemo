@@ -1,10 +1,11 @@
 package jie.example.widget;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import jie.example.boutique.R;
+import jie.example.constant.Constant;
+import jie.example.utils.FileUtil;
+import jie.example.utils.ImageUtil;
 import jie.example.utils.LogUtil;
 import jie.example.utils.StringUtil;
 import android.annotation.SuppressLint;
@@ -16,7 +17,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
-import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -37,6 +37,9 @@ public class WriterView extends LinearLayout {
 	private Path mTextPath = new Path();
 	private Paint mTextPaint;
 	private StringBuilder mStrBuilder = new StringBuilder();
+	@SuppressLint("SimpleDateFormat")
+	private SimpleDateFormat mDateFormat = new SimpleDateFormat(
+			Constant.DATE_FORMAT_FILENAME);
 
 	public WriterView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -50,6 +53,7 @@ public class WriterView extends LinearLayout {
 	@SuppressLint("ResourceAsColor")
 	private void initView(Context context) {
 		mResources = context.getResources();
+		setOrientation(LinearLayout.VERTICAL);
 
 		mIVPanel = new ImageView(context);
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
@@ -57,8 +61,7 @@ public class WriterView extends LinearLayout {
 		params.gravity = Gravity.CENTER;
 		mIVPanel.setLayoutParams(params);
 		mIVPanel.setBackgroundColor(mResources
-				.getColor(R.color.writer_panel_bg));// 设置画板颜色为白色
-
+				.getColor(R.color.writer_panel_bg));// 设置画板颜色
 		addView(mIVPanel);
 	}
 
@@ -76,28 +79,15 @@ public class WriterView extends LinearLayout {
 	 * 保存手指运动轨迹
 	 */
 	private void saveTrack() {
-		String track = mStrBuilder.toString();
-		if (StringUtil.isNotEmpty(track.trim())) {
-			LogUtil.i(TAG, "track = " + track);
+		String trackInfo = mStrBuilder.toString();
+		if (StringUtil.isNotEmpty(trackInfo.trim())) {
 			try {
-				saveToSD("track_" + System.currentTimeMillis() + ".txt", track);
+				String fileName = mDateFormat.format(new Date()) + ".txt";
+				FileUtil.saveInfoToSDCard(TAG, fileName, trackInfo);
 				mStrBuilder.delete(0, mStrBuilder.length());
 			} catch (Exception e) {
-				LogUtil.e(TAG, TAG + "::saveTrack(String)::" + e.toString());
+				LogUtil.e(TAG, TAG + "::saveTrack()::" + e.toString());
 			}
-		} else {
-			LogUtil.i(TAG, "track is null");
-		}
-	}
-
-	public void saveToSD(String fileName, String content) throws Exception {
-		if (Environment.MEDIA_MOUNTED.equals(Environment
-				.getExternalStorageState())) {
-			File file = new File(Environment.getExternalStorageDirectory(),
-					fileName);
-			OutputStream out = new FileOutputStream(file);
-			out.write(content.getBytes());
-			out.close();
 		}
 	}
 
@@ -163,39 +153,14 @@ public class WriterView extends LinearLayout {
 	 * 以图片的形式保存写字板上的文字
 	 */
 	public void savePanelText() {
-		ByteArrayOutputStream baos = null;
-		FileOutputStream fos = null;
-		String savePath = null;
-		File file = null;
 		try {
-			savePath = Environment.getExternalStorageDirectory()
-					+ File.separator + System.currentTimeMillis()
-					+ ".png".trim();
-			file = new File(savePath);
-			fos = new FileOutputStream(file);
-			baos = new ByteArrayOutputStream();
-			mBitmapPanel.compress(Bitmap.CompressFormat.PNG, 100, baos);
-			byte[] data = baos.toByteArray();
-			if (data != null) {
-				fos.write(data);
-			}
+			String fileName = mDateFormat.format(new Date()) + ".png";
+			ImageUtil.saveBitmapToFile(TAG, fileName, mBitmapPanel);
 
 			saveTrack();
 			clearPanel();
 		} catch (Exception e) {
 			LogUtil.e(TAG, TAG + "::savePanelText()::" + e.toString());
-		} finally {
-			try {
-				if (fos != null) {
-					fos.close();
-				}
-				if (baos != null) {
-					baos.close();
-				}
-			} catch (Exception e) {
-				LogUtil.e(TAG,
-						TAG + "::savePanelText() finally::" + e.toString());
-			}
 		}
 	}
 

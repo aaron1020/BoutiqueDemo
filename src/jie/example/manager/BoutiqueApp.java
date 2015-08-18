@@ -1,22 +1,44 @@
 package jie.example.manager;
 
+import java.io.File;
 import jie.example.boutique.R;
 import jie.example.constant.Constant;
 import jie.example.utils.LogUtil;
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 
 public class BoutiqueApp extends Application {
-
-	private static Context mContext;// 全局的上下文对象
+	private static Context context;// 全局的上下文对象
+	private static File appFolder;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mContext = getApplicationContext();
 		LogUtil.globalInfoLog("BoutiqueApp onCreate");
+		context = getApplicationContext();
+
 		getDevicePerferences();
+		createGlobalFolder();
+	}
+
+	private void createGlobalFolder() {
+		if (Environment.MEDIA_MOUNTED.equals(Environment
+				.getExternalStorageState())) {// 判断外存储设备的状态
+			/*
+			 * Environment.getExternalStorageDirectory()：获取SDCard目录。
+			 * 
+			 * 获取SDCard目录的另一种方式：File sdDir = new File("/mnt/sdcard");(不建议使用)
+			 */
+			appFolder = new File(Environment.getExternalStorageDirectory(),
+					Constant.APP_FOLDER);
+			if (!appFolder.exists()) {
+				appFolder.mkdir();
+			}
+		} else {
+			LogUtil.globalErrorLog(getString(R.string.sdcard_error));
+		}
 	}
 
 	private void getDevicePerferences() {
@@ -88,7 +110,11 @@ public class BoutiqueApp extends Application {
 	}
 
 	public static Context getContext() {
-		return mContext;
+		return context;
+	}
+
+	public static File getAppFolder() {
+		return appFolder;
 	}
 
 }

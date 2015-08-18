@@ -17,7 +17,6 @@ import android.content.pm.ActivityInfo;
  */
 @SuppressLint("NewApi")
 public abstract class BasicActivity extends Activity {
-
 	private ActionBar mActionBar;
 	private View mActionBarView;
 	private TextView mActionBarTitle;
