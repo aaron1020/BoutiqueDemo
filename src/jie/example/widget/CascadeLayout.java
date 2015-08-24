@@ -9,44 +9,39 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class CascadeLayout extends ViewGroup {
-
+	private static final String TAG = CascadeLayout.class.getSimpleName();
 	private int mHorizontalSpacing;
 	private int mVerticalSpacing;
-	private static final int DEF_STYLE = 0;
-	private static final String TAG = "CascadeLayout";
 
-	// 当通过XML文件创建视图的实例时会调用该构造函数
+	// 当通过XML文件创建视图时会调用该构造函数
 	public CascadeLayout(Context context, AttributeSet attrs) {
-		this(context, attrs, DEF_STYLE);
+		this(context, attrs, 0);
 		Log.i(TAG, "CascadeLayout(Context, AttributeSet)");
 	}
 
 	public CascadeLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		Log.i(TAG, "CascadeLayout(Context, AttributeSet, int)");
-
-		TypedArray typedArray = context.obtainStyledAttributes(attrs,
-				R.styleable.CascadeLayout);
 		try {
+			TypedArray typedArray = context.obtainStyledAttributes(attrs,
+					R.styleable.CascadeLayout);
+
 			// mHorizontalSpacing和mVerticalSpacing由自定义属性中获取，如果其值未指定，就使用默认值
 			mHorizontalSpacing = typedArray.getDimensionPixelSize(
 					R.styleable.CascadeLayout_horizontal_spacing,
 					getResources().getDimensionPixelSize(
-							R.dimen.cascade_horizontal_spacing));
+							R.dimen.cascade_bv_horizontal_space));
 			mVerticalSpacing = typedArray.getDimensionPixelSize(
 					R.styleable.CascadeLayout_vertical_spacing,
 					getResources().getDimensionPixelSize(
-							R.dimen.cascade_vertical_spacing));
+							R.dimen.cascade_bv_vertical_space));
+			typedArray.recycle();
+
 			Log.i(TAG, "mHorizontalSpacing = " + mHorizontalSpacing);
 			Log.i(TAG, "mVerticalSpacing = " + mVerticalSpacing);
 		} catch (Exception e) {
 			Log.e(TAG, "Init CascadeLayout Exception-->" + e.toString());
-		} finally {
-			if (typedArray != null) {
-				typedArray.recycle();
-			}
 		}
-
 	}
 
 	@Override
@@ -122,26 +117,25 @@ public class CascadeLayout extends ViewGroup {
 	}
 
 	@Override
-	protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
-		return new CascadeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+	protected LayoutParams generateDefaultLayoutParams() {
+		return new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 	}
 
 	@Override
-	public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
+	public LayoutParams generateLayoutParams(AttributeSet attrs) {
 		return new CascadeLayout.LayoutParams(getContext(), attrs);
 	}
 
 	@Override
-	protected ViewGroup.LayoutParams generateLayoutParams(
-			android.view.ViewGroup.LayoutParams p) {
-		return new CascadeLayout.LayoutParams(p);
+	protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+		return new LayoutParams(p);
 	}
 
 	// 要使用自定义的LayoutParams，还需要重写以下方法end
 
 	/**
-	 * 自定义LayoutParams，用于保存每个子视图的x、y轴位置
+	 * 定义LayoutParams，用于保存子视图的x、y轴位置
 	 */
 	public static class LayoutParams extends ViewGroup.LayoutParams {
 

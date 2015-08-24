@@ -7,8 +7,10 @@
     <dimen name="actionbar_title_text_size">16sp</dimen>
     <dimen name="view_divide_line_height">0.5dip</dimen>
     <dimen name="aty_custom_view_group_square">160dip</dimen>
-    <dimen name="cascade_horizontal_spacing">10dp</dimen>
-    <dimen name="cascade_vertical_spacing">10dp</dimen>
+    <dimen name="cascade_base_view_w">100dp</dimen>
+    <dimen name="cascade_base_view_h">150dp</dimen>
+    <dimen name="cascade_bv_horizontal_space">10dp</dimen>
+    <dimen name="cascade_bv_vertical_space">@dimen/cascade_bv_horizontal_space</dimen>
     <dimen name="wrap_content_button_height">38dip</dimen>
     <dimen name="match_parent_button_height">44dip</dimen>
     <dimen name="global_button_padding">@dimen/shape_circle_padding</dimen>
@@ -33,4 +35,5 @@
     <dimen name="hv_container_height">220dp</dimen>
     <dimen name="exit_left_text_size">20sp</dimen>
     <dimen name="preference_dimen">100dp</dimen>
-</resources>
+
+</resources>

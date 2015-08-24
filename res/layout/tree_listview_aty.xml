@@ -17,9 +17,17 @@
         android:scrollingCache="false" />
 
     <Button
-        android:id="@+id/tl_btn_exit_app"
+        android:id="@+id/tl_btn_download"
         style="@style/WrapContentButtonStyle"
         android:layout_below="@id/tree_listview"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dip"
+        android:text="@string/download" />
+    
+    <Button
+        android:id="@+id/tl_btn_exit_app"
+        style="@style/WrapContentButtonStyle"
+        android:layout_below="@id/tl_btn_download"
         android:layout_centerHorizontal="true"
         android:layout_margin="4dip"
         android:text="@string/exit_app" />

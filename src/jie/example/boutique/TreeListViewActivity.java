@@ -5,6 +5,7 @@ import java.util.List;
 
 import jie.example.adapter.TreeListViewAdapter;
 import jie.example.manager.ActivityCollector;
+import jie.example.net.SingleThreadDownload;
 import jie.example.utils.ToastUtil;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -78,6 +79,11 @@ public class TreeListViewActivity extends BasicActivity {
 			mTextView.setVisibility(View.VISIBLE);
 			mViewStub.setVisibility(View.GONE);
 			mHandler.sendEmptyMessage(MSG_SHOW_VIEWSTUB);
+			break;
+		case R.id.tl_btn_download:
+			new Thread(new SingleThreadDownload(
+					"http://192.168.63.66:8080/NetForAndroid/AdobeReader.exe"))
+					.start();
 			break;
 		default:
 			break;
