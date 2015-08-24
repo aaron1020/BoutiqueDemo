@@ -38,8 +38,6 @@ public class CascadeLayoutActivity extends BasicActivity {
 
 	@Override
 	public void loadingData() {
-		mBtnMove.setX(200);
-		mBtnMove.setY(200);
 		mBtnMove.setOnTouchListener(mTouchListener);
 	}
 

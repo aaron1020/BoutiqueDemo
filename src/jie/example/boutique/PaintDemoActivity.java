@@ -8,16 +8,20 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.RelativeLayout;
 
 /**
  * 运用Paint绘制图形
  */
 public class PaintDemoActivity extends BasicActivity {
-
+	private ViewStub mViewStub;
+	private View mSignNamePanel;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,11 +37,40 @@ public class PaintDemoActivity extends BasicActivity {
 		layout.addView(new PaintDemoView(this));
 		RelativeLayout mSVContainer = (RelativeLayout) findViewById(R.id.surface_view_container);
 		mSVContainer.addView(new MySurfaceView(this));
+		
+		mViewStub = (ViewStub) findViewById(R.id.sign_name_panel);
+		mSignNamePanel = mViewStub.inflate();
 	}
 
+	float downX, downY;
+	float moveX, moveY;
+	
 	@Override
 	public void loadingData() {
 		new SignNamePanel(this, 400, 500);
+		
+		mSignNamePanel.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					downX = event.getRawX();
+					downY = event.getRawY();
+					break;
+				case MotionEvent.ACTION_MOVE:
+					moveX = event.getRawX();
+					moveY = event.getRawY();
+					mSignNamePanel.setX(mSignNamePanel.getX() + (moveX - downX));
+					mSignNamePanel.setY(mSignNamePanel.getY() + (moveY - downY));
+					downX = moveX;
+					downY = moveY;
+					break;
+				default:
+					break;
+				}
+				return true;
+			}
+		});
 	}
 
 	public void setOnClick(View view) {
