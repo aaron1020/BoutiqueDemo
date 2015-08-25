@@ -169,7 +169,7 @@ public class TreeListViewActivity extends BasicActivity {
 			total += len;
 			if ((System.currentTimeMillis() - intervalTime) % 1000 == 0) {
 				countTime++;
-				LogUtil.i(TAG, countTime + "s");
+				LogUtil.i(TAG, countTime + "s" + "::" + countTime);
 			}
 			Message msg = mHandler.obtainMessage();
 			msg.what = MSG_UPDATE_UPLOADBAR;
