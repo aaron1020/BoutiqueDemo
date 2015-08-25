@@ -79,5 +79,9 @@
     <string name="sdcard_error">SD卡不存在或已经卸载</string>
     <string name="btn_move">移动我</string>
     <string name="download">下载</string>
+    <string name="upload">上传</string>
+    <string name="upload_file_unexist">要上传的文件不存在</string>
+    <string name="upload_file_finished">文件上传完成</string>
+    <string name="upload_file_fail">文件上传失败</string>
 
 </resources>

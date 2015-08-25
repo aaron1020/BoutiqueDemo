@@ -1,10 +1,10 @@
 package jie.example.widget;
 
 import jie.example.boutique.R;
+import jie.example.utils.LogUtil;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,12 +16,12 @@ public class CascadeLayout extends ViewGroup {
 	// 当通过XML文件创建视图时会调用该构造函数
 	public CascadeLayout(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
-		Log.i(TAG, "CascadeLayout(Context, AttributeSet)");
+		LogUtil.i(TAG, "CascadeLayout(Context, AttributeSet)");
 	}
 
 	public CascadeLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		Log.i(TAG, "CascadeLayout(Context, AttributeSet, int)");
+		LogUtil.i(TAG, "CascadeLayout(Context, AttributeSet, int)");
 		try {
 			TypedArray typedArray = context.obtainStyledAttributes(attrs,
 					R.styleable.CascadeLayout);
@@ -37,10 +37,10 @@ public class CascadeLayout extends ViewGroup {
 							R.dimen.cascade_bv_vertical_space));
 			typedArray.recycle();
 
-			Log.i(TAG, "mHorizontalSpacing = " + mHorizontalSpacing);
-			Log.i(TAG, "mVerticalSpacing = " + mVerticalSpacing);
+			LogUtil.i(TAG, "mHorizontalSpacing = " + mHorizontalSpacing);
+			LogUtil.i(TAG, "mVerticalSpacing = " + mVerticalSpacing);
 		} catch (Exception e) {
-			Log.e(TAG, "Init CascadeLayout Exception-->" + e.toString());
+			LogUtil.e(TAG, "Init CascadeLayout Exception-->" + e.toString());
 		}
 	}
 
@@ -51,39 +51,42 @@ public class CascadeLayout extends ViewGroup {
 		// 使用宽和高计算布局的最终大小以及子视图的x与y轴位置
 		int width = 0;
 		int height = getPaddingTop();
-		Log.i(TAG, "getPaddingTop() = " + height);
+		LogUtil.i(TAG, "getPaddingTop() = " + height);
 
-		final int count = getChildCount();
+		final int count = getChildCount();// 获取子视图的总数
 		for (int i = 0; i < count; i++) {
+			LogUtil.i(TAG, (i + 1) + " recur start ======================");
 			int verticalSpacing = mVerticalSpacing;
-			View child = getChildAt(i);
+			View child = getChildAt(i);// 取出某个子视图
 			measureChild(child, widthMeasureSpec, heightMeasureSpec);// 令每个子视图测量自身
 
 			LayoutParams lp = (LayoutParams) child.getLayoutParams();
 			// 每个子view距离最左边的x坐标 = 左内边距 + 每个子view设置的左间距(倍数递增)
 			width = getPaddingLeft() + mHorizontalSpacing * i;
-			Log.i(TAG, "getPaddingLeft() = " + getPaddingLeft());
+			LogUtil.i(TAG, "getPaddingLeft() = " + getPaddingLeft());
 			lp.x = width;
 			lp.y = height;
 			if (lp.verticalSpacing >= 0) {// 如果有子view定义了垂直间距，再把这高度加上layout的高度里
 				verticalSpacing = lp.verticalSpacing;
-				Log.i(TAG, "verticalSpacing = " + verticalSpacing);
+				LogUtil.i(TAG, "verticalSpacing = " + verticalSpacing);
 			}
 
 			// 总宽度 = 每个子view距离最左边的x坐标 + 子view宽度
 			width += child.getMeasuredWidth();
-			Log.i(TAG, "child.getMeasuredWidth() = " + child.getMeasuredWidth());
+			LogUtil.i(TAG,
+					"child.getMeasuredWidth() = " + child.getMeasuredWidth());
 			height += verticalSpacing;
-			Log.i(TAG, "width = " + width);
-			Log.i(TAG, "height = " + height);
+			LogUtil.i(TAG, "width = " + width);
+			LogUtil.i(TAG, "height = " + height);
+			LogUtil.i(TAG, (i + 1) + " recur end ======================");
 		}
 		// 宽度最后加上右边距
 		width += getPaddingRight();
-		Log.i(TAG, "getPaddingRight() = " + getPaddingRight());
+		LogUtil.i(TAG, "getPaddingRight() = " + getPaddingRight());
 		// 这样layout的高度只是最底部的上边距加上最后一个子view的高度而已
 		int getPaddingBottom = getChildAt(getChildCount() - 1)
 				.getMeasuredHeight() + getPaddingBottom();
-		Log.i(TAG, "getPaddingBottom() = " + getPaddingBottom);
+		LogUtil.i(TAG, "getPaddingBottom() = " + getPaddingBottom);
 		height += getPaddingBottom;
 
 		// 有个不是最后一个的子view特别宽怎么办?-->宽度测量不对
@@ -101,7 +104,7 @@ public class CascadeLayout extends ViewGroup {
 			LayoutParams lp = (LayoutParams) child.getLayoutParams();
 			child.layout(lp.x, lp.y, lp.x + child.getMeasuredWidth(), lp.y
 					+ child.getMeasuredHeight());
-			Log.i(TAG,
+			LogUtil.i(TAG,
 					"lp.x = " + lp.x + " ,lp.y = " + lp.y
 							+ " ,lp.x + child.getMeasuredWidth() = "
 							+ (lp.x + child.getMeasuredWidth())
@@ -145,24 +148,18 @@ public class CascadeLayout extends ViewGroup {
 
 		public LayoutParams(Context context, AttributeSet attrs) {
 			super(context, attrs);
-
-			// 拿到子视图自定义属性，这里是自定义垂直间距
-			TypedArray typedArray = context.obtainStyledAttributes(attrs,
-					R.styleable.CascadeLayout_LayoutParams);
-
 			try {
+				// 拿到子视图自定义属性，这里是自定义垂直间距
+				TypedArray typedArray = context.obtainStyledAttributes(attrs,
+						R.styleable.CascadeLayout_LayoutParams);
 				verticalSpacing = typedArray
 						.getDimensionPixelSize(
 								R.styleable.CascadeLayout_LayoutParams_layout_vertical_spacing,
 								-1);
+				typedArray.recycle();
 			} catch (Exception e) {
-				Log.e(TAG,
-						"Init CascadeLayout.LayoutParams Exception-->"
-								+ e.toString());
-			} finally {
-				if (typedArray != null) {
-					typedArray.recycle();
-				}
+				LogUtil.e(TAG, "Init CascadeLayout.LayoutParams Exception-->"
+						+ e.toString());
 			}
 		}
 

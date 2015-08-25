@@ -20,6 +20,7 @@
 
         <!-- 设置ActionBar的背景，可以去掉ActionBar最右边的留空颜色 -->
         <item name="android:background">@color/actionbar_bg</item>
+        <item name="android:displayOptions"></item>
     </style>
 
     <!--

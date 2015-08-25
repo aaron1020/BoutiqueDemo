@@ -1,27 +1,41 @@
 package jie.example.boutique;
 
+import java.io.File;
+import java.io.OutputStream;
+import java.io.PushbackInputStream;
+import java.io.RandomAccessFile;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 import jie.example.adapter.TreeListViewAdapter;
+import jie.example.constant.Constant;
 import jie.example.manager.ActivityCollector;
+import jie.example.manager.BoutiqueApp;
 import jie.example.net.SingleThreadDownload;
+import jie.example.utils.FileUtil;
+import jie.example.utils.LogUtil;
 import jie.example.utils.ToastUtil;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
  * 树形ListView
  */
 public class TreeListViewActivity extends BasicActivity {
+	private static final String TAG = TreeListViewActivity.class
+			.getSimpleName();;
 	private static final int MSG_SHOW_VIEWSTUB = 1001;
+	private static final int MSG_UPDATE_UPLOADBAR = 1002;
 	private static final int TEXT_SHOW_TIME = 3;
 	private ListView mListView;
 	private TreeListViewAdapter mTreeAdapter;
@@ -30,6 +44,8 @@ public class TreeListViewActivity extends BasicActivity {
 	private ViewStub mViewStub;
 	private View mInflateView;
 	private Button mInflateBtn;
+	private ProgressBar mUploadProgress;
+	private TextView mTextProgress;
 	private int mTimeCounter = TEXT_SHOW_TIME;
 	private boolean isInflate;
 
@@ -49,6 +65,8 @@ public class TreeListViewActivity extends BasicActivity {
 		mTreeAdapter = new TreeListViewAdapter(mStringList, this);
 		mTextView = (TextView) findViewById(R.id.tl_text_vs);
 		mViewStub = (ViewStub) findViewById(R.id.tl_vs);
+		mUploadProgress = (ProgressBar) findViewById(R.id.uploadbar);
+		mTextProgress = (TextView) findViewById(R.id.upload_text_indicator);
 	}
 
 	@Override
@@ -85,9 +103,92 @@ public class TreeListViewActivity extends BasicActivity {
 					"http://192.168.63.66:8080/NetForAndroid/AdobeReader.exe"))
 					.start();
 			break;
+		case R.id.tl_btn_upload:
+			if (Environment.MEDIA_MOUNTED.equals(Environment
+					.getExternalStorageState())) {
+				final File file = new File(BoutiqueApp.getAppFolder(),
+						"Download/" + "AdobeReader.exe");
+				if (file.exists()) {
+					mUploadProgress.setMax((int) file.length());
+					mTextProgress.setText("0%");
+
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								uploadFile(file);
+							} catch (Exception e) {
+								ToastUtil.showToast(R.string.upload_file_fail);
+								LogUtil.e(TAG,
+										"upload Exception::" + e.toString());
+							}
+						}
+					}).start();
+				} else {
+					ToastUtil.showToast(R.string.upload_file_unexist);
+				}
+			}
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void uploadFile(File file) throws Exception {
+		long startTime = System.currentTimeMillis();
+
+		Socket socket = new Socket(Constant.WEB_IP, 7879);
+		OutputStream outStream = socket.getOutputStream();
+
+		String fileName = file.getName();
+		long filelength = file.length();
+		LogUtil.i(TAG, "filelength = " + filelength);
+		String head = "Content-Length=" + filelength + ";filename=" + fileName
+				+ ";sourceid=\r\n";// head为自定义协议，回车换行为方便我们提取第一行数据而自行设定的。
+		outStream.write(head.getBytes()); // 向服务器发送协议消息
+
+		PushbackInputStream inStream = new PushbackInputStream(
+				socket.getInputStream());// 发送协议后，获取从服务器返回的信息
+		String response = FileUtil.readLine(inStream);
+		LogUtil.i(TAG, "reponse:" + response);
+
+		String[] items = response.split(";");
+		long position = Integer.valueOf(items[1].substring(items[1]
+				.indexOf("=") + 1));
+		RandomAccessFile raf = new RandomAccessFile(file, "r");// 用随机文件访问类操作文件
+		raf.seek(position);// position表示从文件的什么位置开始上传，也表示已经上传了多少个字节
+
+		// 开始向服务器写出数据
+		byte[] buffer = new byte[1024 * 4];
+		int len = -1;
+		int total = 0;
+		long intervalTime = System.currentTimeMillis();
+		int countTime = 0;
+		while ((len = raf.read(buffer)) != -1) {
+			outStream.write(buffer, 0, len);
+			total += len;
+			if ((System.currentTimeMillis() - intervalTime) % 1000 == 0) {
+				countTime++;
+				LogUtil.i(TAG, countTime + "s");
+			}
+			Message msg = mHandler.obtainMessage();
+			msg.what = MSG_UPDATE_UPLOADBAR;
+			msg.arg1 = total;
+			mHandler.sendMessage(msg);
+		}
+
+		if (total == filelength - position) {
+			long endTime = System.currentTimeMillis();
+			LogUtil.i(TAG, "upload successfully, take time: "
+					+ (endTime - startTime) / 1000 + "s");
+		} else {
+			LogUtil.e(TAG, "upload error!!");
+		}
+
+		raf.close();
+		inStream.close();
+		outStream.close();
+		socket.close();
 	}
 
 	@Override
@@ -130,6 +231,19 @@ public class TreeListViewActivity extends BasicActivity {
 						mViewStub.setVisibility(View.VISIBLE);
 						mInflateBtn.setText(R.string.press_one_more);
 					}
+				}
+				break;
+			case MSG_UPDATE_UPLOADBAR:
+				int progress = msg.arg1;
+				mUploadProgress.setProgress(progress);
+
+				float percent = (float) progress
+						/ (float) mUploadProgress.getMax();
+				int result = (int) (percent * 100);
+				mTextProgress.setText(result + "%");
+				if (progress == mUploadProgress.getMax()) {
+					ToastUtil.showToast(R.string.upload_file_finished);
+					mTextProgress.setText(R.string.upload_file_finished);
 				}
 				break;
 			default:
