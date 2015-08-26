@@ -7,7 +7,8 @@ import java.io.RandomAccessFile;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import jie.example.adapter.TreeListViewAdapter;
 import jie.example.constant.Constant;
 import jie.example.manager.ActivityCollector;
@@ -15,6 +16,7 @@ import jie.example.manager.BoutiqueApp;
 import jie.example.net.SingleThreadDownload;
 import jie.example.utils.FileUtil;
 import jie.example.utils.LogUtil;
+import jie.example.utils.TimeUtil;
 import jie.example.utils.ToastUtil;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -33,7 +35,8 @@ import android.widget.TextView;
  */
 public class TreeListViewActivity extends BasicActivity {
 	private static final String TAG = TreeListViewActivity.class
-			.getSimpleName();;
+			.getSimpleName();
+	private static final int UPDATE_SURFACE_TIME = 1000;
 	private static final int MSG_SHOW_VIEWSTUB = 1001;
 	private static final int MSG_UPDATE_UPLOADBAR = 1002;
 	private static final int TEXT_SHOW_TIME = 3;
@@ -46,7 +49,11 @@ public class TreeListViewActivity extends BasicActivity {
 	private Button mInflateBtn;
 	private ProgressBar mUploadProgress;
 	private TextView mTextProgress;
+	private Timer mUploadTimer;
 	private int mTimeCounter = TEXT_SHOW_TIME;
+	private long mFileLength = 0;// 要上传的文件的大小
+	private int mUploadedTime = 0;// 已经上传的时间
+	private int mUploadedTotal = 0;// 已经上传的文件大小
 	private boolean isInflate;
 
 	@Override
@@ -109,8 +116,9 @@ public class TreeListViewActivity extends BasicActivity {
 				final File file = new File(BoutiqueApp.getAppFolder(),
 						"Download/" + "AdobeReader.exe");
 				if (file.exists()) {
-					mUploadProgress.setMax((int) file.length());
-					mTextProgress.setText("0%");
+					mFileLength = file.length();
+					mUploadProgress.setMax((int) mFileLength);
+					mTextProgress.setText(R.string.start_upload);
 
 					new Thread(new Runnable() {
 						@Override
@@ -118,7 +126,6 @@ public class TreeListViewActivity extends BasicActivity {
 							try {
 								uploadFile(file);
 							} catch (Exception e) {
-								ToastUtil.showToast(R.string.upload_file_fail);
 								LogUtil.e(TAG,
 										"upload Exception::" + e.toString());
 							}
@@ -129,6 +136,9 @@ public class TreeListViewActivity extends BasicActivity {
 				}
 			}
 			break;
+		case R.id.tl_btn_record_video:
+			ToastUtil.showToast(R.string.record_video);
+			break;
 		default:
 			break;
 		}
@@ -137,7 +147,7 @@ public class TreeListViewActivity extends BasicActivity {
 	private void uploadFile(File file) throws Exception {
 		long startTime = System.currentTimeMillis();
 
-		Socket socket = new Socket(Constant.WEB_IP, 7879);
+		Socket socket = new Socket(Constant.SERVER_IP, 7880);
 		OutputStream outStream = socket.getOutputStream();
 
 		String fileName = file.getName();
@@ -161,23 +171,23 @@ public class TreeListViewActivity extends BasicActivity {
 		// 开始向服务器写出数据
 		byte[] buffer = new byte[1024 * 4];
 		int len = -1;
-		int total = 0;
-		long intervalTime = System.currentTimeMillis();
-		int countTime = 0;
+		mUploadedTotal = (int) position;
+		mUploadTimer = new Timer();
+		mUploadTimer.schedule(new UploadTask(), UPDATE_SURFACE_TIME,
+				UPDATE_SURFACE_TIME);// 为了防止频繁地发消息更新主界面，我们设定每一秒钟更新一次界面
 		while ((len = raf.read(buffer)) != -1) {
 			outStream.write(buffer, 0, len);
-			total += len;
-			if ((System.currentTimeMillis() - intervalTime) % 1000 == 0) {
-				countTime++;
-				LogUtil.i(TAG, countTime + "s" + "::" + countTime);
+			mUploadedTotal += len;
+			if (mUploadedTotal >= mFileLength) {// "total >= fileLength"表示已经完全上传，直接在循环中发消息更新界面
+				stopUploadTask();
+				Message msg = mHandler.obtainMessage();
+				msg.what = MSG_UPDATE_UPLOADBAR;
+				msg.arg1 = mUploadedTotal;
+				mHandler.sendMessage(msg);
 			}
-			Message msg = mHandler.obtainMessage();
-			msg.what = MSG_UPDATE_UPLOADBAR;
-			msg.arg1 = total;
-			mHandler.sendMessage(msg);
 		}
 
-		if (total == filelength - position) {
+		if (mUploadedTotal == filelength) {
 			long endTime = System.currentTimeMillis();
 			LogUtil.i(TAG, "upload successfully, take time: "
 					+ (endTime - startTime) / 1000 + "s");
@@ -195,6 +205,35 @@ public class TreeListViewActivity extends BasicActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		mHandler = null;
+		stopUploadTask();
+	}
+
+	/**
+	 * 停止时间计时器，即停止发消息更新界面
+	 */
+	private void stopUploadTask() {
+		if (mUploadTimer != null) {
+			mUploadTimer.cancel();
+			mUploadTimer = null;
+		}
+	}
+
+	private final class UploadTask extends TimerTask {
+		@Override
+		public void run() {
+			try {
+				mUploadedTime++;
+				long remainLength = mFileLength - mUploadedTotal;// 剩余的文件大小
+				int remainTime = (int) (remainLength * mUploadedTime / mUploadedTotal);// 计算大概还需要多少时间上传完成
+				Message msg = mHandler.obtainMessage();
+				msg.what = MSG_UPDATE_UPLOADBAR;
+				msg.arg1 = mUploadedTotal;
+				msg.arg2 = remainTime;
+				mHandler.sendMessage(msg);
+			} catch (Exception e) {
+				LogUtil.e(TAG, "UploadTask::run()::" + e.toString());
+			}
+		}
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -237,11 +276,15 @@ public class TreeListViewActivity extends BasicActivity {
 				int progress = msg.arg1;
 				mUploadProgress.setProgress(progress);
 
+				String remainTime = TimeUtil.calculateTemainTime(msg.arg2);// 把还需要上传的时间完成转化为时分秒格式
 				float percent = (float) progress
 						/ (float) mUploadProgress.getMax();
 				int result = (int) (percent * 100);
-				mTextProgress.setText(result + "%");
+				mTextProgress.setText(result + "% ,"
+						+ getString(R.string.need_time) + remainTime);
+
 				if (progress == mUploadProgress.getMax()) {
+					stopUploadTask();
 					ToastUtil.showToast(R.string.upload_file_finished);
 					mTextProgress.setText(R.string.upload_file_finished);
 				}

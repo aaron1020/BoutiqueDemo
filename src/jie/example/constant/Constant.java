@@ -22,5 +22,5 @@ public class Constant {
 	public static final String DATE_FORMAT_SHORT_LINE = "yyyy-MM-dd";
 	public static final String DATE_FORMAT_FILENAME = "yyyy-MM-dd'T'HH_mm_ss";
 	public static final String APP_FOLDER = "Boutique";
-	public static final String WEB_IP = "192.168.1.105";
+	public static final String SERVER_IP = "192.168.63.66";
 }

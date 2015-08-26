@@ -14,7 +14,7 @@ public class UploadFileClient {
 	public static void uploadFile(File file) throws Exception {
 		long startTime = System.currentTimeMillis();
 
-		Socket socket = new Socket(Constant.WEB_IP, 7879);
+		Socket socket = new Socket(Constant.SERVER_IP, 7879);
 		OutputStream outStream = socket.getOutputStream();
 
 		String fileName = file.getName();

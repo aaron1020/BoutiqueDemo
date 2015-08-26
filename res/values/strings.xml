@@ -80,8 +80,15 @@
     <string name="btn_move">移动我</string>
     <string name="download">下载</string>
     <string name="upload">上传</string>
+    <string name="start_upload">开始上传</string>
     <string name="upload_file_unexist">要上传的文件不存在</string>
     <string name="upload_file_finished">文件上传完成</string>
     <string name="upload_file_fail">文件上传失败</string>
+    <string name="need_time">大约需要: </string>
+    <string name="day">天</string>
+    <string name="hour">小时</string>
+    <string name="minute">分</string>
+    <string name="second">秒</string>
+    <string name="record_video">录制视频</string>
 
 </resources>
