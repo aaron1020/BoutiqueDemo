@@ -43,6 +43,7 @@
         <activity android:name=".HistogramViewActivity" />
         <activity android:name=".LogingActivity" />
         <activity android:name=".OfflineActivity" />
+        <activity android:name=".SettingActivity" />
 
         <receiver
             android:name=".receiver.ForceOfflineReceiver"

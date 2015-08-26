@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="pref_first_preferencescreen_key"
+    android:title="Preferences" >
+
+    <PreferenceCategory android:title="User" >
+        <EditTextPreference
+            android:key="pref_username"
+            android:summary="Setting Username"
+            android:title="Username" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Application" >
+        <Preference
+            android:key="pref_rate"
+            android:summary="Rate the app in the store"
+            android:title="Rate the app" />
+        <Preference
+            android:key="pref_share"
+            android:summary="Share the app with your friends"
+            android:title="Share it" />
+
+        <jie.example.widget.EmailDialog
+            android:dialogIcon="@drawable/ic_launcher"
+            android:dialogMessage="Do you want to send an email?"
+            android:dialogTitle="Send Feedback"
+            android:key="pref_sendemail_key"
+            android:negativeButtonText="Cancel"
+            android:positiveButtonText="OK"
+            android:summary="Send yout feedback by e-mail"
+            android:title="Send Feedback" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

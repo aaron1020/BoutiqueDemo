@@ -81,7 +81,7 @@ public class TransparentMenuActivity extends BasicActivity {
 				} else if (msg.arg1 == R.id.transparent_menu_item3) {
 					startActivity(new Intent(mActivity, PaintDemoActivity.class));
 				} else if (msg.arg1 == R.id.transparent_menu_item2) {
-					startActivity(new Intent(mActivity, LogingActivity.class));
+					startActivity(new Intent(mActivity, SettingActivity.class));
 				} else {
 					Intent intent = new Intent(mActivity,
 							DynamicAddViewActivity.class);
