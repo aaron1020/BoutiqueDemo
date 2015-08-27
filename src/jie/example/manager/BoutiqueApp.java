@@ -9,7 +9,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 
-public class BoutiqueApp extends Application {
+public class BoutiqueApp extends Application{
 	private static Context context;// 全局的上下文对象
 	private static File appFolder;
 

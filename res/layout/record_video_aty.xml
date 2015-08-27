@@ -1,0 +1,45 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecordVideoActivity" >
+
+    <jie.example.widget.RecordVideoView
+        android:id="@+id/moive_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/start_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dip"
+            android:alpha="0.6"
+            android:drawableTop="@drawable/transparent_menu_pic2"
+            android:gravity="center"
+            android:text="@string/record"
+            android:drawablePadding="-2dip"
+            android:textColor="@color/eagle_one"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/stop_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dip"
+            android:alpha="0.6"
+            android:drawableTop="@drawable/transparent_menu_pic1"
+            android:gravity="center"
+            android:text="@string/stop"
+            android:drawablePadding="-2dip"
+            android:textColor="@color/eagle_one"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</merge>

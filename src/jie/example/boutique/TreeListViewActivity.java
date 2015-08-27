@@ -19,6 +19,7 @@ import jie.example.utils.LogUtil;
 import jie.example.utils.TimeUtil;
 import jie.example.utils.ToastUtil;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -39,6 +40,7 @@ public class TreeListViewActivity extends BasicActivity {
 	private static final int UPDATE_SURFACE_TIME = 1000;
 	private static final int MSG_SHOW_VIEWSTUB = 1001;
 	private static final int MSG_UPDATE_UPLOADBAR = 1002;
+	private static final int REQUEST_RECORD_VIDEO = 1003;
 	private static final int TEXT_SHOW_TIME = 3;
 	private ListView mListView;
 	private TreeListViewAdapter mTreeAdapter;
@@ -137,7 +139,8 @@ public class TreeListViewActivity extends BasicActivity {
 			}
 			break;
 		case R.id.tl_btn_record_video:
-			ToastUtil.showToast(R.string.record_video);
+			startActivityForResult(new Intent(this, RecordVideoActivity.class),
+					REQUEST_RECORD_VIDEO);
 			break;
 		default:
 			break;
