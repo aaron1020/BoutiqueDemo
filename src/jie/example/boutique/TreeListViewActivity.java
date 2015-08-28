@@ -108,9 +108,14 @@ public class TreeListViewActivity extends BasicActivity {
 			mHandler.sendEmptyMessage(MSG_SHOW_VIEWSTUB);
 			break;
 		case R.id.tl_btn_download:
-			new Thread(new SingleThreadDownload(
-					"http://192.168.63.66:8080/NetForAndroid/AdobeReader.exe"))
-					.start();
+			try {
+				new Thread(
+						new SingleThreadDownload(this,
+								"http://192.168.63.76:8080/NetForAndroid/WPSOffice.apk"))
+						.start();
+			} catch (Exception e) {
+				ToastUtil.showToast(R.string.download_fail);
+			}
 			break;
 		case R.id.tl_btn_upload:
 			if (Environment.MEDIA_MOUNTED.equals(Environment

@@ -29,8 +29,8 @@ public class RecordVideoView extends SurfaceView implements OnErrorListener,
 	private SurfaceHolder mSurfaceHolder;
 	private MediaRecorder mMediaRecorder;
 	private Camera mCamera;
-	private File mSaveRecordFile;// 文件
-	private boolean mOpenCamera = true;// 是否一开始就打开摄像头
+	private File mSaveRecordFile;// 用于保存录音文件
+	private boolean mOpenCamera = true;
 
 	public RecordVideoView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);

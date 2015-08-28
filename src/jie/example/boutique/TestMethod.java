@@ -13,9 +13,9 @@ public class TestMethod extends AndroidTestCase {
 	}
 
 	public void testSingleThreadDownload() {
-		new Thread(new SingleThreadDownload(
-				"http://192.168.63.66:8080/NetForAndroid/AdobeReader.exe"))
-				.start();
+//		new Thread(new SingleThreadDownload(
+//				"http://192.168.63.66:8080/NetForAndroid/AdobeReader.exe"))
+//				.start();
 	}
 
 }

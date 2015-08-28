@@ -16,28 +16,32 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/start_btn"
+            android:id="@+id/start_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="12dip"
             android:alpha="0.6"
+            android:clickable="true"
+            android:drawablePadding="-2dip"
             android:drawableTop="@drawable/transparent_menu_pic2"
             android:gravity="center"
+            android:onClick="setOnClick"
             android:text="@string/record"
-            android:drawablePadding="-2dip"
             android:textColor="@color/eagle_one"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/stop_btn"
+            android:id="@+id/stop_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dip"
             android:alpha="0.6"
+            android:clickable="true"
+            android:drawablePadding="-2dip"
             android:drawableTop="@drawable/transparent_menu_pic1"
             android:gravity="center"
+            android:onClick="setOnClick"
             android:text="@string/stop"
-            android:drawablePadding="-2dip"
             android:textColor="@color/eagle_one"
             android:textSize="20sp" />
     </LinearLayout>

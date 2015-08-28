@@ -92,5 +92,12 @@
     <string name="record_video">录制视频</string>
     <string name="record">录制</string>
     <string name="stop">停止</string>
+    <string name="play">播放</string>
+    <string name="replay">再播一次</string>
+    <string name="downloading">正在下载: </string>
+    <string name="download_note">下载提示</string>
+    <string name="download_finish">下载完成</string>
+    <string name="downloaded_install">点击安装</string>
+    <string name="download_fail">下载失败</string>
 
 </resources>
