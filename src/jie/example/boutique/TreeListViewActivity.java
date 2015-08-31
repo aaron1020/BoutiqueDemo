@@ -52,6 +52,7 @@ public class TreeListViewActivity extends BasicActivity {
 	private ProgressBar mUploadProgress;
 	private TextView mTextProgress;
 	private Timer mUploadTimer;
+	private SingleThreadDownload mThreadDownload;
 	private int mTimeCounter = TEXT_SHOW_TIME;
 	private long mFileLength = 0;// 要上传的文件的大小
 	private int mUploadedTime = 0;// 已经上传的时间
@@ -109,10 +110,9 @@ public class TreeListViewActivity extends BasicActivity {
 			break;
 		case R.id.tl_btn_download:
 			try {
-				new Thread(
-						new SingleThreadDownload(this,
-								"http://192.168.63.76:8080/NetForAndroid/WPSOffice.apk"))
-						.start();
+				mThreadDownload = new SingleThreadDownload(this,
+						"http://192.168.63.90:8080/NetForAndroid/WPSOffice.apk");
+				new Thread(mThreadDownload).start();
 			} catch (Exception e) {
 				ToastUtil.showToast(R.string.download_fail);
 			}
@@ -162,7 +162,7 @@ public class TreeListViewActivity extends BasicActivity {
 		long filelength = file.length();
 		LogUtil.i(TAG, "filelength = " + filelength);
 		String head = "Content-Length=" + filelength + ";filename=" + fileName
-				+ ";sourceid=\r\n";// head为自定义协议，回车换行为方便我们提取第一行数据而自行设定的。
+				+ ";sourceid=\r\n";// head为自定义协议，回车换行是为方便我们提取第一行数据而自行设定。
 		outStream.write(head.getBytes()); // 向服务器发送协议消息
 
 		PushbackInputStream inStream = new PushbackInputStream(
@@ -214,6 +214,7 @@ public class TreeListViewActivity extends BasicActivity {
 		super.onDestroy();
 		mHandler = null;
 		stopUploadTask();
+		mThreadDownload.stopDownloadTask();
 	}
 
 	/**

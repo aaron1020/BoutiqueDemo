@@ -39,6 +39,7 @@ public class SingleThreadDownload implements Runnable {
 	private int mDownloadSize;// 需要下载的文件的大小
 	private int mDownloaded = 0;// 已经下载的文件的大小
 	private int mDownloadedTime = 0;// 已经下载的了多少时间
+	private int mDownloadedBefore = 0;// 用于计算每一秒钟的下载速率
 
 	public SingleThreadDownload(Context context, String downloadPath) {
 		mContext = context;
@@ -51,7 +52,7 @@ public class SingleThreadDownload implements Runnable {
 
 	private void initDownload(Context context) {
 		mNotiBuilder = new NotificationCompat.Builder(context);
-		mNotiBuilder.setSmallIcon(R.drawable.ic_launcher)
+		mNotiBuilder.setSmallIcon(R.drawable.download_anim)
 				.setContentTitle(context.getString(R.string.download_note))
 				.setTicker(context.getString(R.string.downloading) + mFileName);
 
@@ -102,33 +103,29 @@ public class SingleThreadDownload implements Runnable {
 			while ((len = inputStream.read(buffer)) != -1) {
 				outStream.write(buffer, 0, len);
 				mDownloaded += len;
-				if (mDownloaded >= mDownloadSize) {
+				if (mDownloaded >= mDownloadSize) {// 下载完成
 					mTimer.cancel();
 					String ticker = mFileName
 							+ mContext.getString(R.string.download_finish);
-					mNotiBuilder
-							.setSmallIcon(
-									R.drawable.actionbar_left_ibtn_menu_press)
-							.setContentTitle(
-									mContext.getString(R.string.download_note))
-							.setTicker(ticker);
 
+					mNotification.icon = R.drawable.download_anim_i_1;
+					mNotification.tickerText = ticker;
 					mNotiViews.setTextViewText(R.id.noti_tv_name, ticker);
 					mNotiViews.setTextViewText(R.id.noti_tv_rate,
 							mContext.getString(R.string.downloaded_install));
 
-					Intent intent = new Intent();
+					Intent intent = new Intent();// 自动安装
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.setAction(Intent.ACTION_VIEW);
 					intent.setDataAndType(Uri.fromFile(file),
 							"application/vnd.android.package-archive");
+					mContext.startActivity(intent);
+
 					PendingIntent pendingIntent = PendingIntent.getActivity(
 							mContext, 0, intent,
-							PendingIntent.FLAG_CANCEL_CURRENT);
-					mNotiBuilder.setContentIntent(pendingIntent);
-
+							PendingIntent.FLAG_CANCEL_CURRENT);// 点击通知栏安装
+					mNotification.contentIntent = pendingIntent;
 					mNotiManager.notify(mNotiId, mNotification);
-					mContext.startActivity(intent);
 				}
 			}
 
@@ -140,17 +137,31 @@ public class SingleThreadDownload implements Runnable {
 		}
 	}
 
+	public void stopDownloadTask() {
+		if (mTimer != null) {
+			mTimer.cancel();
+			mTimer = null;
+		}
+		mNotiManager.cancelAll();
+	}
+
 	private final class DownloadTask extends TimerTask {
 		@Override
 		public void run() {
 			try {
 				mDownloadedTime++;
-				int downloadRate = (int) 1.0f * mDownloaded / mDownloadedTime
-						/ TIME_REFRESH_VIEW;// 计算下载速率，单位：kb/s
+				LogUtil.i(TAG, "DownloadTask::run()::" + mDownloadedTime);
+				// int downloadRate = (int) 1.0f * mDownloaded / mDownloadedTime
+				// / TIME_REFRESH_VIEW;// 计算平均下载速率，单位：KB/s
+
+				// 计算每一秒钟的下载速率，单位：KB/s，(mDownloaded - mDownloadedBefore)为增量
+				int downloadRate = (mDownloaded - mDownloadedBefore)
+						/ TIME_REFRESH_VIEW;
 				mNotiViews.setTextViewText(R.id.noti_tv_rate,
 						(int) (100.0f * mDownloaded / mDownloadSize) + "% ,"
-								+ downloadRate + "kb/s");
+								+ downloadRate + "KB/s");
 				mNotiManager.notify(mNotiId, mNotification);
+				mDownloadedBefore = mDownloaded;
 			} catch (Exception e) {
 				LogUtil.e(TAG, "DownloadTask::run()::" + e.toString());
 			}
