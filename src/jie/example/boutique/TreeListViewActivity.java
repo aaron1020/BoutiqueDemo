@@ -214,7 +214,9 @@ public class TreeListViewActivity extends BasicActivity {
 		super.onDestroy();
 		mHandler = null;
 		stopUploadTask();
-		mThreadDownload.stopDownloadTask();
+		if (mThreadDownload != null) {
+			mThreadDownload.stopDownloadTask();
+		}
 	}
 
 	/**

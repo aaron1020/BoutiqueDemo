@@ -40,7 +40,7 @@ public class RecordVideoActivity extends Activity {
 		switch (view.getId()) {
 		case R.id.start_record:
 			try {
-				mRecordView.record();
+				mRecordView.startRecord();
 				mBtnStopRecord.setEnabled(true);
 				mStopRecorded = false;
 			} catch (Exception e) {

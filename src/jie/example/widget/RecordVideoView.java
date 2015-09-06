@@ -68,7 +68,7 @@ public class RecordVideoView extends SurfaceView implements OnErrorListener,
 	private void setCameraParams() {
 		if (mCamera != null) {
 			Parameters params = mCamera.getParameters();
-			params.set("orientation", "portrait");
+			//params.set("orientation", "portrait");
 			mCamera.setParameters(params);
 		}
 	}
@@ -133,7 +133,7 @@ public class RecordVideoView extends SurfaceView implements OnErrorListener,
 	/**
 	 * 开始录制视频
 	 */
-	public void record() throws Exception {
+	public void startRecord() throws Exception {
 		if (!mOpenCamera) {// 如果未打开摄像头，则打开
 			initCamera();
 		}
