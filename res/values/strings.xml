@@ -53,7 +53,6 @@
     <string name="refresh_map_view">刷新地图</string>
     <string name="paint_text">画字</string>
     <string name="paint_text_path">沿着路径画字</string>
-    <string name="paint_text_path_2">TEXTPATH</string>
     <string name="histogram_view_aty">柱状图表</string>
     <string name="hv_top_main_title">全网监控系统</string>
     <string name="hv_top_sub_title">[一级指标]</string>
@@ -99,5 +98,15 @@
     <string name="download_finish">下载完成</string>
     <string name="downloaded_install">点击安装</string>
     <string name="download_fail">下载失败</string>
+    <string name="extract_screen_c">获取屏幕任意点的颜色</string>
+    <string name="show_color_and_rgb">滑动屏幕即可改变该栏目的背景色</string>
+    <string name="change_bg_btn">更换背景</string>
+    <string name="btn_scan_code">扫码换背景</string>
+    <string name="btn_scan_take_photo">拍照</string>
+    <string name="aty_scan">扫一扫</string>
+    <string name="change_bg_image_btn">更换图片 %1$s/%2$s</string>
+    <string name="gray_calculate_rule">Gray=R*0.3+G*0.59+B*0.11=</string>
+    <string name="scanning_color">颜色扫描</string>
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
 
 </resources>

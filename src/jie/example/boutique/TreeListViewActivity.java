@@ -146,6 +146,8 @@ public class TreeListViewActivity extends BasicActivity {
 		case R.id.tl_btn_record_video:
 			startActivityForResult(new Intent(this, RecordVideoActivity.class),
 					REQUEST_RECORD_VIDEO);
+		case R.id.tl_btn_temp:
+			startActivity(new Intent(this, ScreenColorActivity.class));
 			break;
 		default:
 			break;

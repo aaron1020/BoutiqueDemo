@@ -1,7 +1,11 @@
 package jie.example.utils;
 
 import java.io.ByteArrayOutputStream;
+
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 public class ImageUtil {
 
@@ -37,6 +41,17 @@ public class ImageUtil {
 	public static void saveBitmapToFile(String folder, String fileName,
 			Bitmap bitmap) throws Exception {
 		FileUtil.saveInfoToSDCard(folder, fileName, bitmapToByteArray(bitmap));
+	}
+
+	/**
+	 * Bitmap--> Drawable
+	 */
+	public static Drawable bitmapToDrawable(Context context, Bitmap bitmap) {
+		BitmapDrawable drawable = null;
+		if (bitmap != null) {
+			drawable = new BitmapDrawable(context.getResources(), bitmap);
+		}
+		return drawable;
 	}
 
 }

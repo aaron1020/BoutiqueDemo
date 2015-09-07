@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_window"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScreenColorActivity"
+    android:background="@drawable/extract_screen_bg" >
+
+    <TextView
+        android:id="@+id/main_text_show_rgb"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_alignParentTop="true"
+        android:background="@color/activity_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="setOnClick"
+        android:textColor="#000000" >
+    </TextView>
+
+    <Button
+        android:id="@+id/main_btn_change_bg"
+        style="@style/WrapContentButtonStyle"
+        android:layout_centerInParent="true"
+        android:text="@string/change_bg_btn" />
+
+    <Button
+        android:id="@+id/main_btn_scan"
+        style="@style/WrapContentButtonStyle"
+        android:layout_below="@id/main_btn_change_bg"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="6dip"
+        android:text="@string/btn_scan_code" />
+    
+    <Button
+        android:id="@+id/main_btn_tp"
+        style="@style/WrapContentButtonStyle"
+        android:layout_below="@id/main_btn_scan"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="6dip"
+        android:text="@string/btn_scan_take_photo" />
+
+</RelativeLayout>

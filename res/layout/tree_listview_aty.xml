@@ -59,9 +59,17 @@
         android:text="@string/record_video" />
 
     <Button
-        android:id="@+id/tl_btn_exit_app"
+        android:id="@+id/tl_btn_temp"
         style="@style/WrapContentButtonStyle"
         android:layout_below="@id/tl_btn_record_video"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dip"
+        android:text="@string/extract_screen_c" />
+
+    <Button
+        android:id="@+id/tl_btn_exit_app"
+        style="@style/WrapContentButtonStyle"
+        android:layout_below="@id/tl_btn_temp"
         android:layout_centerHorizontal="true"
         android:layout_margin="4dip"
         android:text="@string/exit_app" />
@@ -76,8 +84,7 @@
 
     <!--
     1.ViewStub目前不支持merge标签；2.inflatedId为ViewStub调用inflate()后才返回的id，
-    如果想用通过findViewById找到该id对应的实例，会报空指针异常，但该值可以不用设置。
-    -->
+    如果想用通过findViewById找到该id对应的实例，会报空指针异常，但该值可以不用设置。    -->
 
     <ViewStub
         android:id="@+id/tl_vs"

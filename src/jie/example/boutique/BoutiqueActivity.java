@@ -22,7 +22,6 @@ import android.widget.ViewSwitcher.ViewFactory;
  * 精品首页
  */
 public class BoutiqueActivity extends BasicActivity {
-
 	private static final String TAG = BoutiqueActivity.class.getSimpleName();
 	private static final int TEST_REQUEST_CODE = 101;
 	private BoutiqueActivity mActivity;

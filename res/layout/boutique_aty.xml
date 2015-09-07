@@ -91,31 +91,4 @@
         android:onClick="setOnClick"
         android:src="@drawable/transparent_menu_pic_open" />
 
-    <TextView
-        android:id="@+id/vertical_text_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="4dip"
-        android:ems="1"
-        android:text="@string/paint_text_path" />
-
-    <TextView
-        android:id="@+id/vertical_text_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/vertical_text_1"
-        android:layout_toRightOf="@id/vertical_text_1"
-        android:ems="1"
-        android:text="@string/paint_text_path_2" />
-
-    <jie.example.widget.VerticalLayoutText
-        android:id="@+id/vertical_text_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/vertical_text_1"
-        android:layout_toRightOf="@id/vertical_text_2"
-        android:visibility="gone"/>
-    
 </RelativeLayout>
