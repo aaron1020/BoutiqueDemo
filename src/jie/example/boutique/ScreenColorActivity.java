@@ -3,8 +3,6 @@ package jie.example.boutique;
 import jie.example.utils.ImageUtil;
 import jie.example.utils.LogUtil;
 import jie.example.utils.ScreenUtil;
-import jie.example.utils.ToastUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;

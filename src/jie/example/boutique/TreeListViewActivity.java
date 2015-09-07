@@ -5,7 +5,9 @@ import java.io.OutputStream;
 import java.io.PushbackInputStream;
 import java.io.RandomAccessFile;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,11 +21,16 @@ import jie.example.utils.LogUtil;
 import jie.example.utils.TimeUtil;
 import jie.example.utils.ToastUtil;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
@@ -53,6 +60,7 @@ public class TreeListViewActivity extends BasicActivity {
 	private TextView mTextProgress;
 	private Timer mUploadTimer;
 	private SingleThreadDownload mThreadDownload;
+	private File mRecordVideoFile;
 	private int mTimeCounter = TEXT_SHOW_TIME;
 	private long mFileLength = 0;// 要上传的文件的大小
 	private int mUploadedTime = 0;// 已经上传的时间
@@ -97,6 +105,7 @@ public class TreeListViewActivity extends BasicActivity {
 		mTreeAdapter.notifyDataSetChanged();
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	public void setOnClick(View view) {
 		switch (view.getId()) {
 		case R.id.tl_btn_exit_app:
@@ -144,11 +153,58 @@ public class TreeListViewActivity extends BasicActivity {
 			}
 			break;
 		case R.id.tl_btn_record_video:
-			startActivityForResult(new Intent(this, RecordVideoActivity.class),
-					REQUEST_RECORD_VIDEO);
+			// startActivityForResult(new Intent(this,
+			// RecordVideoActivity.class),
+			// REQUEST_RECORD_VIDEO);
+
+			Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+			intent.addCategory(Intent.CATEGORY_DEFAULT);
+			intent.putExtra("camerasensortype", CameraInfo.CAMERA_FACING_BACK); // 打开后置摄像头
+			int cameraNumber = Camera.getNumberOfCameras();
+			if (cameraNumber >= 2) {
+				intent.putExtra("camerasensortype",
+						CameraInfo.CAMERA_FACING_FRONT); // 打开前置摄像头
+			}
+			File dir = new File(BoutiqueApp.getAppFolder(), "RecordVideo");
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			String fileName = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm_ss")
+					.format(new Date());
+			mRecordVideoFile = new File(dir, fileName + ".3gp");
+			if (mRecordVideoFile.exists()) {
+				mRecordVideoFile.delete();
+			}
+			Uri uri = Uri.fromFile(mRecordVideoFile);
+			intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+			startActivityForResult(intent, REQUEST_RECORD_VIDEO);
+			break;
 		case R.id.tl_btn_temp:
 			startActivity(new Intent(this, ScreenColorActivity.class));
 			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case REQUEST_RECORD_VIDEO:
+			if (resultCode == Activity.RESULT_OK) {
+				ToastUtil.showToast("RESULT_OK");
+				Uri uri = data.getData();
+				if (uri != null) {
+					ToastUtil.showToast(uri.getPath());
+				}
+			} else {
+				if (mRecordVideoFile.exists()) {
+					mRecordVideoFile.delete();
+				}
+			}
+			break;
+
 		default:
 			break;
 		}
